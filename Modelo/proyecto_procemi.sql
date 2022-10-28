@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 24-10-2022 a las 00:10:31
+-- Tiempo de generación: 28-10-2022 a las 04:16:16
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 7.4.22
 
@@ -61,6 +61,7 @@ CREATE TABLE `empresa` (
   `empresa_Encargado` varchar(60) COLLATE utf8_spanish_ci DEFAULT NULL,
   `empresa_Nombre` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
   `empresa_Ubicacion` varchar(250) COLLATE utf8_spanish_ci NOT NULL,
+  `empresa_condition` enum('I','E') COLLATE utf8_spanish_ci NOT NULL,
   `empresa_Estatus` tinyint(1) NOT NULL,
   `empresa_Fecha` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -172,6 +173,7 @@ CREATE TABLE `producto` (
 CREATE TABLE `vehiculo` (
   `ID` int(11) NOT NULL,
   `vehiculo_Placa` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
+  `segunda_Placa` char(10) COLLATE utf8_spanish_ci DEFAULT NULL,
   `rif_dueno` char(12) COLLATE utf8_spanish_ci DEFAULT NULL,
   `vehiculo_Peso` decimal(8,2) NOT NULL,
   `vehiculo_Ano` char(4) COLLATE utf8_spanish_ci NOT NULL,

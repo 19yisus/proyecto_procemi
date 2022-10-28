@@ -41,6 +41,7 @@
 								<th>Rif</th>
 								<th>Nombre</th>
 								<th>Ubicación</th>
+								<th>Condición</th>
 								<th>Opciones</th>
 							</thead>
 							<tbody>
@@ -70,8 +71,8 @@
 										<div class="input-group">
 											<div class="pretend">
 												<select name="tipoRif" id="tipo_rif" class="form-control">
-													<option value="V">V</option>
 													<option value="J">J</option>
+													<option value="V">V</option>
 												</select>
 											</div>
 											<input type="text" minlength="10" maxlength="10" name="Rif" id="rif" class="form-control" required placeholder="Rif">
@@ -86,6 +87,19 @@
 										<label>Dirección</label>
 
 										<input type="text" name="Ubicacion" id="ubicacion" class="form-control" required>
+									</div>
+									<div class="d-flex flex-column form-group">
+										<label for="">Condición del vehiculo</label>
+										<div class="d-flex flex-row justify-content-around">
+											<div class="form-check ml-2 mr-2">
+												<input type="radio" name="empresa_condition" value="E" id="condition" class="form-check-input">
+												<small class="form-check-label">Externa</small>
+											</div>
+											<div class="form-check">
+												<input type="radio" name="empresa_condition" value="I" id="condition" class="form-check-input">
+												<small class="form-check-label">Interna</small>
+											</div>
+										</div>
 									</div>
 								</div>
 								<div class="modal-footer">
@@ -160,6 +174,12 @@
 							data: "empresa_Ubicacion"
 						},
 						{
+							data: "empresa_condition",
+							render(data){
+								if(data == "I") return "Interna"; else return "Externa";
+							}
+						},
+						{
 							defaultContent: "",
 							render(data, type, row) {
 								let btn = `
@@ -196,11 +216,14 @@
 						$("#id").val(data.ID)
 						$("#encargado").val(data.empresa_Encargado)
 						let [tipo, cedula] = data.empresa_Rif.split("-")
-						
+
 						$("#tipo_rif").val(tipo);
 						$("#rif").val(cedula);
 						$("#nombre").val(data.empresa_Nombre)
 						$("#ubicacion").val(data.empresa_Ubicacion)
+						document.querySelectorAll("#condition").forEach(item => {
+							if (item.value == data.empresa_condition) item.checked = true;
+						})
 					}).catch(error => console.error(error))
 			}
 			/* Bueno, en estas dos funciones solo estamos asignando valores, pero son funciones mas cortas ya que solo realizamos una accion */

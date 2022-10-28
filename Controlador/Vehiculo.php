@@ -56,9 +56,10 @@
       }else $rif = null;
 
       if(!isset($_POST['if_doble'])) $if_doble = 0; else $if_doble = $_POST['if_doble'];
+      if(!isset($_POST['segunda_Placa'])) $segundaPlaca = null; else $segundaPlaca = $_POST['segunda_Placa'];
       if(!isset($_POST['Vehiculo_PesoSecundario'])) $pesoExtra = 0; else $pesoExtra = $_POST['Vehiculo_PesoSecundario'];
       if(!isset($_POST["Empresa"])) $empresa = null; else $empresa = $_POST["Empresa"];
-      $a->SetDatos(null,$_POST["Placa"],$_POST["Modelo"],$empresa,$_POST["Color"],$_POST["Peso"],$_POST["Ano"],$if_doble,$pesoExtra,$_POST['condicion'],$rif);
+      $a->SetDatos(null,$_POST["Placa"],$_POST["Modelo"],$empresa,$_POST["Color"],$_POST["Peso"],$_POST["Ano"],$if_doble,$pesoExtra,$_POST['condicion'],$rif, $segundaPlaca);
       $res = $a->Registrar();
       if($res) header("location:../View_Vehiculo?Mensaje=2");
       else header("location:../View_Vehiculo?Mensaje= 1 ");
@@ -70,8 +71,9 @@
          $rif = $_POST['tipo_rif']."-".$_POST['rif_dueno'];
       }else $rif = null;
       if(!isset($_POST['if_double'])) $if_doble = 0; else $if_doble = $_POST['if_double'];
+      if(!isset($_POST['segunda_Placa'])) $segundaPlaca = null; else $segundaPlaca = $_POST['segunda_Placa'];
       if(!isset($_POST['Vehiculo_PesoSecundario'])) $pesoExtra = 0; else $pesoExtra = $_POST['Vehiculo_PesoSecundario'];
-      $a->SetDatos(null,$_POST["Placa"],$_POST["Modelo"],$_POST["Empresa"],$_POST["Color"],$_POST["Peso"],$_POST["Ano"],$if_doble,$pesoExtra,$_POST['condicion'],$rif);
+      $a->SetDatos(null,$_POST["Placa"],$_POST["Modelo"],$_POST["Empresa"],$_POST["Color"],$_POST["Peso"],$_POST["Ano"],$if_doble,$pesoExtra,$_POST['condicion'],$rif, $segundaPlaca);
       $res = $a->Actualizar();
       if($res) header("location:../View_Vehiculo?Mensaje=2");
       else header("location:../View_Vehiculo?Mensaje= 1 ");
@@ -91,7 +93,7 @@
    }
    function eliminar_vehiculo(){
       $a = new Vehiculo_m();
-      $a->SetDatos($_POST["ID"],null,null,null,null,null,null,null,null,null,null,null);
+      $a->SetDatos($_POST["ID"],null,null,null,null,null,null,null,null,null,null,null,null);
       $res = $a->Eliminar();
       if($res) header ("location:../View_Vehiculo?Mensaje=3");
       else header("location:../View_Vehiculo?Mensaje= 1 ");

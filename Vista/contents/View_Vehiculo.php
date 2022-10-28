@@ -182,6 +182,14 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 											</div>
 										</div>
 									</div>
+									<div class="row">
+										<div class="col-6">
+											<div class="form-group">
+												<label>Placa</label>
+												<input type="text" name="segunda_Placa" id="segunda_Placa" disabled="disabled" maxlength="7" minlength="7" pattern="[A-Z0-9]{7}" class="form-control" onkeyup="Mayuscula(this)" required>
+											</div>
+										</div>
+									</div>
 
 								</div>
 								<div class="modal-footer">
@@ -231,8 +239,13 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 		<?php $this->Component("scripts"); ?>
 		<script type="text/javascript">
 			document.getElementById("if_doble").addEventListener("click", (e) => {
-				if (!e.target.checked) $("#peso_extra").attr("disabled", true);
-				else $("#peso_extra").removeAttr("disabled");
+				if (!e.target.checked) {
+					$("#peso_extra").attr("disabled", true);
+					$("#segunda_Placa").attr("disabled", true);
+				} else {
+					$("#peso_extra").removeAttr("disabled");
+					$("#segunda_Placa").removeAttr("disabled");
+				}
 			})
 			const manipulateDOM = (value) => {
 				if (value != "E") {
@@ -353,7 +366,7 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 						$("#peso").val(data.vehiculo_Peso)
 						$("#ano").val(data.vehiculo_Ano)
 						let [tipo, cedula] = data.rif_dueno.split("-")
-						
+
 						$("#tipo_rif").val(tipo);
 						$("#rif_dueno").val(cedula);
 					}).catch(error => console.error(error))

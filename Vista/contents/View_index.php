@@ -26,13 +26,14 @@
 						<div class="table-title">
 							<div class="row">
 								<div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
-									<h2 class="ml-lg-2">Silos</h2>
+									<h2 class="ml-lg-2">PROCEMI</h2>
 								</div>
 							</div>
 						</div>
 						<br>
-						<div class="container">
-							<div class="products-container">
+						<div class="container d-flex justify-content-center">
+							<img src="<?php $this->Assets('img/logo.jpg'); ?>" width="300" class="img-fluid" />
+							<!-- <div class="products-container">
 								<div class="product" data-name="p-1">
 									<img src="images/1.png" alt="">
 									<h3>Silo 1</h3>
@@ -59,9 +60,9 @@
 
 
 
-							</div>
+							</div> -->
 
-							<div class="products-preview">
+							<!-- <div class="products-preview">
 
 								<div class="preview" data-target="p-1">
 									<i class="fas fa-times"></i>
@@ -140,7 +141,7 @@
 								</div>
 
 
-							</div>
+							</div> -->
 						</div>
 					</div>
 
@@ -150,4 +151,5 @@
 	</div>
 	<?php $this->Component("scripts"); ?>
 </body>
+
 </html>

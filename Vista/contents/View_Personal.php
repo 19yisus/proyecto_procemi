@@ -76,8 +76,17 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 
 									<div class="form-group">
 										<label>Cédula</label>
+										<div class="input-group">
+											<div class="pretend">
+												<select name="Nacionalidad" id="Nacionalidad" class="form-control">
+													<option value="V">V</option>
+													<option value="E">E</option>
+												</select>
+											</div>
+											<input type="text" pattern="[0-9]{7,8}" maxlength="8" minlength="7" name="Cedula" id="cedula" class="form-control" required>
+										</div>
 
-										<input type="number" maxlength="8" minlength="7" name="Cedula" id="cedula" class="form-control" required>
+										
 									</div>
 									<div class="form-group">
 										<label>Nombre</label>
@@ -91,14 +100,9 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 									</div>
 
 									<div class="form-group">
-										<label>Nacionalidad</label>
-										V<input type="radio" name="Nacionalidad" value="V" checked>
-										E<input type="radio" name="Nacionalidad" value="E">
-									</div>
-									<div class="form-group">
 										<label>Télefono</label>
 
-										<input type="tel" maxlength="11" minlength="11" name="Telefono" id="telefono" class="form-control" required>
+										<input type="tel" pattern="[0-9]{11}" title="Solo se aceptan numeros" maxlength="11" minlength="11" name="Telefono" id="telefono" class="form-control" required>
 									</div>
 									<div class="form-group">
 										<label>Correo</label>
@@ -255,7 +259,7 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 						$("#id").val(data.ID)
 						$("#nombre").val(data.personal_Nombre)
 						$("#apellido").val(data.personal_Apellido)
-						$("#nacionalidad").val(data.personal_Nacionalidad)
+						$("#Nacionalidad").val(data.personal_Nacionalidad)
 						$("#cedula").val(data.personal_Cedula)
 						$("#telefono").val(data.personal_Telefono)
 						$("#correo").val(data.personal_Correo)

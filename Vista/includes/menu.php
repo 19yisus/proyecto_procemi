@@ -1,32 +1,33 @@
-<div class="wrapper">
+<div class="wrapper overflow-hidden">
   <div class="body-overlay"></div>
   <div id="sidebar">
-  <div class="sidebar-header">
-    <h3><img src="<?php $this->Assets('img/user.png');?>" class="img-fluid"/><span>PROCEMI</span></h3>
-  </div>
-  <ul class="list-unstyled component m-0">
-    <li class="active">
-      <a href="inicio.php" class="dashboard"><i class="material-icons">dashboard</i>Menu </a>
-    </li>
-    <li class="dropdown">
-      <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-        <i class="material-icons">aspect_ratio</i>Registros
-      </a>
-      <ul class="collapse list-unstyled menu" id="homeSubmenu1">
-        <li><a href="View_Personal">Personal</a></li>
-        <li><a href="View_Vehiculo">Camiones</a></li>
-        <li><a href="View_cargo">Cargo</a></li>
-        <li><a href="View_Producto">Producto</a></li>
-        <li><a href="View_Empresa">Empresa</a></li>
-        <li>
-          <a href="#homeSubmenu5" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Configuración del vehículo</a>
-          <ul class="collapse list-unstyled menu" id="homeSubmenu5"></li>
-            <li><a href="View_marca">Marca</a></li>
-            <li><a href="View_modelo">Modelo</a></li>
-            <li><a href="View_color">Color</a></li>
-          </ul>
-       
-      </ul>
+    <div class="sidebar-header">
+      <h1><img src="<?php $this->Assets('img/logo.jpg'); ?>" class="img-fluid" /><span>PROCEMI</span></h1>
+    </div>
+    <ul class="list-unstyled component m-0">
+      <li class="active">
+        <a href="View_index" class="dashboard"><i class="material-icons">dashboard</i>Menu </a>
+      </li>
+      <li class="dropdown">
+        <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+          <i class="material-icons">aspect_ratio</i>Registros
+        </a>
+        <ul class="collapse list-unstyled menu" id="homeSubmenu1">
+          <li><a href="View_Personal">Personal</a></li>
+          <li><a href="View_Vehiculo">Camiones</a></li>
+          <li><a href="View_cargo">Cargo</a></li>
+          <li><a href="View_Producto">Producto</a></li>
+          <li><a href="View_Empresa">Empresa</a></li>
+          <li>
+            <a href="#homeSubmenu5" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Configuración del vehículo</a>
+            <ul class="collapse list-unstyled menu" id="homeSubmenu5">
+          </li>
+          <li><a href="View_marca">Marca</a></li>
+          <li><a href="View_modelo">Modelo</a></li>
+          <li><a href="View_color">Color</a></li>
+        </ul>
+
+    </ul>
     </li>
     <li class="dropdown">
       <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -38,7 +39,7 @@
         <li><a href="View_Salida">Salida</a></li>
       </ul>
     </li>
-    
+
     <li class="dropdown">
       <a href="#homeSubmenu4" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
         <i class="material-icons">aspect_ratio</i>Datos Eliminados
@@ -65,6 +66,6 @@
       <ul class="collapse list-unstyled menu" id="homeSubmenu3">
         <li><a href="reportes_entrada.php">Todod los maestros y ovimientos </a></li>
       </ul>
-    </li> 
-  </ul>
-</div>
+    </li>
+    </ul>
+  </div>

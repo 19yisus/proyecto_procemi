@@ -53,7 +53,7 @@
       $a = new Empresa_m();
       $rif = $_POST['tipoRif']."-".$_POST['Rif'];
 
-      $a->SetDatos(null,$_POST["Encargado"],$rif,$_POST["Nombre"],$_POST["Ubicacion"]);
+      $a->SetDatos(null,$_POST["Encargado"],$rif,$_POST["Nombre"],$_POST["Ubicacion"],$_POST['empresa_condition']);
       $res = $a->Registrar();
       if($res) header("location:../View_Empresa?Mensaje=2");
       else header("location:../View_Empresa?Mensaje= 1 ");
@@ -61,7 +61,7 @@
 
    function actualizar_empresa(){
       $a = new Empresa_m();
-      $a->SetDatos($_POST["ID"],$_POST["Encargado"],$_POST["Rif"],$_POST["Nombre"],$_POST["Ubicacion"]);
+      $a->SetDatos($_POST["ID"],$_POST["Encargado"],$_POST["Rif"],$_POST["Nombre"],$_POST["Ubicacion"],$_POST['empresa_condition']);
       $res = $a->Actualizar();
       if($res) header("location:../View_Empresa?Mensaje=2");
       else header("location:../View_Empresa?Mensaje= 1 ");
@@ -83,7 +83,7 @@
 
    function eliminar_empresa(){
       $a = new Empresa_m();
-      $a->SetDatos($_POST["ID"],null,null,null,null);
+      $a->SetDatos($_POST["ID"],null,null,null,null,null);
       $res = $a->Eliminar();
       if($res) header ("location:../View_Empresa?Mensaje=3");
       else header("location:../View_Empresa?Mensaje= 1 ");
@@ -100,7 +100,7 @@
 
    function Recuperar(){
       $a = new Empresa_m();
-      $a->SetDatos($_POST["ID"],null,null,null,null);
+      $a->SetDatos($_POST["ID"],null,null,null,null,null);
       $res = $a->Recuperar();
       if($res) header ("location:../View_Empresa_E?Mensaje=4");
       else header("location:../View_Empresa_E?Mensaje= 1 ");
