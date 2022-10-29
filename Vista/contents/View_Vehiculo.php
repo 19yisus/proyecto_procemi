@@ -100,15 +100,15 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 												<label for="">Condición del vehiculo</label>
 												<div class="d-flex flex-row justify-content-around">
 													<div class="form-check">
-														<input type="radio" name="condicion" value="P" id="condition" class="form-check-input">
+														<input type="radio" name="condicion" value="P" id="condition" class="form-check-input" required>
 														<small class="form-check-label">Particular</small>
 													</div>
 													<div class="form-check ml-2 mr-2">
-														<input type="radio" name="condicion" value="E" id="condition" class="form-check-input">
+														<input type="radio" name="condicion" value="E" id="condition" class="form-check-input" required>
 														<small class="form-check-label">Externo</small>
 													</div>
 													<div class="form-check">
-														<input type="radio" name="condicion" value="I" id="condition" class="form-check-input">
+														<input type="radio" name="condicion" value="I" id="condition" class="form-check-input" required>
 														<small class="form-check-label">Interno</small>
 													</div>
 												</div>
@@ -121,7 +121,7 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 												<label>Rif de Dueño</label>
 												<div class="input-group">
 													<div class="pretend">
-														<select name="tipoRif" id="tipo_rif" class="form-control">
+														<select name="tipoRif" id="tipo_rif" class="form-control" disabled="disabled" required>
 															<option value="V">V</option>
 															<option value="J">J</option>
 														</select>
@@ -132,7 +132,7 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 											</div>
 											<div class="form-group" id="divEmpresa">
 												<label>Empresa</label>
-												<select name="Empresa" id="empresa" class="form-control">
+												<select name="Empresa" id="empresa" class="form-control" required>
 													<option value="">Seleccione una opción</option>
 													<?php while ($a = $empresa->fetch_assoc()) { ?>
 														<option value="<?php echo $a["ID"] ?>"><?php echo $a["empresa_Nombre"] ?></option>
@@ -143,7 +143,7 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 										<div class="col-6">
 											<div class="form-group">
 												<label>Color</label>
-												<select name="Color" id="color" class="form-control">
+												<select name="Color" id="color" class="form-control" required>
 													<option value="">Seleccione una opción</option>
 													<?php while ($a = $color->fetch_assoc()) { ?>
 														<option name="Color" id="color" value="<?php echo $a["ID"] ?>"><?php echo $a["color_Nombre"] ?></option>
@@ -255,11 +255,13 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 						$("#divEmpresa").hide(150, () => {
 							$("#divRifDueno").show(150)
 							$("#rif_dueno").removeAttr("disabled");
+							$("#tipo_rif").removeAttr("disabled");
 						});
 					} else {
 						$("#divRifDueno").hide(150, () => {
 							$("#divEmpresa").show(150)
 							$("#rif_dueno").attr("disabled", true);
+							$("#tipo_rif").attr("disabled", true);
 						});
 					}
 				} else {
@@ -267,6 +269,7 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 					$("#divRifDueno").hide(150, () => {
 						$("#divEmpresa").show(150)
 						$("#rif_dueno").attr("disabled", true);
+						$("#tipo_rif").attr("disabled", true);
 					});
 				}
 			}
@@ -306,7 +309,10 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 							data: "color_Nombre"
 						},
 						{
-							data: "vehiculo_Peso"
+							data: "vehiculo_Peso",
+							render(data){
+								return data+" KG.";
+							}
 						},
 						{
 							data: "empresa_Nombre",

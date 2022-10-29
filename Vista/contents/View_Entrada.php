@@ -51,6 +51,7 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 								<th>Placa</th>
 								<th>Cédula</th>
 								<th>Empresa</th>
+								<th>Condición de la empresa</th>
 								<th>Producto</th>
 								<th>Cantidad</th>
 								<th>Estado</th>
@@ -74,51 +75,80 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 									</button>
 								</div>
 								<div class="modal-body">
-									<div class="form-group">
-										<label>Empresa</label>
-										<select name="id_empresa" id="empresa" class="form-control">
-											<option value="">Seleccione una opción</option>
-											<?php while ($a = $empresa->fetch_assoc()) { ?>
-												<option value="<?php echo $a["ID"] ?>"><?php echo $a["empresa_Nombre"] ?></option>
-											<?php } ?>
-										</select>
+									<div class="row">
+										<div class="col-6">
+											<div class="form-group">
+												<label>Producto</label>
+												<select name="id_producto" id="producto" class="form-control" required>
+													<option value="">Seleccione una opción</option>
+													<?php while ($a = $producto->fetch_assoc()) { ?>
+														<option value="<?php echo $a["ID"] ?>"><?php echo $a["producto_Nombre"] ?></option>
+													<?php } ?>
+												</select>
+											</div>
+										</div>
+										<div class="col-6">
+											<div class="form-group">
+												<label>Empresa</label>
+												<select name="id_empresa" id="empresa" class="form-control" required>
+													<option value="">Seleccione una opción</option>
+													<?php while ($a = $empresa->fetch_assoc()) { ?>
+														<option value="<?php echo $a["ID"] ?>"><?php echo $a["empresa_Nombre"] ?></option>
+													<?php } ?>
+												</select>
+											</div>
+										</div>
 									</div>
-
-									<div class="form-group">
-										<label>Vehiculo</label>
-										<select name="id_vehiculo" id="Placa" class="form-control" required>
-											<option value="">Seleccione una opción</option>
-											<?php while ($a = $vehiculos->fetch_assoc()) {
-											?>
-												<option value="<?php echo $a["ID"]; ?>"><?php echo $a["vehiculo_Placa"]; ?></option>
-											<?php }
-											?>
-										</select>
+									<div class="row">
+										<div class="col-6">
+											<div class="form-group">
+												<label>Personal</label>
+												<select name="id_personal" id="cedula" class="form-control" required>
+													<option value="">Seleccione una opción</option>
+													<?php while ($a = $personal->fetch_assoc()) { ?>
+														<option value="<?php echo $a["ID"]; ?>"><?php echo $a["personal_Nacionalidad"] . "-" . $a["personal_Cedula"] . " " . $a['personal_Nombre']; ?></option>
+													<?php } ?>
+												</select>
+											</div>
+										</div>
+										<div class="col-6">
+											<div class="form-group">
+												<label>Vehiculo</label>
+												<select name="id_vehiculo" id="Placa" class="form-control" required>
+													<option value="">Seleccione una opción</option>
+													<?php while ($a = $vehiculos->fetch_assoc()) {
+													?>
+														<option value="<?php echo $a["ID"]; ?>"><?php echo $a["vehiculo_Placa"]; ?></option>
+													<?php }
+													?>
+												</select>
+											</div>
+										</div>
 									</div>
-
-									<div class="form-group">
-										<label>Personal</label>
-										<select name="id_personal" id="cedula" class="form-control" required>
-											<option value="">Seleccione una opción</option>
-											<?php while ($a = $personal->fetch_assoc()) { ?>
-												<option value="<?php echo $a["ID"]; ?>"><?php echo $a["personal_Nacionalidad"] . "-" . $a["personal_Cedula"] . " " . $a['personal_Nombre']; ?></option>
-											<?php } ?>
-										</select>
+									<div class="row">
+										<div class="col-12">
+											<div class="d-flex flex-column">
+												<label for="">Condición de la empresa</label>
+												<div class="d-flex flex-row justify-content-around">
+													<div class="form-check ml-2 mr-2">
+														<input type="radio" name="condicion_empresa" value="E" id="condition" class="form-check-input" required>
+														<small class="form-check-label">Externo</small>
+													</div>
+													<div class="form-check">
+														<input type="radio" name="condicion_empresa" value="I" id="condition" class="form-check-input" required>
+														<small class="form-check-label">Interno</small>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
-
-									<div class="form-group">
-										<label>Producto</label>
-										<select name="id_producto" id="producto" class="form-control">
-											<option value="">Seleccione una opción</option>
-											<?php while ($a = $producto->fetch_assoc()) { ?>
-												<option value="<?php echo $a["ID"] ?>"><?php echo $a["producto_Nombre"] ?></option>
-											<?php } ?>
-										</select>
-									</div>
-
-									<div class="form-group">
-										<label>Cantidad</label>
-										<input type="number" step="1" min="1" name="cantidad" id="cantidad" class="form-control" required>
+									<div class="row">
+										<div class="col-12">
+											<div class="form-group">
+												<label>Cantidad</label>
+												<input type="number" step="1" min="1" name="cantidad" id="cantidad" class="form-control" required>
+											</div>
+										</div>
 									</div>
 								</div>
 								<div class="modal-footer">
@@ -190,6 +220,13 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 							data: "empresa_Nombre"
 						},
 						{
+							data:"condicion_empresa",
+							render(data){
+								if(data == "E") return "Externa";
+								else return "Interna";
+							}
+						},
+						{
 							data: "producto_Nombre"
 						},
 						{
@@ -197,11 +234,11 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 						},
 						{
 							data: "status_proceso",
-							render(data){
-								if(data == 'R') return "En Revisión";
-								if(data == 'D') return "Devuelto";
-								if(data == 'A') return "Aprobado";
-								if(data == 'S') return "En el Silo";
+							render(data) {
+								if (data == 'R') return "En Revisión";
+								if (data == 'D') return "Devuelto";
+								if (data == 'A') return "Aprobado";
+								if (data == 'S') return "En el Silo";
 							}
 						},
 						{
@@ -214,8 +251,8 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 									<a href="#deleteEmployeeModal" class="delete" id="delete" data-toggle="modal" onclick="Eliminar('${row.ID}')">
 										<i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
 									</a>`;
-								
-								if(row.status_proceso == "D") return btn;
+
+								if (row.status_proceso == "D") return btn;
 								return null;
 							}
 						}

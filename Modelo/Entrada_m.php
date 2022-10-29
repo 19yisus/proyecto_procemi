@@ -4,7 +4,7 @@ require("Conexion.php");
 class Entrada_m extends bd
 {
   //Variables privadas que solo pueden ser accedidas desde la clase donde se crean
-  private $id, $id_vehiculo, $id_personal, $id_empresa, $id_producto, $cantidad, $estatus, $fecha;
+  private $id, $id_vehiculo, $id_personal, $id_empresa, $id_producto, $cantidad, $estatus, $fecha, $condicion_empresa;
   private $dano, $muestra, $humedad, $impureza, $pesoLab, $pesoFinal, $total;
   //Funcion constructora, se ejecuta automaticamente al instanciar la clase 
   //Este se hace para dejar las variables con un string vacio
@@ -17,6 +17,7 @@ class Entrada_m extends bd
       $this->id_producto =
       $this->cantidad =
       $this->estatus =
+      $this->condicion_empresa =
       $this->fecha = "";
     $this->dano = "";
     $this->muestra = "";
@@ -34,6 +35,7 @@ class Entrada_m extends bd
     $this->id_vehiculo = isset($d['id_vehiculo']) ? $d['id_vehiculo'] : null;
     $this->id_personal = isset($d['id_personal']) ? $d['id_personal'] : null;
     $this->id_empresa = isset($d['id_empresa']) ? $d['id_empresa'] : null;
+    $this->condicion_empresa = isset($d['condicion_empresa']) ? $d['condicion_empresa'] : null;
     $this->id_producto = isset($d['id_producto']) ? $d['id_producto'] : null;
     $this->estatus = isset($d['estatus']) ? $d['estatus'] : null;
     $this->fecha = date('m-d-Y');
@@ -54,11 +56,11 @@ class Entrada_m extends bd
     try {
       $sql1 = "INSERT INTO movimiento(
           ID_Vehiculo, ID_Personal,
-          ID_Producto, ID_Empresa,
+          ID_Producto, ID_Empresa,condicion_empresa,
           
           m_Silo, m_Estatus,status_proceso,m_Fecha) 
           VALUES (
-          '$this->id_vehiculo','$this->id_personal','$this->id_empresa','$this->id_producto',
+          '$this->id_vehiculo','$this->id_personal','$this->id_producto','$this->id_empresa','$this->condicion_empresa',
           'N',1,'R',NOW()
           )";
 
@@ -67,6 +69,7 @@ class Entrada_m extends bd
 
       if (!$result) {
         $this->rollback();
+        die($sql1);
         return false;
       }
 

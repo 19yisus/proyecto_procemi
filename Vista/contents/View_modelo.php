@@ -11,7 +11,7 @@ $marca = $a->Consultar_Todos();
 <?php $this->Component("header"); ?>
 
 <body>
-<?php $this->Component("menu"); ?>
+	<?php $this->Component("menu"); ?>
 	<!------------>
 	<!-----Contenido----------->
 	<div id="content">
@@ -74,7 +74,8 @@ $marca = $a->Consultar_Todos();
 
 									<div class="form-group">
 										<label>Marca</label>
-										<select name="Marca" id="marca" class="form-control">
+										<select name="Marca" id="marca" class="form-control" required>
+											<option value="">Seleccione una opción</option>
 											<?php foreach ($marca as $a) { ?>
 												<option name="Marca" id="marca" value="<?php echo $a["ID"] ?>"><?php echo $a["marca_Nombre"] ?></option>
 											<?php } ?>

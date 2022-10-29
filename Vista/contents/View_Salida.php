@@ -65,7 +65,7 @@
 									<div class="form-group">
 										<input type="hidden" name="Cantidad" id="cantidad">
 										<label>Silos</label>
-										<select name="Silo" class="form-control">
+										<select name="Silo" class="form-control" required>
 											<option value="1">Silo 1</option>
 											<option value="2">Silo 2</option>
 											<option value="3">Silo 3</option>

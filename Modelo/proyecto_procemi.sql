@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 29-10-2022 a las 15:16:35
+-- Tiempo de generación: 29-10-2022 a las 21:05:27
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 7.4.22
 
@@ -104,6 +104,7 @@ CREATE TABLE `movimiento` (
   `ID_Personal` int(11) NOT NULL,
   `ID_Producto` int(11) NOT NULL,
   `ID_Empresa` int(11) NOT NULL,
+  `condicion_empresa` enum('I','E') COLLATE utf8_spanish_ci NOT NULL,
   `m_Silo` char(1) COLLATE utf8_spanish_ci NOT NULL,
   `m_Estatus` tinyint(1) NOT NULL,
   `status_proceso` enum('R','A','S','D') COLLATE utf8_spanish_ci NOT NULL,
