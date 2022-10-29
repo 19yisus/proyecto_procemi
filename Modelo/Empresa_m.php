@@ -4,7 +4,7 @@ require("Conexion.php");
 class Empresa_m extends bd
 {
   //Variables privadas que solo pueden ser accedidas desde la clase donde se crean
-  private $id, $encargado, $rif, $nombre, $ubicacion, $fecha, $empresa_condition;
+  private $id, $encargado, $rif, $nombre, $ubicacion, $fecha;
   //Funcion constructora, se ejecuta automaticamente al instanciar la clase 
   //Este se hace para dejar las variables con un string vacio
   public function __construct()
@@ -19,16 +19,15 @@ class Empresa_m extends bd
     $this->encargado = isset($encargado) ? $encargado : null;
     $this->rif = isset($rif) ? $rif : null;
     $this->nombre = isset($nombre) ? $nombre : null;
-    $this->ubicacion = isset($ubicacion) ? $ubicacion : null;
-    $this->empresa_condition = isset($condition) ? $condition : null;
+    $this->ubicacion = isset($ubicacion) ? $ubicacion : null; 
     $this->fecha = date('m-d-Y');
   }
   //Se hace las operaciones y se retorna un booleano, aqui podemos aplicar mas validaciones para mayor seguridad
   //Por ejemplo validar que la operacion se realizo, y validar si hubo algun tipo de error
   public function Registrar()
   {
-    $result = $this->ejecutar("INSERT INTO empresa(empresa_Rif,empresa_Encargado,empresa_Nombre,empresa_Ubicacion,empresa_condition,empresa_Estatus,empresa_Fecha) 
-      VALUES ('$this->rif','$this->encargado','$this->nombre','$this->ubicacion','$this->empresa_condition',true,NOW())");
+    $result = $this->ejecutar("INSERT INTO empresa(empresa_Rif,empresa_Encargado,empresa_Nombre,empresa_Ubicacion,empresa_Estatus,empresa_Fecha) 
+      VALUES ('$this->rif','$this->encargado','$this->nombre','$this->ubicacion',true,NOW())");
     return $result;
   }
 

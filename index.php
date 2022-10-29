@@ -1,18 +1,31 @@
 <?php
   class App{
     public $mensaje, $http;
+    private $vistas_publicas = ['View_Login-romanero','View_Login-laboratorio'];
     public function __construct()
     {
+      session_start();
       $this->Vista($this->Route()[0]);
     }
 
     private function Vista($file)
     {
-      $path = "./Vista/contents/$file.php";
       if(strpos($file,"View_") !== false){
-        if(file_exists($path)) require_once $path; else header("Location: ./View_index");;
+        $path = "./Vista/contents/$file.php";
+        if(!file_exists($path)) header("Location: ./View_index");;
+
+        if(isset($_SESSION['rol_id'])){
+          if(strpos($file,"View_Login-") !== false){
+            header("Location: ./View_index");
+          }else require_once $path;
+        }
+
+        if(!isset($_SESSION['rol_id'])){
+          if(strpos($file,"View_Login-") !== false){
+            require_once $path;
+          }else header("Location: ./View_Login-laboratorio");
+        }        
       } 
-      
     }
 
     private function Route()

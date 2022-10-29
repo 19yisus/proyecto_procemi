@@ -41,7 +41,6 @@
 								<th>Rif</th>
 								<th>Nombre</th>
 								<th>Ubicación</th>
-								<th>Condición</th>
 								<th>Opciones</th>
 							</thead>
 							<tbody>
@@ -87,19 +86,6 @@
 										<label>Dirección</label>
 
 										<input type="text" name="Ubicacion" id="ubicacion" class="form-control" required>
-									</div>
-									<div class="d-flex flex-column form-group">
-										<label for="">Condición del vehiculo</label>
-										<div class="d-flex flex-row justify-content-around">
-											<div class="form-check ml-2 mr-2">
-												<input type="radio" name="empresa_condition" value="E" id="condition" class="form-check-input">
-												<small class="form-check-label">Externa</small>
-											</div>
-											<div class="form-check">
-												<input type="radio" name="empresa_condition" value="I" id="condition" class="form-check-input">
-												<small class="form-check-label">Interna</small>
-											</div>
-										</div>
 									</div>
 								</div>
 								<div class="modal-footer">
@@ -172,12 +158,6 @@
 						},
 						{
 							data: "empresa_Ubicacion"
-						},
-						{
-							data: "empresa_condition",
-							render(data){
-								if(data == "I") return "Interna"; else return "Externa";
-							}
 						},
 						{
 							defaultContent: "",

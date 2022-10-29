@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 28-10-2022 a las 04:16:16
+-- Tiempo de generación: 29-10-2022 a las 15:16:35
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 7.4.22
 
@@ -61,7 +61,6 @@ CREATE TABLE `empresa` (
   `empresa_Encargado` varchar(60) COLLATE utf8_spanish_ci DEFAULT NULL,
   `empresa_Nombre` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
   `empresa_Ubicacion` varchar(250) COLLATE utf8_spanish_ci NOT NULL,
-  `empresa_condition` enum('I','E') COLLATE utf8_spanish_ci NOT NULL,
   `empresa_Estatus` tinyint(1) NOT NULL,
   `empresa_Fecha` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -167,6 +166,29 @@ CREATE TABLE `producto` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `id_usuario` int(11) NOT NULL,
+  `cedula_user` char(8) COLLATE utf8_spanish_ci NOT NULL,
+  `clave_user` varchar(120) COLLATE utf8_spanish_ci NOT NULL,
+  `name_user` varchar(40) COLLATE utf8_spanish_ci NOT NULL,
+  `rol_user` enum('R','A','L') COLLATE utf8_spanish_ci NOT NULL,
+  `estatus_user` tinyint(1) NOT NULL,
+  `fecha_user` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id_usuario`, `cedula_user`, `clave_user`, `name_user`, `rol_user`, `estatus_user`, `fecha_user`) VALUES
+(1, '12345678', '$2y$12$SQRNIjhWMZKYnzWvcT46g.RBrRrWsLFe1OV4vyqNodNovfQaNZWSe', 'DEFAULT', 'A', 1, '2022-10-29');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `vehiculo`
 --
 
@@ -255,6 +277,13 @@ ALTER TABLE `producto`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indices de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id_usuario`),
+  ADD UNIQUE KEY `cedula_user` (`cedula_user`);
+
+--
 -- Indices de la tabla `vehiculo`
 --
 ALTER TABLE `vehiculo`
@@ -314,6 +343,12 @@ ALTER TABLE `personal`
 --
 ALTER TABLE `producto`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `vehiculo`

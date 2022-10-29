@@ -32,7 +32,10 @@
 						</div>
 						<br>
 						<div class="container d-flex justify-content-center">
-							<img src="<?php $this->Assets('img/logo.jpg'); ?>" width="300" class="img-fluid" />
+							<?php 
+								var_dump($_SESSION);
+							?>
+							<!-- <img src="<?php //$this->Assets('img/logo.jpg'); ?>" width="300" class="img-fluid" /> -->
 							<!-- <div class="products-container">
 								<div class="product" data-name="p-1">
 									<img src="images/1.png" alt="">

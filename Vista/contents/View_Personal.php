@@ -73,67 +73,80 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 									</button>
 								</div>
 								<div class="modal-body">
-
-									<div class="form-group">
-										<label>Cédula</label>
-										<div class="input-group">
-											<div class="pretend">
-												<select name="Nacionalidad" id="Nacionalidad" class="form-control">
-													<option value="V">V</option>
-													<option value="E">E</option>
+									<div class="row">
+										<div class="col-6">
+											<div class="form-group">
+												<label>Cédula</label>
+												<div class="input-group">
+													<div class="pretend">
+														<select name="Nacionalidad" id="Nacionalidad" class="form-control">
+															<option value="V">V</option>
+															<option value="E">E</option>
+														</select>
+													</div>
+													<input type="text" pattern="[0-9]{7,8}" maxlength="8" minlength="7" name="Cedula" id="cedula" class="form-control" required>
+												</div>
+											</div>
+										</div>
+										<div class="col-6">
+											<div class="form-group">
+												<label>Nombre</label>
+												<input type="text" maxlength="60" minlength="3" name="Nombre" id="nombre" class="form-control" required>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-6">
+											<div class="form-group">
+												<label>Apellido</label>
+												<input type="text" maxlength="60" minlength="3" name="Apellido" id="apellido" class="form-control" required>
+											</div>
+										</div>
+										<div class="col-6">
+											<div class="form-group">
+												<label>Télefono</label>
+												<input type="tel" pattern="[0-9]{11}" title="Solo se aceptan numeros" maxlength="11" minlength="11" name="Telefono" id="telefono" class="form-control" required>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-6">
+											<div class="form-group">
+												<label>Correo</label>
+												<input type="email" maxlength="120" minlength="20" name="Correo" id="correo" class="form-control" required>
+											</div>
+										</div>
+										<div class="col-6">
+											<div class="form-group">
+												<label>Dirección</label>
+												<input type="text" name="Direccion" id="direccion" class="form-control" required>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-6">
+											<div class="form-group">
+												<label>Empresa</label>
+												<select name="Empresa" class="form-control" required>
+													<option value="">Seleccione una opción</option>
+													<?php while ($a = $empresa->fetch_assoc()) { ?>
+														<option name="Empresa" id="empresa" value="<?php echo $a["ID"] ?>"><?php echo $a["empresa_Nombre"] ?></option>
+													<?php } ?>
 												</select>
 											</div>
-											<input type="text" pattern="[0-9]{7,8}" maxlength="8" minlength="7" name="Cedula" id="cedula" class="form-control" required>
 										</div>
-
-										
+										<div class="col-6">
+											<div class="form-group">
+												<label>Cargo</label>
+												<select name="Cargo" class="form-control" required>
+													<option value="">Seleccione una opción</option>
+													<?php while ($a = $cargo->fetch_assoc()) { ?>
+														<option name="Cargo" id="cargo" value="<?php echo $a["ID"] ?>"><?php echo $a["cargo_Nombre"] ?></option>
+													<?php } ?>
+												</select>
+											</div>
+										</div>
 									</div>
-									<div class="form-group">
-										<label>Nombre</label>
-
-										<input type="text" maxlength="60" minlength="3" name="Nombre" id="nombre" class="form-control" required>
-									</div>
-									<div class="form-group">
-										<label>Apellido</label>
-
-										<input type="text" maxlength="60" minlength="3" name="Apellido" id="apellido" class="form-control" required>
-									</div>
-
-									<div class="form-group">
-										<label>Télefono</label>
-
-										<input type="tel" pattern="[0-9]{11}" title="Solo se aceptan numeros" maxlength="11" minlength="11" name="Telefono" id="telefono" class="form-control" required>
-									</div>
-									<div class="form-group">
-										<label>Correo</label>
-
-										<input type="email" maxlength="120" minlength="20" name="Correo" id="correo" class="form-control" required>
-									</div>
-									<div class="form-group">
-										<label>Dirección</label>
-										<input type="text" name="Direccion" id="direccion" class="form-control" required>
-									</div>
-
-
-									<div class="form-group">
-										<label>Empresa</label>
-										<select name="Empresa" class="form-control" required>
-											<?php while ($a = $empresa->fetch_assoc()) { ?>
-												<option name="Empresa" id="empresa" value="<?php echo $a["ID"] ?>"><?php echo $a["empresa_Nombre"] ?></option>
-											<?php } ?>
-										</select>
-									</div>
-
-									<div class="form-group">
-										<label>Cargo</label>
-										<select name="Cargo" class="form-control" required>
-											<?php while ($a = $cargo->fetch_assoc()) { ?>
-												<option name="Cargo" id="cargo" value="<?php echo $a["ID"] ?>"><?php echo $a["cargo_Nombre"] ?></option>
-											<?php } ?>
-										</select>
-
-									</div>
-
 								</div>
 								<div class="modal-footer">
 									<input type="hidden" name="operacion" id="operacion" value="Registro">
@@ -197,7 +210,7 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 						// },
 						{
 							data: "personal_Cedula",
-							render(data, type, row){
+							render(data, type, row) {
 								return `${row.personal_Nacionalidad}-${row.personal_Cedula}`;
 							}
 						},
