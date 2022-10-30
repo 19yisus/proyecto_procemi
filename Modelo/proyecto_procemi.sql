@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 29-10-2022 a las 21:05:27
+-- Tiempo de generación: 30-10-2022 a las 21:41:52
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 7.4.22
 
@@ -185,7 +185,9 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id_usuario`, `cedula_user`, `clave_user`, `name_user`, `rol_user`, `estatus_user`, `fecha_user`) VALUES
-(1, '12345678', '$2y$12$SQRNIjhWMZKYnzWvcT46g.RBrRrWsLFe1OV4vyqNodNovfQaNZWSe', 'DEFAULT', 'A', 1, '2022-10-29');
+(1, '12345678', '$2y$12$SQRNIjhWMZKYnzWvcT46g.RBrRrWsLFe1OV4vyqNodNovfQaNZWSe', 'DEFAULT', 'A', 1, '2022-10-29'),
+(2, '22222222', '$2y$12$SQRNIjhWMZKYnzWvcT46g.RBrRrWsLFe1OV4vyqNodNovfQaNZWSe', 'ROMANERO', 'R', 1, '2022-10-30'),
+(3, '33333333', '$2y$12$SQRNIjhWMZKYnzWvcT46g.RBrRrWsLFe1OV4vyqNodNovfQaNZWSe', 'ROMANERO', 'L', 1, '2022-10-30');
 
 -- --------------------------------------------------------
 
@@ -349,7 +351,7 @@ ALTER TABLE `producto`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `vehiculo`

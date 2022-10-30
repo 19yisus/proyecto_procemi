@@ -4,7 +4,7 @@
     <div class="sidebar-header">
       <img src="<?php $this->Assets('img/logo.jpg'); ?>" class="img-fluid" width="150" />
       <h3><span>PROCEMI</span></h3>
-      <h6>Nombre: <?php echo $_SESSION['name']; ?></h6>
+      <h6>Usuario: <?php echo $_SESSION['cedula']; ?></h6>
       <h6>
         Rol:
         <?php
@@ -18,6 +18,7 @@
       <li class="active">
         <a href="View_index" class="dashboard"><i class="material-icons">dashboard</i>Menu </a>
       </li>
+      <?php if($_SESSION['rol_id'] != "L"){?>
       <li class="dropdown">
         <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
           <i class="material-icons">aspect_ratio</i>Registros
@@ -38,17 +39,27 @@
           </li>
         </ul>
       </li>
+      <?php }?>
       <li class="dropdown">
         <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
           <i class="material-icons">apps</i>Movimiento
         </a>
         <ul class="collapse list-unstyled menu" id="homeSubmenu2">
+          <?php if($_SESSION['rol_id'] != "L"){?>
           <li><a href="View_Entrada">Entrada Materia Prima</a></li>
+
+          <?php 
+            }
+            if($_SESSION['rol_id'] == "L"){?>
           <li><a href="View_Laboratorio">Laboratorio</a></li>
+          <?php 
+            }
+            if($_SESSION['rol_id'] != "L"){?>
           <li><a href="View_Salida">Salida</a></li>
+          <?php }?>
         </ul>
       </li>
-
+      <?php if($_SESSION['rol_id'] != "L"){?>
       <li class="dropdown">
         <a href="#homeSubmenu4" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
           <i class="material-icons">aspect_ratio</i>Datos Eliminados
@@ -76,6 +87,7 @@
           <li><a href="reportes_entrada.php">Todod los maestros y ovimientos </a></li>
         </ul>
       </li>
+      <?php }?>
       <li>
         <a href="#" onclick="cerrarSession()">
           <i class="material-icons">logout</i>Cerrar Sesión</a>

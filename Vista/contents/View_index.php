@@ -22,7 +22,6 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="table-wrapper">
-
 						<div class="table-title">
 							<div class="row">
 								<div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
@@ -31,12 +30,32 @@
 							</div>
 						</div>
 						<br>
-						<div class="container d-flex justify-content-center">
-							<?php 
-								var_dump($_SESSION);
-							?>
-							<!-- <img src="<?php //$this->Assets('img/logo.jpg'); ?>" width="300" class="img-fluid" /> -->
-							<!-- <div class="products-container">
+						<table class="table table-striped table-hover" id="tabla">
+							<thead>
+								<th>ID</th>
+								<th>Placa</th>
+								<th>Cédula</th>
+								<th>Empresa</th>
+								<th>Condición de la empresa</th>
+								<th>Producto</th>
+								<th>Cantidad</th>
+								<th>Muestra</th>
+								<th>Daño</th>
+								<th>Humedad</th>
+								<th>Impureza</th>
+								<th>Total</th>
+								<th>Peso Salida</th>
+								<th>Cantidad Producto</th>
+								<th>Silo</th>
+								<th>Estado</th>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+
+						<!-- <img src="<?php //$this->Assets('img/logo.jpg'); 
+														?>" width="300" class="img-fluid" /> -->
+						<!-- <div class="products-container">
 								<div class="product" data-name="p-1">
 									<img src="images/1.png" alt="">
 									<h3>Silo 1</h3>
@@ -65,7 +84,7 @@
 
 							</div> -->
 
-							<!-- <div class="products-preview">
+						<!-- <div class="products-preview">
 
 								<div class="preview" data-target="p-1">
 									<i class="fas fa-times"></i>
@@ -142,17 +161,89 @@
 
 									</div>
 								</div>
-
-
 							</div> -->
-						</div>
 					</div>
-
 				</div>
 			</div>
 		</div>
 	</div>
 	<?php $this->Component("scripts"); ?>
+	<script>
+		$(document).ready(() => {
+			/* Creamos el datatable y por medio de la propiedad ajax, le damos la url a consultar y asignamos la propiedad dataSrc, le damos el valor data (ya que es lo que mando desde el controlador)
+			 asigno las columnas donde van, y agrego los botones con su evento onclick para las operaciones
+			 */
+			$("#tabla").DataTable({
+				"ajax": {
+					"url": "Controlador/Entrada.php?operacion=ConsultarTodos",
+					"dataSrc": "data"
+				},
+				"columns": [{
+						data: "ID"
+					},
+					{
+						data: "vehiculo_Placa"
+					},
+					{
+						data: "personal_Cedula"
+					},
+					{
+						data: "empresa_Nombre"
+					},
+					{
+						data: "condicion_empresa",
+						render(data) {
+							if (data == "E") return "Externa";
+							else return "Interna";
+						}
+					},
+					{
+						data: "producto_Nombre"
+					},
+					{
+						data: "m_Cantidad"
+					},
+					{
+						data: "m_Muestra"
+					},
+					{
+						data: "m_Dano"
+					},
+					{
+						data: "m_Humedad"
+					},
+					{
+						data: "m_Impureza"
+					},
+					{
+						data: "m_PesoLab"
+					},
+
+					{
+						data: "m_pesoFinal"
+					},
+					{
+						data: "m_Total"
+					},
+					{
+						data: "m_Silo"
+					},
+					{
+						data: "status_proceso",
+						render(data) {
+							if (data == 'R') return "En Revisión";
+							if (data == 'D') return "Devuelto";
+							if (data == 'A') return "Aprobado";
+							if (data == 'S') return "En el Silo";
+						}
+					}
+				],
+				language: {
+					url: `Vista/js/DataTable.config.json`
+				}
+			})
+		})
+	</script>
 </body>
 
 </html>

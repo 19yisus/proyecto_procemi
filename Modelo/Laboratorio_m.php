@@ -41,6 +41,7 @@ class Laboratorio_m extends bd
 
       if(!$result){
         $this->rollback();
+        die($sql1);
         return false;
       }
 

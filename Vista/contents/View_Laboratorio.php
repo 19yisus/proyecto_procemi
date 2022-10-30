@@ -59,24 +59,24 @@
 									<input type="hidden" name="Cantidad" id="cantidad">
 									<div class="form-group">
 										<label>Muestra</label>
-										<input type="text" pattern="[0-9]{1,11}" minlength="1" maxlength="11" name="Muestra" id="muestra" class="form-control" required>
+										<input type="text" pattern="[0-9]{1,11}" min="Solo se aceptan numeros" minlength="1" maxlength="11" name="Muestra" id="muestra" class="form-control" required>
 									</div>
 									<div class="form-group">
 										<label>Grano Dañado</label>
-										<input type="text" pattern="[0-9]{1,11}" minlength="1" maxlength="11" name="Dano" id="dano" class="form-control" required>
+										<input type="text" pattern="[0-9]{1,11}" min="Solo se aceptan numeros" minlength="1" maxlength="11" name="Dano" id="dano" class="form-control" required>
 									</div>
 									<div class="form-group">
 										<label>Grano Partido</label>
-										<input type="text" pattern="[0-9]{1,11}" minlength="1" maxlength="11" name="Partido" id="partido" class="form-control" required>
+										<input type="text" pattern="[0-9]{1,11}" min="Solo se aceptan numeros" minlength="1" maxlength="11" name="Partido" id="partido" class="form-control" required>
 									</div>
 									<div class="form-group">
 										<label>Humedad</label>
-										<input type="number" step="00.1" min="00.1" maxlength="3" name="Humedad" id="humedad" class="form-control" required>
+										<input type="number" step="00.1" min="00.1" min="Solo se aceptan numeros" maxlength="3" name="Humedad" id="humedad" class="form-control" required>
 									</div>
 									<div class="form-group">
 										<input type="hidden" name="ID" id="id">
 										<label>Impureza</label>
-										<input type="number" step="00.1" min="00.1" maxlength="3" name="Impureza" id="impureza" class="form-control" required>
+										<input type="number" step="00.1" min="Solo se aceptan numeros" min="00.1" maxlength="3" name="Impureza" id="impureza" class="form-control" required>
 									</div>
 								</div>
 								<div class="modal-footer">

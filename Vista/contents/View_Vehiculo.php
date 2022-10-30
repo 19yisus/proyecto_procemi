@@ -48,10 +48,12 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 							<thead>
 								<th>ID</th>
 								<th>Placa</th>
+								<th>Segunda Placa</th>
 								<th>Marca</th>
 								<th>Modelo</th>
 								<th>Color</th>
 								<th>Peso</th>
+								<th>Segundo Peso</th>
 								<th>Empresa</th>
 								<th>Año</th>
 								<th>Opciones</th>
@@ -300,6 +302,9 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 							data: "vehiculo_Placa"
 						},
 						{
+							data: "segunda_Placa"
+						},
+						{
 							data: "marca_Nombre"
 						},
 						{
@@ -310,6 +315,12 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 						},
 						{
 							data: "vehiculo_Peso",
+							render(data){
+								return data+" KG.";
+							}
+						},
+						{
+							data: "Vehiculo_PesoSecundario",
 							render(data){
 								return data+" KG.";
 							}

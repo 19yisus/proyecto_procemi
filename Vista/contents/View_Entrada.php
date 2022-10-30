@@ -1,7 +1,9 @@
 <?php
 include("Modelo/Conexion.php");
 $a = new bd();
-$vehiculo = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = true");
+$vehiculo = $a->ejecutar("SELECT * FROM vehiculo 
+	INNER JOIN modelo ON modelo.ID = vehiculo.ID_Modelo
+	INNER JOIN marca ON marca.ID = modelo.ID_Marca WHERE vehiculo_Estatus = true")->fetch_all(MYSQLI_ASSOC);
 $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 $producto = $a->ejecutar("SELECT * FROM producto WHERE producto_Estatus = true");
 $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = true");
@@ -93,7 +95,7 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 												<select name="id_empresa" id="empresa" class="form-control" required>
 													<option value="">Seleccione una opción</option>
 													<?php while ($a = $empresa->fetch_assoc()) { ?>
-														<option value="<?php echo $a["ID"] ?>"><?php echo $a["empresa_Nombre"] ?></option>
+														<option value="<?php echo $a["ID"]; ?>"><?php echo $a["empresa_Nombre"]; ?></option>
 													<?php } ?>
 												</select>
 											</div>
@@ -116,9 +118,9 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 												<label>Vehiculo</label>
 												<select name="id_vehiculo" id="Placa" class="form-control" required>
 													<option value="">Seleccione una opción</option>
-													<?php while ($a = $vehiculos->fetch_assoc()) {
+													<?php foreach($vehiculo as $a) {
 													?>
-														<option value="<?php echo $a["ID"]; ?>"><?php echo $a["vehiculo_Placa"]; ?></option>
+														<option value="<?php echo $a["ID"]; ?>"><?php echo $a["vehiculo_Placa"]." - ".$a["modelo_Nombre"]." - ".$a["marca_Nombre"]; ?></option>
 													<?php }
 													?>
 												</select>
@@ -220,9 +222,9 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 							data: "empresa_Nombre"
 						},
 						{
-							data:"condicion_empresa",
-							render(data){
-								if(data == "E") return "Externa";
+							data: "condicion_empresa",
+							render(data) {
+								if (data == "E") return "Externa";
 								else return "Interna";
 							}
 						},

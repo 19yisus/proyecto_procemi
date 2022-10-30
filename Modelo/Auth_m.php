@@ -3,12 +3,12 @@ require("Conexion.php");
 
 class Auth_m extends bd
 {
-  private $id, $cedula_user, $clave_user, $name_user, $rol_user, $estatus_user, $fecha_user, $tipo_user;
+  private $id, $cedula_user, $clave_user, $rol_user, $estatus_user, $fecha_user, $tipo_user;
 
   public function __construct()
   {
     $this->id = $this->cedula_user = $this->clave_user =
-      $this->name_user = $this->rol_user = $this->estatus_user =
+      $this->rol_user = $this->estatus_user =
       $this->fecha_user = $this->tipo_user = "";
   }
 
@@ -17,7 +17,6 @@ class Auth_m extends bd
     $this->id = isset($datos['id']) ? $datos['id'] : null;
     $this->cedula_user = isset($datos['cedula_user']) ? $datos['cedula_user'] : null;
     $this->clave_user = isset($datos['clave']) ? $datos['clave'] : null;
-    $this->name_user = isset($datos['name']) ? $datos['name'] : null;
     $this->rol_user = isset($datos['rol']) ? $datos['rol'] : null;
     $this->estatus_user = isset($datos['estatus']) ? $datos['estatus'] : null;
     // $this->tipo_user = isset($datos['tipo_user']) ? $datos['tipo_user'] : null;
@@ -38,7 +37,6 @@ class Auth_m extends bd
 
     session_start();
     $_SESSION['cedula'] = $result1['cedula_user'];
-    $_SESSION['name'] = $result1['name_user'];
     $_SESSION['rol_id'] = $result1['rol_user'];
 
     return 5;
@@ -47,9 +45,9 @@ class Auth_m extends bd
   public function Registrar()
   {
     $this->clave_user = password_hash($this->clave_user, PASSWORD_BCRYPT, ['cost' => 12]);
-    $sql = "INSERT INTO usuarios(cedula_user, clave_user, name_user, rol_user, estatus_user, fecha_user)
-     VALUES('$this->cedula_user','$this->clave_user','$this->name_user','$this->rol_user',1,NOW())";
-    die($sql);
+    $sql = "INSERT INTO usuarios(cedula_user, clave_user, rol_user, estatus_user, fecha_user)
+     VALUES('$this->cedula_user','$this->clave_user','$this->rol_user',1,NOW())";
+    // die($sql);
     $result = $this->ejecutar($sql);
     return $result;
   }
