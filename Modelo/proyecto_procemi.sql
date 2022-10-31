@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 31-10-2022 a las 05:38:49
+-- Tiempo de generación: 31-10-2022 a las 18:00:07
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 7.4.22
 
@@ -167,6 +167,19 @@ CREATE TABLE `producto` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `user_transaction_cambios`
+--
+
+CREATE TABLE `user_transaction_cambios` (
+  `user_id` int(11) NOT NULL,
+  `tran_id` int(11) NOT NULL,
+  `des_cambio` enum('E','A','S','U','R') COLLATE utf8_spanish_ci DEFAULT NULL,
+  `fecha` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `usuarios`
 --
 
@@ -280,6 +293,13 @@ ALTER TABLE `producto`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indices de la tabla `user_transaction_cambios`
+--
+ALTER TABLE `user_transaction_cambios`
+  ADD KEY `FK_user` (`user_id`),
+  ADD KEY `FK_tran` (`tran_id`);
+
+--
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -390,6 +410,13 @@ ALTER TABLE `movimiento_detalles`
 ALTER TABLE `personal`
   ADD CONSTRAINT `personal_ibfk_1` FOREIGN KEY (`ID_Cargo`) REFERENCES `cargo` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `personal_ibfk_2` FOREIGN KEY (`ID_Empresa`) REFERENCES `empresa` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `user_transaction_cambios`
+--
+ALTER TABLE `user_transaction_cambios`
+  ADD CONSTRAINT `FK_tran` FOREIGN KEY (`tran_id`) REFERENCES `movimiento` (`ID`),
+  ADD CONSTRAINT `FK_user` FOREIGN KEY (`user_id`) REFERENCES `usuarios` (`id_usuario`);
 
 --
 -- Filtros para la tabla `vehiculo`

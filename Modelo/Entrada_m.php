@@ -53,6 +53,7 @@ class Entrada_m extends bd
   //Por ejemplo validar que la operacion se realizo, y validar si hubo algun tipo de error
   public function Registrar()
   {
+    session_start();
     try {
       $sql1 = "INSERT INTO movimiento(
           ID_Vehiculo, ID_Personal,
@@ -72,7 +73,6 @@ class Entrada_m extends bd
         die($sql1);
         return false;
       }
-
       $id_mov = $this->ultimoID();
 
       $sql2 = "INSERT INTO movimiento_detalles(
@@ -83,6 +83,17 @@ class Entrada_m extends bd
           '$id_mov',
           '$this->cantidad',null,null,null,null,null,null,null,null)";
       $result = $this->queryTransaccion($sql2);
+
+      if (!$result) {
+        $this->rollback();
+        return false;
+      }
+
+      $idUsuario = $_SESSION['id_usuario_activo'];
+      $sql3 = "INSERT INTO user_transaction_cambios(user_id, tran_id, des_cambio, fecha)
+        VALUES($idUsuario, $id_mov, 'E',NOW())";
+
+      $result = $this->queryTransaccion($sql3);
 
       if (!$result) {
         $this->rollback();
@@ -118,6 +129,7 @@ class Entrada_m extends bd
 
   public function Actualizar()
   {
+    session_start();
     try {
       $sql1 = "UPDATE movimiento SET 
       ID_Vehiculo = $this->id_vehiculo,
@@ -143,6 +155,17 @@ class Entrada_m extends bd
         $this->rollback();
         var_dump($sql2);
         die("xx");
+        return false;
+      }
+
+      $idUsuario = $_SESSION['id_usuario_activo'];
+      $sql3 = "INSERT INTO user_transaction_cambios(user_id, tran_id, des_cambio, fecha)
+        VALUES($idUsuario, $this->id, 'U',NOW())";
+
+      $result = $this->queryTransaccion($sql3);
+
+      if (!$result) {
+        $this->rollback();
         return false;
       }
 

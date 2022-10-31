@@ -36,6 +36,7 @@ class Auth_m extends bd
     if (!password_verify($this->clave_user, $result1['clave_user'])) return 3;
 
     session_start();
+    $_SESSION['id_usuario_activo'] = $result1['id_usuario'];
     $_SESSION['cedula'] = $result1['cedula_user'];
     $_SESSION['rol_id'] = $result1['rol_user'];
 

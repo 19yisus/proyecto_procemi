@@ -27,9 +27,10 @@ class Laboratorio_m extends bd
   //Por ejemplo validar que la operacion se realizo, y validar si hubo algun tipo de error
   public function Registrar()
   {
+    session_start();
     try {
       $pesolab = ($this->cantidad - $this->impureza) - $this->humedad;
-      
+
       $sql1 = "UPDATE movimiento_detalles SET 
         m_Muestra = $this->muestra,
         m_Dano = $this->dano,
@@ -41,7 +42,7 @@ class Laboratorio_m extends bd
       $con = $this->beginTransaccion();
       $result = $this->queryTransaccion($sql1);
 
-      if(!$result){
+      if (!$result) {
         $this->rollback();
         die($sql1);
         return false;
@@ -51,14 +52,24 @@ class Laboratorio_m extends bd
 
       $result = $this->queryTransaccion($sql2);
 
-      if(!$result){
+      if (!$result) {
+        $this->rollback();
+        return false;
+      }
+
+      $idUsuario = $_SESSION['id_usuario_activo'];
+      $sql3 = "INSERT INTO user_transaction_cambios(user_id, tran_id, des_cambio, fecha)
+        VALUES($idUsuario, $this->id, 'A',NOW())";
+
+      $result = $this->queryTransaccion($sql3);
+
+      if (!$result) {
         $this->rollback();
         return false;
       }
 
       $this->commit();
       return true;
-
     } catch (Exception $e) {
       die($e->getMessage());
     }
@@ -66,9 +77,22 @@ class Laboratorio_m extends bd
     return true;
   }
 
-  public function Rechazo($id){
+  public function Rechazo($id)
+  {
+    session_start();
     $sql = "UPDATE movimiento SET status_proceso = 'D' WHERE ID = $id";
     $result = $this->ejecutar($sql);
+
+    $idUsuario = $_SESSION['id_usuario_activo'];
+    $sql3 = "INSERT INTO user_transaction_cambios(user_id, tran_id, des_cambio, fecha)
+        VALUES($idUsuario, $id, 'R',NOW())";
+
+    $result = $this->ejecutar($sql3);
+
+    if (!$result) {
+      $this->rollback();
+      return false;
+    }
     return $result;
   }
 

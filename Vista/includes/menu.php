@@ -77,8 +77,6 @@
             <li>
           </ul>
         </li>
-
-
         <li class="dropdown">
           <a href="#homeSubmenu3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
             <i class="material-icons">equalizer</i>Reportes de sistema
@@ -87,13 +85,15 @@
             <li><a href="reportes_entrada.php">Todod los maestros y ovimientos </a></li>
           </ul>
         </li>
-      <?php } ?>
+      <?php }
+        if ($_SESSION['rol_id'] == "A") { ?>
       <li>
         <a href="View_usuarios">
           <i class="material-icons">
             settings_accessibility
           </i>Usuarios</a>
       </li>
+      <?php }?>
       <li>
         <a href="#" onclick="cerrarSession()">
           <i class="material-icons">logout</i>Cerrar Sesión</a>

@@ -27,6 +27,7 @@ class Salida_m extends bd
   //Por ejemplo validar que la operacion se realizo, y validar si hubo algun tipo de error
   public function Registrar()
   {
+    session_start();
     try {
       $total_peso = ($this->cantidad - $this->peso);
       $sql1 = "UPDATE movimiento_detalles SET 
@@ -47,6 +48,17 @@ class Salida_m extends bd
         WHERE ID = $this->id";
 
       $result = $this->queryTransaccion($sql2);
+
+      if (!$result) {
+        $this->rollback();
+        return false;
+      }
+
+      $idUsuario = $_SESSION['id_usuario_activo'];
+      $sql3 = "INSERT INTO user_transaction_cambios(user_id, tran_id, des_cambio, fecha)
+        VALUES($idUsuario, $this->id, 'S',NOW())";
+
+      $result = $this->queryTransaccion($sql3);
 
       if (!$result) {
         $this->rollback();
