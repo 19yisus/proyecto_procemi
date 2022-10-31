@@ -3,7 +3,7 @@ include("Modelo/Conexion.php");
 $a = new bd();
 $vehiculo = $a->ejecutar("SELECT * FROM vehiculo 
 	INNER JOIN modelo ON modelo.ID = vehiculo.ID_Modelo
-	INNER JOIN marca ON marca.ID = modelo.ID_Marca WHERE vehiculo_Estatus = true")->fetch_all(MYSQLI_ASSOC);
+	INNER JOIN marca ON marca.ID = modelo.ID_Marca WHERE vehiculo_Estatus = 1");
 $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 $producto = $a->ejecutar("SELECT * FROM producto WHERE producto_Estatus = true");
 $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = true");
@@ -116,11 +116,11 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 										<div class="col-6">
 											<div class="form-group">
 												<label>Vehiculo</label>
-												<select name="id_vehiculo" id="Placa" class="form-control" required>
+												<select onchange="capadidad_vehiculo(this.value)" name="id_vehiculo" id="Placa" class="form-control" required>
 													<option value="">Seleccione una opción</option>
-													<?php foreach($vehiculo as $a) {
+													<?php while($a = $vehiculo->fetch_assoc()) {
 													?>
-														<option value="<?php echo $a["ID"]; ?>"><?php echo $a["vehiculo_Placa"]." - ".$a["modelo_Nombre"]." - ".$a["marca_Nombre"]; ?></option>
+														<option value="<?php echo $a["ID"]; ?>" data-capacidad="<?php echo $a['vehiculo_Peso'];?>" data-2capacidad="<?php echo $a['Vehiculo_PesoSecundario'];?>"  ><?php echo $a["vehiculo_Placa"]." - ".$a["modelo_Nombre"]." - ".$a["marca_Nombre"]; ?></option>
 													<?php }
 													?>
 												</select>
@@ -200,6 +200,16 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 		</footer>
 		<?php $this->Component("scripts"); ?>
 		<script type="text/javascript">
+			
+			const capadidad_vehiculo = (value) => {
+				let select = document.getElementById("Placa");
+				console.group("Capacidad");
+				console.log(select.options[value])
+				console.log(select.options[value].getAttribute("data-capacidad"))
+				console.log(select.options[value].getAttribute("data-2capacidad"))
+				console.groupEnd();
+			}
+
 			$(document).ready(() => {
 				/* Creamos el datatable y por medio de la propiedad ajax, le damos la url a consultar y asignamos la propiedad dataSrc, le damos el valor data (ya que es lo que mando desde el controlador)
 				 asigno las columnas donde van, y agrego los botones con su evento onclick para las operaciones

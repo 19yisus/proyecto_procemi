@@ -47,14 +47,13 @@ class Auth_m extends bd
     $this->clave_user = password_hash($this->clave_user, PASSWORD_BCRYPT, ['cost' => 12]);
     $sql = "INSERT INTO usuarios(cedula_user, clave_user, rol_user, estatus_user, fecha_user)
      VALUES('$this->cedula_user','$this->clave_user','$this->rol_user',1,NOW())";
-    // die($sql);
     $result = $this->ejecutar($sql);
     return $result;
   }
 
   public function Consultar_Todos()
   {
-    $res = $this->ejecutar("SELECT * FROM usuarios WHERE estatus_user = 1;");
+    $res = $this->ejecutar("SELECT id_usuario,cedula_user,rol_user,fecha_user,estatus_user FROM usuarios WHERE estatus_user = 1;");
     if($res) $res = $res->fetch_all(MYSQLI_ASSOC); else $res = [];
     return $res;
   }

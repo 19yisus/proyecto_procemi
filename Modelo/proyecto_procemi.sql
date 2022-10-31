@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 30-10-2022 a las 21:41:52
+-- Tiempo de generación: 31-10-2022 a las 05:38:49
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 7.4.22
 
@@ -174,7 +174,6 @@ CREATE TABLE `usuarios` (
   `id_usuario` int(11) NOT NULL,
   `cedula_user` char(8) COLLATE utf8_spanish_ci NOT NULL,
   `clave_user` varchar(120) COLLATE utf8_spanish_ci NOT NULL,
-  `name_user` varchar(40) COLLATE utf8_spanish_ci NOT NULL,
   `rol_user` enum('R','A','L') COLLATE utf8_spanish_ci NOT NULL,
   `estatus_user` tinyint(1) NOT NULL,
   `fecha_user` date NOT NULL
@@ -184,10 +183,11 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id_usuario`, `cedula_user`, `clave_user`, `name_user`, `rol_user`, `estatus_user`, `fecha_user`) VALUES
-(1, '12345678', '$2y$12$SQRNIjhWMZKYnzWvcT46g.RBrRrWsLFe1OV4vyqNodNovfQaNZWSe', 'DEFAULT', 'A', 1, '2022-10-29'),
-(2, '22222222', '$2y$12$SQRNIjhWMZKYnzWvcT46g.RBrRrWsLFe1OV4vyqNodNovfQaNZWSe', 'ROMANERO', 'R', 1, '2022-10-30'),
-(3, '33333333', '$2y$12$SQRNIjhWMZKYnzWvcT46g.RBrRrWsLFe1OV4vyqNodNovfQaNZWSe', 'ROMANERO', 'L', 1, '2022-10-30');
+INSERT INTO `usuarios` (`id_usuario`, `cedula_user`, `clave_user`, `rol_user`, `estatus_user`, `fecha_user`) VALUES
+(1, '12345678', '$2y$12$SQRNIjhWMZKYnzWvcT46g.RBrRrWsLFe1OV4vyqNodNovfQaNZWSe', 'A', 1, '2022-10-29'),
+(2, '22222222', '$2y$12$SQRNIjhWMZKYnzWvcT46g.RBrRrWsLFe1OV4vyqNodNovfQaNZWSe', 'R', 1, '2022-10-30'),
+(3, '33333333', '$2y$12$SQRNIjhWMZKYnzWvcT46g.RBrRrWsLFe1OV4vyqNodNovfQaNZWSe', 'L', 1, '2022-10-30'),
+(4, '12123123', '$2y$12$VIlw7.Lc4MmkuWbmBfHGc.loEpTWpcxx426AygHQ.OlxATu77i/Ha', 'R', 1, '2022-10-31');
 
 -- --------------------------------------------------------
 
@@ -351,7 +351,7 @@ ALTER TABLE `producto`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `vehiculo`

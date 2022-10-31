@@ -28,13 +28,15 @@ class Laboratorio_m extends bd
   public function Registrar()
   {
     try {
+      $pesolab = ($this->cantidad - $this->impureza) - $this->humedad;
+      
       $sql1 = "UPDATE movimiento_detalles SET 
         m_Muestra = $this->muestra,
         m_Dano = $this->dano,
         m_Partido = $this->partido,
         m_Humedad = $this->humedad,
         m_Impureza = $this->impureza,
-        m_PesoLab = ($this->cantidad - $this->impureza - $this->humedad)
+        m_PesoLab = $pesolab
         WHERE id_detalle = $this->id;";
       $con = $this->beginTransaccion();
       $result = $this->queryTransaccion($sql1);

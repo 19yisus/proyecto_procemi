@@ -33,6 +33,7 @@
 						<table class="table table-striped table-hover" id="tabla">
 							<thead>
 								<th>ID</th>
+								<th>Fecha</th>
 								<th>Placa</th>
 								<th>Cédula</th>
 								<th>Empresa</th>
@@ -182,6 +183,9 @@
 						data: "ID"
 					},
 					{
+						data: "m_Fecha"
+					},
+					{
 						data: "vehiculo_Placa"
 					},
 					{
@@ -201,7 +205,10 @@
 						data: "producto_Nombre"
 					},
 					{
-						data: "m_Cantidad"
+						data: "m_Cantidad",
+						render(data){
+							return data+" KG"
+						}
 					},
 					{
 						data: "m_Muestra"

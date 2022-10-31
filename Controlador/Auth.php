@@ -87,11 +87,11 @@ function logout_user()
 }
 function registrar_user()
 {
-  $vista = returnVista();
   $a = new Auth_m();
   $a->SetDatos($_POST);
   $res = $a->Registrar();
-  header("location: ../$vista?Mensaje=$res");
+  if($res) header("location:../View_usuarios?Mensaje=2");
+  else header("location:../View_usuarios?Mensaje= 1 ");
 }
 
 function actualizar_user()

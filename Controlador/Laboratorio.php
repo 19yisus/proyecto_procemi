@@ -44,11 +44,11 @@ if (isset($_GET["operacion"])) {
 function registrar_laboratorio()
 {
    $impureza = round($_POST["Impureza"], 2);
-   $impureza = $impureza * 100 / $_POST["Muestra"];
+   $impureza = ($impureza * 100) / $_POST["Muestra"];
    $humedad = round($_POST['Humedad'], 2);
    $a = new Laboratorio_m();
    if ($humedad >= 13) {
-      $humedad = 12 - $humedad / 88;
+      $humedad = (12 - $humedad) / 88;
       $humedad = round($humedad, 2);
 
       $a->SetDatos($_POST["ID"], $_POST["Muestra"], $_POST["Dano"], $_POST["Partido"], $humedad, $impureza, $_POST["Cantidad"]);

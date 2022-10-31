@@ -28,9 +28,10 @@ class Salida_m extends bd
   public function Registrar()
   {
     try {
+      $total_peso = ($this->cantidad - $this->peso);
       $sql1 = "UPDATE movimiento_detalles SET 
         m_pesoFinal = $this->peso, 
-        m_Total = $this->cantidad - $this->peso
+        m_Total = $total_peso
         WHERE id_detalle = $this->id";
 
       $con = $this->beginTransaccion();

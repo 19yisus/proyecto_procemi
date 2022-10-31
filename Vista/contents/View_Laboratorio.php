@@ -59,7 +59,7 @@
 									<input type="hidden" name="Cantidad" id="cantidad">
 									<div class="form-group">
 										<label>Muestra</label>
-										<input type="text" pattern="[0-9]{1,11}" min="Solo se aceptan numeros" minlength="1" maxlength="11" name="Muestra" id="muestra" class="form-control" required>
+										<input type="number" step="1" min="1" pattern="[0-9]{1,11}" min="Solo se aceptan numeros" minlength="1" maxlength="11" name="Muestra" id="muestra" class="form-control" required>
 									</div>
 									<div class="form-group">
 										<label>Grano Dañado</label>
@@ -166,6 +166,7 @@
 								$("#id").val(data.ID)
 								$("#cantidad").val(data.m_Cantidad)
 								$("#muestra").val(data.m_Muestra)
+								$("#muestra").attr("max",data.m_Cantidad)
 								$("#dano").val(data.m_Dano)
 								$("#humedad").val(data.m_Humedad)
 								$("#impureza").val(data.m_Impureza)
