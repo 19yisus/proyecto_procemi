@@ -28,9 +28,10 @@ class Auth_m extends bd
     $result1 = $this->ejecutar($sql)->fetch_assoc();
 
     if (!$result1) return 1;
-    if($result1['rol_user'] != "A"){
-      if($result1['rol_user'] != $this->rol_user) echo "FUERA";
-    }
+    
+    // if($result1['rol_user'] != "A"){
+    //   if($result1['rol_user'] != $this->rol_user) echo "FUERA";
+    // }
     
     if ($result1['estatus_user'] == 0) return 2;
     if (!password_verify($this->clave_user, $result1['clave_user'])) return 3;
