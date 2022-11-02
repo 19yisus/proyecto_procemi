@@ -302,7 +302,11 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 							data: "vehiculo_Placa"
 						},
 						{
-							data: "segunda_Placa"
+							data: "segunda_Placa",
+							render(data){
+								if(data == "") return "No tiene";
+								else return data;
+							}
 						},
 						{
 							data: "marca_Nombre"
@@ -322,7 +326,8 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 						{
 							data: "Vehiculo_PesoSecundario",
 							render(data){
-								return data+" KG.";
+								if(data == "") return "No tiene";
+								else return data+" KG.";
 							}
 						},
 						{

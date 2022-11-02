@@ -38,6 +38,7 @@
               <thead>
                 <th>ID</th>
                 <th>Cédula</th>
+                <th>Nombre</th>
                 <th>Rol</th>
                 <th>Estado</th>
                 <th>Fecha</th>
@@ -73,6 +74,15 @@
                       <div class="form-group">
                         <label>Clave</label>
                         <input type="password" minlength="8" name="clave" id="clave" class="form-control" required>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="form-group">
+                        <label>Nombre y Apellido</label>
+                        <input type="text" minlength="2" maxlength="60" name="nombre" id="nombre" class="form-control" required>
                       </div>
                     </div>
                   </div>
@@ -157,6 +167,9 @@
             },
             {
               data: "cedula_user"
+            },
+            {
+              data: "nombre"
             },
             {
               data: "rol_user",

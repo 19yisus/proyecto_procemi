@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 31-10-2022 a las 18:00:07
+-- Tiempo de generación: 02-11-2022 a las 05:06:08
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 7.4.22
 
@@ -103,7 +103,7 @@ CREATE TABLE `movimiento` (
   `ID_Vehiculo` int(11) NOT NULL,
   `ID_Personal` int(11) NOT NULL,
   `ID_Producto` int(11) NOT NULL,
-  `ID_Empresa` int(11) NOT NULL,
+  `ID_Empresa` int(11) DEFAULT NULL,
   `condicion_empresa` enum('I','E') COLLATE utf8_spanish_ci NOT NULL,
   `m_Silo` char(1) COLLATE utf8_spanish_ci NOT NULL,
   `m_Estatus` tinyint(1) NOT NULL,
@@ -187,6 +187,7 @@ CREATE TABLE `usuarios` (
   `id_usuario` int(11) NOT NULL,
   `cedula_user` char(8) COLLATE utf8_spanish_ci NOT NULL,
   `clave_user` varchar(120) COLLATE utf8_spanish_ci NOT NULL,
+  `nombre` varchar(60) COLLATE utf8_spanish_ci DEFAULT NULL,
   `rol_user` enum('R','A','L') COLLATE utf8_spanish_ci NOT NULL,
   `estatus_user` tinyint(1) NOT NULL,
   `fecha_user` date NOT NULL
@@ -196,11 +197,11 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id_usuario`, `cedula_user`, `clave_user`, `rol_user`, `estatus_user`, `fecha_user`) VALUES
-(1, '12345678', '$2y$12$SQRNIjhWMZKYnzWvcT46g.RBrRrWsLFe1OV4vyqNodNovfQaNZWSe', 'A', 1, '2022-10-29'),
-(2, '22222222', '$2y$12$SQRNIjhWMZKYnzWvcT46g.RBrRrWsLFe1OV4vyqNodNovfQaNZWSe', 'R', 1, '2022-10-30'),
-(3, '33333333', '$2y$12$SQRNIjhWMZKYnzWvcT46g.RBrRrWsLFe1OV4vyqNodNovfQaNZWSe', 'L', 1, '2022-10-30'),
-(4, '12123123', '$2y$12$VIlw7.Lc4MmkuWbmBfHGc.loEpTWpcxx426AygHQ.OlxATu77i/Ha', 'R', 1, '2022-10-31');
+INSERT INTO `usuarios` (`id_usuario`, `cedula_user`, `clave_user`, `nombre`, `rol_user`, `estatus_user`, `fecha_user`) VALUES
+(1, '12345678', '$2y$12$SQRNIjhWMZKYnzWvcT46g.RBrRrWsLFe1OV4vyqNodNovfQaNZWSe', 'administrador', 'A', 1, '2022-10-29'),
+(2, '22222222', '$2y$12$SQRNIjhWMZKYnzWvcT46g.RBrRrWsLFe1OV4vyqNodNovfQaNZWSe', 'primer romanero', 'R', 1, '2022-10-30'),
+(3, '33333333', '$2y$12$SQRNIjhWMZKYnzWvcT46g.RBrRrWsLFe1OV4vyqNodNovfQaNZWSe', 'primer laboratorio', 'L', 1, '2022-10-30'),
+(4, '12123123', '$2y$12$VIlw7.Lc4MmkuWbmBfHGc.loEpTWpcxx426AygHQ.OlxATu77i/Ha', 'segundo romanero', 'R', 1, '2022-10-31');
 
 -- --------------------------------------------------------
 

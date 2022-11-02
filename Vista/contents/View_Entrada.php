@@ -1,14 +1,13 @@
 <?php
 include("Modelo/Conexion.php");
 $a = new bd();
-$vehiculo = $a->ejecutar("SELECT * FROM vehiculo 
+$vehiculo = $a->ejecutar("SELECT vehiculo.*,modelo.modelo_Nombre,marca.marca_Nombre FROM vehiculo
 	INNER JOIN modelo ON modelo.ID = vehiculo.ID_Modelo
-	INNER JOIN marca ON marca.ID = modelo.ID_Marca WHERE vehiculo_Estatus = 1");
+	INNER JOIN marca ON marca.ID = modelo.ID_Marca WHERE vehiculo.vehiculo_Estatus = 1;");
 $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 $producto = $a->ejecutar("SELECT * FROM producto WHERE producto_Estatus = true");
 $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = true");
 $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true");
-
 ?>
 
 <!-- Para empezar, optimice las lineas de codigo, y le di identacion al codigo para que se va mas ordenao y legible, como veras varias secciones de la pagina ya no estan.
@@ -78,6 +77,23 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 								</div>
 								<div class="modal-body">
 									<div class="row">
+										<div class="col-12">
+											<div class="d-flex flex-column">
+												<label for="">Condición de la empresa</label>
+												<div class="d-flex flex-row justify-content-around">
+													<div class="form-check ml-2 mr-2">
+														<input type="radio" name="condicion_empresa" value="E" id="condition" class="form-check-input" required>
+														<small class="form-check-label">Externo</small>
+													</div>
+													<div class="form-check">
+														<input type="radio" name="condicion_empresa" value="I" id="condition" class="form-check-input" required>
+														<small class="form-check-label">Interno</small>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
 										<div class="col-6">
 											<div class="form-group">
 												<label>Producto</label>
@@ -118,9 +134,9 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 												<label>Vehiculo</label>
 												<select onchange="capadidad_vehiculo(this.value)" name="id_vehiculo" id="Placa" class="form-control" required>
 													<option value="">Seleccione una opción</option>
-													<?php while($a = $vehiculo->fetch_assoc()) {
+													<?php while ($a = $vehiculo->fetch_assoc()) {
 													?>
-														<option value="<?php echo $a["ID"]; ?>" data-capacidad="<?php echo $a['vehiculo_Peso'];?>" data-2capacidad="<?php echo $a['Vehiculo_PesoSecundario'];?>"  ><?php echo $a["vehiculo_Placa"]." - ".$a["modelo_Nombre"]." - ".$a["marca_Nombre"]; ?></option>
+														<option value="<?php echo $a["ID"]; ?>" data-capacidad="<?php echo $a['vehiculo_Peso']; ?>" data-2capacidad="<?php echo $a['Vehiculo_PesoSecundario']; ?>"><?php echo $a["vehiculo_Placa"] . " - " . $a["modelo_Nombre"] . " - " . $a["marca_Nombre"]; ?></option>
 													<?php }
 													?>
 												</select>
@@ -128,27 +144,16 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-12">
-											<div class="d-flex flex-column">
-												<label for="">Condición de la empresa</label>
-												<div class="d-flex flex-row justify-content-around">
-													<div class="form-check ml-2 mr-2">
-														<input type="radio" name="condicion_empresa" value="E" id="condition" class="form-check-input" required>
-														<small class="form-check-label">Externo</small>
-													</div>
-													<div class="form-check">
-														<input type="radio" name="condicion_empresa" value="I" id="condition" class="form-check-input" required>
-														<small class="form-check-label">Interno</small>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-12">
+										<div class="col-6">
 											<div class="form-group">
 												<label>Cantidad</label>
 												<input type="number" step="1" min="1" name="cantidad" id="cantidad" class="form-control" required>
+											</div>
+										</div>
+										<div class="col-6">
+											<div class="form-group">
+												<label>Segunda carga</label>
+												<input type="number" step="1" min="1" name="segunda_cantidad" id="segunda_cantidad" class="form-control" disabled="disabled" required>
 											</div>
 										</div>
 									</div>
@@ -200,15 +205,23 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 		</footer>
 		<?php $this->Component("scripts"); ?>
 		<script type="text/javascript">
-			
 			const capadidad_vehiculo = (value) => {
-				let select = document.getElementById("Placa");
-				console.group("Capacidad");
-				console.log(select.options[value])
-				console.log(select.options[value].getAttribute("data-capacidad"))
-				console.log(select.options[value].getAttribute("data-2capacidad"))
-				console.groupEnd();
+				let select = document.getElementById("Placa");	
+				$("#cantidad").attr("max",parseInt(select.options[value].getAttribute("data-capacidad")))
+				let capacidad_secundaria = parseInt(select.options[value].getAttribute("data-2capacidad"));
+				if(capacidad_secundaria > 0){
+					$("#segunda_cantidad").removeAttr("disabled");
+					$("#segunda_cantidad").attr("max",capacidad_secundaria);
+				}else $("#segunda_cantidad").attr("disabled",true);
 			}
+			const manipulateDOM = (value) => {
+				if (value == "E") $("#empresa").removeAttr("disabled");
+				else $("#empresa").attr("disabled", true);
+			}
+
+			document.querySelectorAll("#condition").forEach(item => {
+				item.addEventListener("change", (e) => manipulateDOM(e.target.value))
+			})
 
 			$(document).ready(() => {
 				/* Creamos el datatable y por medio de la propiedad ajax, le damos la url a consultar y asignamos la propiedad dataSrc, le damos el valor data (ya que es lo que mando desde el controlador)
@@ -293,7 +306,11 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 						$("#cedula").val(data.ID_Personal)
 						$("#empresa").val(data.ID_Empresa)
 						$("#producto").val(data.ID_Producto)
-						$("#cantidad").val(data.m_Cantidad)
+						// $("#cantidad").val(data.m_Cantidad)
+						$("#condition").val(data.condicion_empresa)
+						manipulateDOM(data.condicion_empresa)
+						capadidad_vehiculo(data.ID_Vehiculo)
+
 					}).catch(error => console.error(error))
 			}
 			/* Bueno, en estas dos funciones solo estamos asignando valores, pero son funciones mas cortas ya que solo realizamos una accion */

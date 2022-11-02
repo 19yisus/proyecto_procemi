@@ -49,6 +49,7 @@
 								<th>Cantidad Producto</th>
 								<th>Silo</th>
 								<th>Estado</th>
+								<th>Opciones</th>
 							</thead>
 							<tbody>
 							</tbody>
@@ -166,10 +167,36 @@
 					</div>
 				</div>
 			</div>
+			<div class="modal fade" tabindex="-1" id="modalConsult" role="dialog">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Consulta</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body" id="modalConsulta">
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<?php $this->Component("scripts"); ?>
 	<script>
+		const consultarModal = async (value) => {
+			await fetch("Controlador/Entrada.php?operacion=ConsultarModal&&id=" + value)
+				.then(response => response.text())
+				.then(result => {
+					console.log(value)
+					$("#modalConsulta").html(result)
+				}).catch(error => console.error(error))
+		}
 		$(document).ready(() => {
 			/* Creamos el datatable y por medio de la propiedad ajax, le damos la url a consultar y asignamos la propiedad dataSrc, le damos el valor data (ya que es lo que mando desde el controlador)
 			 asigno las columnas donde van, y agrego los botones con su evento onclick para las operaciones
@@ -206,8 +233,8 @@
 					},
 					{
 						data: "m_Cantidad",
-						render(data){
-							return data+" KG"
+						render(data) {
+							return data + " KG"
 						}
 					},
 					{
@@ -227,10 +254,16 @@
 					},
 
 					{
-						data: "m_pesoFinal"
+						data: "m_pesoFinal",
+						render(data) {
+							return data + " KG.";
+						}
 					},
 					{
-						data: "m_Total"
+						data: "m_Total",
+						render(data) {
+							return data + " KG.";
+						}
 					},
 					{
 						data: "m_Silo"
@@ -242,6 +275,16 @@
 							if (data == 'D') return "Devuelto";
 							if (data == 'A') return "Aprobado";
 							if (data == 'S') return "En el Silo";
+						}
+					},
+					{
+						defaultContent: "",
+						render(data, type, row) {
+							let btn = `
+									<a href="#modalConsult" class="edit" data-toggle="modal" onclick="consultarModal('${row.ID}')">
+										<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
+									</a>`;
+							return btn;
 						}
 					}
 				],

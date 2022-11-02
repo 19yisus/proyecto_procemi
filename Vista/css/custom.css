@@ -675,7 +675,8 @@ background-color:rgba(0,0,0,0.09);
 	   
 	   /*-------Formulario y ventana emergentes------*/
 	   .modal .modal-dialog{
-		   max-width:600px;
+		   min-width:600px;
+			 min-width:1000px;
 	   }
 	   .modal .modal-header, .modal .modal-body,.modal .modal-footer{
 		   padding:20px 30px;

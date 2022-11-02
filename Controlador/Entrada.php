@@ -42,6 +42,10 @@
             Consultar_E();
          break;   
 
+         case 'ConsultarModal';
+            Consultar_Modal();
+         break;
+
 
          default:
             echo "No es valida la peticion";
@@ -75,8 +79,13 @@
    function consultar_uno(){
       $a = new Entrada_m();
       $datos = $a->Consultar_Uno($_GET["id"]);
-      /* La misma explicacion de arriba */
       echo json_encode(["data" => $datos], false);
+   }
+
+   function Consultar_Modal(){
+      $a = new Entrada_m();
+      $datos = $a->consultModal($_GET["id"]);
+      echo $datos;
    }
 
    function eliminar_entrada(){
