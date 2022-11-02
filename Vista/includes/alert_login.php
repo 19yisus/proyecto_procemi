@@ -27,8 +27,8 @@ if (isset($_GET['Mensaje'])) {
     echo "<script>
               Swal.fire({
                 position: 'top-end',
-                icon: 'success',
-                title: 'Eliminado',
+                icon: 'error',
+                title: 'Contraseña incorrecta',
                 showConfirmButton: false,
                 timer: 1500
               })

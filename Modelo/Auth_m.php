@@ -25,6 +25,9 @@ class Auth_m extends bd
 
   public function Loguear()
   {
+    // DESCOMENTA ESTO SI EL LOGIN NO COOPERA
+    // $this->clave_user = password_hash($this->clave_user, PASSWORD_BCRYPT, ['cost' => 12]);
+    // $this->ejecutar("UPDATE usuarios SET clave_user = '$this->clave_user' WHERE cedula_user = '$this->cedula_user' ");
     $sql = "SELECT * FROM usuarios WHERE cedula_user = '$this->cedula_user' ";
     $result1 = $this->ejecutar($sql)->fetch_assoc();
 
@@ -51,6 +54,7 @@ class Auth_m extends bd
     $sql = "INSERT INTO usuarios(cedula_user, clave_user,nombre, rol_user, estatus_user, fecha_user)
      VALUES('$this->cedula_user','$this->clave_user','$this->nombre','$this->rol_user',1,NOW())";
     $result = $this->ejecutar($sql);
+    if(!$result) die($sql);
     return $result;
   }
 

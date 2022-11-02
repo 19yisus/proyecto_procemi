@@ -72,7 +72,10 @@ function login_user()
   $a->SetDatos($_POST);
   $res = $a->Loguear();
   if ($res !== 5) $vista = returnVista();
-  else $vista = "View_index";
+  else{
+    $vista = "View_index";
+    $res = null;
+  }
   header("location: ../$vista?Mensaje=$res");
 }
 function logout_user()
