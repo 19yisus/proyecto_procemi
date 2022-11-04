@@ -10,7 +10,7 @@ body{
 }
 
 h3{
-    color:  #2faf93;
+    color:  #3950b9;
 }
 
 .container{
@@ -173,11 +173,8 @@ a:hover{
 	margin: 1rem 0;
 	cursor: pointer;
 	transition: .5s;
-
-
-
-
     position: relative;
+	background: #3950b9;
   
 }
 .btn:hover{

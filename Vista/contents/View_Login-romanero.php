@@ -12,7 +12,7 @@
 <body>
   <div class="container">
     <div class="img">
-      <img src="<?php $this->Assets('img/romana.svg'); ?>" />
+      <img src="<?php $this->Assets('img/logo.png'); ?>" />
     </div>
 
     <div class="login-content">

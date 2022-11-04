@@ -61,7 +61,9 @@ iconos, estilos,tipografia
 	   font-weight:400;
 	   line-height:1.5em;
   }
-  
+h2{
+	color: white;
+}
   p{
 	   font-size:15px;
 	   margin:12px 0 0;
@@ -158,7 +160,7 @@ overflow:auto;
   #sidebar::-webkit-scrollbar-thumbs{
 	  width:5px;
 	  border-radius:10px;
-	  background-color:#1cc9a3;
+	  background-color:#3950b9;
 	  display:none;
   }
    #sidebar:hover::-webkit-scrollbar-thumbs{
@@ -182,6 +184,8 @@ overflow:auto;
 	  text-transform:uppercase;
 	  transition:all 0.5s ease;
 	  font-weight:600;
+	  margin-left:30%;
+	  margin-bottom: 2%;
   }
   
    .sidebar-header h3 img{
@@ -194,19 +198,19 @@ overflow:auto;
   }
   
    #sidebar ul li.active> a{
-	   color:#1cc9a3;
+	   color:#3950b9;
 	   background-color:#DBE5FD;
    }
    
    
    #sidebar ul li.active> a i{
-	    color:#1cc9a3;
+	    color:#3950b9;
    }
    
    
    
      #sidebar ul li a:hover{
-		  color:#1cc9a3;
+		  color:#3950b9;
 		  background-color:#DBE5FD;
 	 }
    
@@ -261,7 +265,7 @@ overflow:auto;
 		  z-index:9;
 		  position:relative;
 		  padding:15px 30px;
-		  background-color:#1cc9a3;
+		  background-color:#3950b9;
 	 }
 	 
 	 .xd-topbar{
@@ -327,7 +331,7 @@ overflow:auto;
 	   }
 	   
 	   .navbar{
-		   background-color: #1cc9a3;
+		   background-color: #3950b9;
 		   color:#fff;
 	   }
 	   
@@ -464,7 +468,7 @@ background-color:rgba(0,0,0,0.09);
 	   	   /*--franja del titulo de la tabla----*/ 
 
 	   .table-title{
-		   background:#1cc9a3;
+		   background:#3950b9;
 		   color:#fff;
 		   position:sticky;
 		   top:0;
@@ -717,7 +721,7 @@ background-color:rgba(0,0,0,0.09);
 		  
 		      /*-------franja inferior------*/
 			  footer{
-		       background-color:#1cc9a3;
+		       background-color:#3950b9;
 			   color:#fff;
 			   text-align:center;
 			   padding:10px 30px;

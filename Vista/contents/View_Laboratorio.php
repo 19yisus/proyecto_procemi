@@ -35,7 +35,7 @@
 								<th>Daño</th>
 								<th>Humedad</th>
 								<th>Impureza</th>
-								<th>Total</th>
+								<th>Cantidad restante</th>
 								<th>Opciones</th>
 							</thead>
 							<tbody>
@@ -45,7 +45,7 @@
 					</div>
 				</div>
 				<!----Formulario emergente--------->
-				<form action="Controlador/Laboratorio.php" method="POST" id="formulario">
+				<form action="Controlador/Laboratorio.php" method="POST" id="formulario" autocomplete="off">
 					<div class="modal fade" tabindex="-1" id="addEmployeeModal" role="dialog">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
@@ -57,33 +57,70 @@
 								</div>
 								<div class="modal-body">
 									<input type="hidden" name="Cantidad" id="cantidad">
-									<div class="form-group">
-										<label>Muestra</label>
-										<input type="number" step="1" min="1" pattern="[0-9]{1,11}" min="Solo se aceptan numeros" minlength="1" maxlength="11" name="Muestra" id="muestra" class="form-control" required>
+									<div class="row">
+										<div class="col-12">
+											<div class="form-group" id="div_muestra">
+												<label>Muestra</label>
+												<input type="number" step="1" pattern="[0-9]{1,11}" min="Solo se aceptan numeros" minlength="1" maxlength="11" name="Muestra" id="muestra" class="form-control" required>
+											</div>
+											<div class="form-group" id="div_obser" style="display: none;">
+												<label>Observación</label>
+												<input type="text" minlength="1" maxlength="60" name="observacion" id="observacion" class="form-control" required disabled="disabled">
+											</div>
+										</div>
 									</div>
-									<div class="form-group">
-										<label>Grano Dañado</label>
-										<input type="text" pattern="[0-9]{1,11}" min="Solo se aceptan numeros" minlength="1" maxlength="11" name="Dano" id="dano" class="form-control" required>
+									<div class="row">
+										<div class="col-12">
+											<div class="d-flex flex-column">
+												<label for="">Estatus de la operación</label>
+												<div class="d-flex flex-row justify-content-around">
+													<div class="form-check">
+														<input type="radio" name="estatus_ope" value="A" id="estatus_ope" class="form-check-input" required disabled="disabled">
+														<small class="form-check-label">Aprobada</small>
+													</div>
+													<div class="form-check ml-2 mr-2">
+														<input type="radio" name="estatus_ope" value="D" id="estatus_ope" class="form-check-input" required disabled="disabled">
+														<small class="form-check-label">Rechazada</small>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
-									<div class="form-group">
-										<label>Grano Partido</label>
-										<input type="text" pattern="[0-9]{1,11}" min="Solo se aceptan numeros" minlength="1" maxlength="11" name="Partido" id="partido" class="form-control" required>
+									<div class="row">
+										<div class="col-6">
+											<div class="form-group">
+												<label>Grano Dañado</label>
+												<input type="text" pattern="[0-9]{1,11}" min="Solo se aceptan numeros" minlength="1" maxlength="11" name="Dano" id="dano" class="form-control" required disabled="disabled">
+											</div>
+										</div>
+										<div class="col-6">
+											<div class="form-group">
+												<label>Grano Partido</label>
+												<input type="text" pattern="[0-9]{1,11}" min="Solo se aceptan numeros" minlength="1" maxlength="11" name="Partido" id="partido" class="form-control" required disabled="disabled">
+											</div>
+										</div>
 									</div>
-									<div class="form-group">
-										<label>Humedad</label>
-										<input type="number" step="00.1" min="00.1" min="Solo se aceptan numeros" maxlength="3" name="Humedad" id="humedad" class="form-control" required>
-									</div>
-									<div class="form-group">
-										<input type="hidden" name="ID" id="id">
-										<label>Impureza</label>
-										<input type="number" step="00.1" min="Solo se aceptan numeros" min="00.1" maxlength="3" name="Impureza" id="impureza" class="form-control" required>
+									<div class="row">
+										<div class="col-6">
+											<div class="form-group">
+												<label>Humedad</label>
+												<input type="number" step="00.1" min="00.1" min="Solo se aceptan numeros" maxlength="3" name="Humedad" id="humedad" class="form-control" required disabled="disabled">
+											</div>
+										</div>
+										<div class="col-6">
+											<div class="form-group">
+												<input type="hidden" name="ID" id="id">
+												<label>Impureza</label>
+												<input type="number" step="00.1" min="Solo se aceptan numeros" min="00.1" maxlength="3" name="Impureza" id="impureza" class="form-control" required disabled="disabled">
+											</div>
+										</div>
 									</div>
 								</div>
 								<div class="modal-footer">
 									<input type="hidden" name="operacion" id="operacion" value="Registro">
 									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 									<button type="submit" name="Registro" class="btn btn-success">Enviar</button>
-									<button type="button" onclick="rechazo()" name="Rechazo" class="btn btn-danger">Rechazar</button>
+									<!-- <button type="button" onclick="rechazo()" name="Rechazo" class="btn btn-danger">Rechazar</button> -->
 								</div>
 							</div>
 						</div>
@@ -99,6 +136,38 @@
 				</footer>
 				<?php $this->Component("scripts"); ?>
 				<script type="text/javascript">
+					const manipulateDOM = (value) => {
+						if (value == "D") {
+							$("#operacion").val("Rechazo");
+							$("#muestra").attr("disabled", true);
+							$("#div_muestra").hide(150, () => {
+								$("#div_obser").show(150)
+								$("#observacion").removeAttr("disabled");
+
+								$("#muestra").attr("disabled", true);
+								$("#peso").attr("disabled", true);
+								$("#humedad").attr("disabled", true);
+								$("#impureza").attr("disabled", true);
+								$("#dano").attr("disabled", true);
+								$("#partido").attr("disabled", true);
+							});
+						} else {
+							$("#operacion").val("Registro");
+							$("#observacion").attr("disabled", true);
+							$("#div_obser").hide(150, () => {
+								$("#div_muestra").show(150)
+								$("#muestra").removeAttr("disabled");
+								$("#peso").removeAttr("disabled");
+								$("#humedad").removeAttr("disabled");
+								$("#impureza").removeAttr("disabled");
+								$("#dano").removeAttr("disabled");
+								$("#partido").removeAttr("disabled");
+							});
+						}
+					}
+					document.querySelectorAll("#estatus_ope").forEach(item => {
+						item.addEventListener("change", (e) => manipulateDOM(e.target.value))
+					})
 					$(document).ready(() => {
 						/* Creamos el datatable y por medio de la propiedad ajax, le damos la url a consultar y asignamos la propiedad dataSrc, le damos el valor data (ya que es lo que mando desde el controlador)
 						 asigno las columnas donde van, y agrego los botones con su evento onclick para las operaciones
@@ -162,14 +231,22 @@
 							.then(({
 								data
 							}) => {
-								console.log(data);
+								console.log(data.m_Muestra);
 								$("#id").val(data.ID)
 								$("#cantidad").val(data.m_Cantidad)
 								$("#muestra").val(data.m_Muestra)
-								$("#muestra").attr("max",data.m_Cantidad)
-								$("#dano").val(data.m_Dano)
-								$("#humedad").val(data.m_Humedad)
-								$("#impureza").val(data.m_Impureza)
+
+								if (data.m_Muestra != null) {
+									document.querySelectorAll("#estatus_ope").forEach(item => {
+										$(item).removeAttr("disabled");
+									})
+
+									$("#muestra").attr("max", data.m_Cantidad)
+									$("#dano").val(data.m_Dano)
+									$("#humedad").val(data.m_Humedad)
+									$("#impureza").val(data.m_Impureza)
+								}
+
 							}).catch(error => console.error(error))
 					}
 					/* 
@@ -181,7 +258,7 @@
 					
 					/* Bueno, en estas dos funciones solo estamos asignando valores, pero son funciones mas cortas ya que solo realizamos una accion */
 					const Registro = (id) => $(".ID").val(id);
-					const rechazo = () =>{
+					const rechazo = () => {
 						$("#cantidad").removeAttr("required");
 						$("#muestra").removeAttr("required");
 						$("#dano").removeAttr("required");

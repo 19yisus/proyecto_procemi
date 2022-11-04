@@ -18,15 +18,11 @@
 						<div class="table-title">
 							<div class="row">
 								<div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
-									<h2 class="ml-lg-2">Cargo de empleo</h2>
+									<h2 class="ml-lg-2">Cargos de los empleados</h2>
 								</div>
 								<div class="col-sm-6 p-0 flex justify-content-lg-end justify-content-center">
 									<a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal" onclick="crear_cargo()">
 										<i class="material-icons">&#xE147;</i>
-										<span></span>
-									</a>
-									<a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal">
-										<i class="material-icons">&#xE15C;</i>
 										<span></span>
 									</a>
 								</div>
@@ -58,9 +54,9 @@
 								</div>
 								<div class="modal-body">
 									<div class="form-group">
-										<label>Cargo</label>
+										<label>Nombre del cargo</label>
 										<input type="hidden" name="ID" id="id">
-										<input type="text" name="Nombre" id="nombre" class="form-control" required>
+										<input type="text" name="Nombre" id="nombre" class="form-control" pattern="[A-Za-z ]+" title="Solo puedes ingresar caracteres alfabeticos" minlength="4" maxlength="12" required>
 									</div>
 								</div>
 								<div class="modal-footer">

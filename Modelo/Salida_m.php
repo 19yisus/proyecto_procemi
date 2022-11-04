@@ -85,7 +85,7 @@ class Salida_m extends bd
       INNER JOIN vehiculo ON vehiculo.ID = movimiento.ID_vehiculo
       INNER JOIN personal ON personal.ID = movimiento.ID_personal
       INNER JOIN producto ON producto.ID = movimiento.ID_producto
-      INNER JOIN empresa ON empresa.ID = movimiento.ID_empresa
+      LEFT JOIN empresa ON empresa.ID = movimiento.ID_empresa
       INNER JOIN movimiento_detalles ON movimiento.ID = movimiento_detalles.id_detalle
       WHERE m_PesoLab <> '' AND status_proceso = 'A' ")->fetch_all(MYSQLI_ASSOC);
     return $res;

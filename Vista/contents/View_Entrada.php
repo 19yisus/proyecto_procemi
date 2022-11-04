@@ -31,17 +31,14 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 						<div class="table-title">
 							<div class="row">
 								<div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
-									<h2 class="ml-lg-2">Entrada</h2>
+									<h2 class="ml-lg-2">entradas realizadas</h2>
 								</div>
 								<div class="col-sm-6 p-0 flex justify-content-lg-end justify-content-center">
 									<a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal" onclick="crear_entrada()">
 										<i class="material-icons">&#xE147;</i>
 										<span></span>
 									</a>
-									<a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal">
-										<i class="material-icons">&#xE15C;</i>
-										<span></span>
-									</a>
+									
 								</div>
 							</div>
 						</div>
@@ -54,7 +51,7 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 								<th>Empresa</th>
 								<th>Condición de la empresa</th>
 								<th>Producto</th>
-								<th>Cantidad</th>
+								<th>Peso bruto</th>
 								<th>Estado</th>
 								<th>Opciones</th>
 							</thead>
@@ -70,12 +67,41 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title">Personal</h5>
+									<h5 class="modal-title">Entrada</h5>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
 								</div>
 								<div class="modal-body">
+
+								<div class="row">
+										<div class="col-6">
+											<div class="form-group">
+												<label>Producto</label>
+												<select name="id_producto" id="producto" class="form-control" required>
+													<option value="">Seleccione una opción</option>
+													<?php while ($a = $producto->fetch_assoc()) { ?>
+														<option value="<?php echo $a["ID"] ?>"><?php echo $a["producto_Nombre"] ?></option>
+													<?php } ?>
+												</select>
+											</div>
+										</div>
+										<div class="col-6">
+											<div class="form-group">
+												<label>Vehiculo</label>
+												<select onchange="capadidad_vehiculo(this.value)" name="id_vehiculo" id="Placa" class="form-control" required>
+													<option value="">Seleccione una opción</option>
+													<?php while ($a = $vehiculo->fetch_assoc()) {
+													?>
+														<option value="<?php echo $a["ID"]; ?>" data-capacidad="<?php echo $a['vehiculo_Peso']; ?>" data-2capacidad="<?php echo $a['Vehiculo_PesoSecundario']; ?>"><?php echo $a["vehiculo_Placa"] . " - " . $a["modelo_Nombre"] . " - " . $a["marca_Nombre"]; ?></option>
+													<?php }
+													?>
+												</select>
+											</div>
+										</div>
+										</div>
+
+
 									<div class="row">
 										<div class="col-12">
 											<div class="d-flex flex-column">
@@ -94,17 +120,6 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-6">
-											<div class="form-group">
-												<label>Producto</label>
-												<select name="id_producto" id="producto" class="form-control" required>
-													<option value="">Seleccione una opción</option>
-													<?php while ($a = $producto->fetch_assoc()) { ?>
-														<option value="<?php echo $a["ID"] ?>"><?php echo $a["producto_Nombre"] ?></option>
-													<?php } ?>
-												</select>
-											</div>
-										</div>
 										<div class="col-6">
 											<div class="form-group">
 												<label>Empresa</label>
@@ -129,31 +144,19 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 												</select>
 											</div>
 										</div>
-										<div class="col-6">
-											<div class="form-group">
-												<label>Vehiculo</label>
-												<select onchange="capadidad_vehiculo(this.value)" name="id_vehiculo" id="Placa" class="form-control" required>
-													<option value="">Seleccione una opción</option>
-													<?php while ($a = $vehiculo->fetch_assoc()) {
-													?>
-														<option value="<?php echo $a["ID"]; ?>" data-capacidad="<?php echo $a['vehiculo_Peso']; ?>" data-2capacidad="<?php echo $a['Vehiculo_PesoSecundario']; ?>"><?php echo $a["vehiculo_Placa"] . " - " . $a["modelo_Nombre"] . " - " . $a["marca_Nombre"]; ?></option>
-													<?php }
-													?>
-												</select>
-											</div>
-										</div>
+										
 									</div>
 									<div class="row">
 										<div class="col-6">
 											<div class="form-group">
-												<label>Cantidad</label>
-												<input type="number" step="1" min="1" name="cantidad" id="cantidad" class="form-control" required>
+												<label>Peso bruto</label>
+												<input type="text" step="1" min="1" name="cantidad" id="cantidad" class="form-control" pattern="[0-9]{1,6}" required>
 											</div>
 										</div>
 										<div class="col-6">
 											<div class="form-group">
 												<label>Segunda carga</label>
-												<input type="number" step="1" min="1" name="segunda_cantidad" id="segunda_cantidad" class="form-control" disabled="disabled" required>
+												<input type="text" step="1" min="1" name="segunda_cantidad" id="segunda_cantidad" class="form-control" pattern="[0-9]{1,6}" disabled="disabled" required>
 											</div>
 										</div>
 									</div>
@@ -242,7 +245,10 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 							data: "personal_Cedula"
 						},
 						{
-							data: "empresa_Nombre"
+							data: "empresa_Nombre",
+							render(data){
+								if(data) return data; else return "Procemi";
+							}
 						},
 						{
 							data: "condicion_empresa",
@@ -370,6 +376,8 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 			// 	}
 			// })
 		</script>
+
+		
 </body>
 
 </html>

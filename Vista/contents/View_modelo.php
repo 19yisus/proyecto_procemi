@@ -59,7 +59,7 @@ $marca = $a->Consultar_Todos();
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title">Modelo</h5>
+									<h5 class="modal-title">Modelo del vehiculo</h5>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
@@ -68,7 +68,7 @@ $marca = $a->Consultar_Todos();
 									<div class="form-group">
 										<label>Modelo</label>
 										<input type="hidden" name="ID" id="id">
-										<input type="text" name="Nombre" id="nombre" class="form-control" required>
+										<input type="text" name="Nombre" id="nombre" class="form-control" pattern="[A-Za-z0-9 ]+" title="Solo puedes ingresar caracteres alfanumericos" minlength="3" maxlength="15" required>
 									</div>
 
 

@@ -1,4 +1,8 @@
 <?php
+
+    // DESCOMENTA ESTO SI EL LOGIN NO COOPERA
+    // $this->clave_user = password_hash($this->clave_user, PASSWORD_BCRYPT, ['cost' => 12]);
+    // $this->ejecutar("UPDATE usuarios SET clave_user = '$this->clave_user' WHERE cedula_user = '$this->cedula_user' ");
 require("Conexion.php");
 
 class Auth_m extends bd
@@ -21,13 +25,11 @@ class Auth_m extends bd
     $this->rol_user = isset($datos['rol']) ? $datos['rol'] : null;
     $this->estatus_user = isset($datos['estatus']) ? $datos['estatus'] : null;
     // $this->tipo_user = isset($datos['tipo_user']) ? $datos['tipo_user'] : null;
+
   }
 
   public function Loguear()
   {
-    // DESCOMENTA ESTO SI EL LOGIN NO COOPERA
-    // $this->clave_user = password_hash($this->clave_user, PASSWORD_BCRYPT, ['cost' => 12]);
-    // $this->ejecutar("UPDATE usuarios SET clave_user = '$this->clave_user' WHERE cedula_user = '$this->cedula_user' ");
     $sql = "SELECT * FROM usuarios WHERE cedula_user = '$this->cedula_user' ";
     $result1 = $this->ejecutar($sql)->fetch_assoc();
 
@@ -38,7 +40,20 @@ class Auth_m extends bd
     // }
     
     if ($result1['estatus_user'] == 0) return 2;
-    if (!password_verify($this->clave_user, $result1['clave_user'])) return 3;
+    if (!password_verify($this->clave_user, $result1['clave_user'])){
+      $result = $this->ejecutar("SELECT intentos_user FROM usuarios WHERE rol_user != 'A' AND cedula_user = '$this->cedula_user';")->fetch_assoc();
+      $num = $result['intentos_user'];
+      if($num){
+        if($num == 2){
+          $this->ejecutar("UPDATE usuarios SET estatus_user = 0 WHERE cedula_user = '$this->cedula_user';");
+          return 4;
+        }
+      }
+
+      $num =+ 1;
+      $this->ejecutar("UPDATE usuarios SET intentos_user = $num WHERE cedula_user = '$this->cedula_user';");
+      return 3;
+    }
 
     session_start();
     $_SESSION['id_usuario_activo'] = $result1['id_usuario'];

@@ -51,8 +51,8 @@ if ($res['status_proceso'] == "R") $estatus_proceso = "En Revisión";
         <td><?php echo $res['m_Muestra']; ?></td>
         <td><?php echo $res['m_Impureza']; ?></td>
         <td><?php echo $res['m_Humedad']; ?></td>
-        <td><?php echo $res['m_PesoLab']; ?></td>
-        <td><?php echo $res['m_pesoFinal']; ?></td>
+        <td><?php echo $res['m_PesoLab'] . " KG."; ?></td>
+        <td><?php echo ($res['m_pesoFinal']) ? $res['m_pesoFinal'] . " KG." : ""; ?></td>
         <td><?php echo $res['m_Total']; ?></td>
       </tr>
     </tbody>
@@ -67,7 +67,6 @@ if ($res['status_proceso'] == "R") $estatus_proceso = "En Revisión";
         <th scope="col">Cargo</th>
         <th scope="col">Telefono</th>
         <th scope="col">Correo</th>
-        <th scope="col">Humedad</th>
         <th scope="col">Dirección</th>
       </tr>
     </thead>
@@ -102,7 +101,7 @@ if ($res['status_proceso'] == "R") $estatus_proceso = "En Revisión";
     <tbody>
       <tr>
         <th scope="row"><?php echo $res['vehiculo_Placa']; ?></th>
-        <td><?php echo $res['segunda_Placa']; ?></td>
+        <td><?php echo ($res['segunda_Placa']) ? $res['segunda_Placa'] : "No tiene"; ?></td>
         <td><?php echo $res['vehiculo_Peso'] . "KG"; ?></td>
         <td><?php echo $res['Vehiculo_PesoSecundario'] . "KG"; ?></td>
         <?php if ($res['condicion'] == "P") { ?>
@@ -110,7 +109,7 @@ if ($res['status_proceso'] == "R") $estatus_proceso = "En Revisión";
         <?php } ?>
         <td><?php echo $res['vehiculo_Ano']; ?></td>
         <td><?php echo $res['modelo_Nombre']; ?></td>
-        <td><?php echo $res['marca_Nombre']; ?></td>
+        <td><p><?php echo $res['marca_Nombre']; ?></p></td>
       </tr>
     </tbody>
   </table>
@@ -128,29 +127,44 @@ if ($res['status_proceso'] == "R") $estatus_proceso = "En Revisión";
       <tr>
         <th scope="row"><?php echo $res['empresa_Rif']; ?></th>
         <td><?php echo $res['empresa_Encargado']; ?></td>
-        <td><?php echo $res['empresa_Nombre']; ?></td>
-        <td><?php echo $res['empresa_Ubicacion']; ?></td>
+        <td><?php echo ($res['empresa_Nombre']) ? $res['empresa_Nombre'] : "Procemi"; ?></td>
+        <td><p><?php echo $res['empresa_Ubicacion']; ?></p></td>
       </tr>
     </tbody>
   </table>
-  <!-- <strong>Usuarios involucrados</strong>
+  
+  <strong>Usuarios involucrados</strong>
   <table class="table">
     <thead>
       <tr>
         <th scope="col">Cédula</th>
+        <th scope="col">Nombre</th>
         <th scope="col">Rol</th>
-        <th scope="col">Descripción de la operación</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Fecha de la operación</th>
       </tr>
     </thead>
     <tbody>
-      <?php //while ($item = $res2->fetch_assoc()) { ?>
+      <?php 
+        foreach($res2 as $item){
+          if($item['des_cambio'] == 'E') $operacion = "Registro de Entrada";
+          if($item['des_cambio'] == 'A') $operacion = "Aprobación";
+          if($item['des_cambio'] == 'S') $operacion = "Asignado a un silo";
+          if($item['des_cambio'] == 'U') $operacion = "Actualización del registro";
+          if($item['des_cambio'] == 'D') $operacion = "Rechazado";
+
+          if($item['rol_user'] == "R") $rol = "Romanero";
+          if($item['rol_user'] == "L") $rol = "Laboratorio";
+        ?>
         <tr>
-          <th scope="row"><?php //echo $item['cedula_user']; ?></th>
-          <td><?php //echo $item['rol_user']; ?></td>
-          <td><?php //echo $item['des_cambio']; ?></td>
+          <th scope="row"><?php echo $item['cedula_user']; ?></th>
+          <th><?php echo $item['nombre'];?></th>
+          <td><?php echo $rol; ?></td>
+          <td><?php echo $operacion; ?></td>
+          <td><p><?php echo $item['fecha']; ?></p></td>
         </tr>
-      <?php //} ?>
+      <?php } ?>
 
     </tbody>
-  </table> -->
+  </table>
 </div>

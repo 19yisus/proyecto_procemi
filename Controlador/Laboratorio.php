@@ -10,7 +10,7 @@ if (isset($_POST["operacion"])) {
          registrar_laboratorio();
          break;
 
-      case 'rechazo':
+      case 'Rechazo':
          rechazo();
          break;
 
@@ -43,20 +43,29 @@ if (isset($_GET["operacion"])) {
 
 function registrar_laboratorio()
 {
+   $a = new Laboratorio_m();
+
+   if (!isset($_POST['Impureza'])) {
+      $a->SetDatos($_POST["ID"], $_POST["Muestra"],null,null,null,null,null,null);
+      $res = $a->Registrar();
+      if ($res) header("location:../View_Laboratorio?Mensaje=2");
+      else header("location:../View_Laboratorio?Mensaje=1 ");
+   }
+
    $impureza = round($_POST["Impureza"], 2);
    $impureza = ($impureza * 100) / $_POST["Muestra"];
    $humedad = round($_POST['Humedad'], 2);
-   $a = new Laboratorio_m();
+
    if ($humedad >= 13) {
       $humedad = (12 - $humedad) / 88;
       $humedad = round($humedad, 2);
 
-      $a->SetDatos($_POST["ID"], $_POST["Muestra"], $_POST["Dano"], $_POST["Partido"], $humedad, $impureza, $_POST["Cantidad"]);
+      $a->SetDatos($_POST["ID"], $_POST["Muestra"], $_POST["Dano"], $_POST["Partido"], $humedad, $impureza, $_POST["Cantidad"], $_POST['estatus_ope']);
       $res = $a->Registrar();
       if ($res) header("location:../View_Laboratorio?Mensaje=2");
       else header("location:../View_Laboratorio?Mensaje=1 ");
    } else {
-      $a->SetDatos($_POST["ID"], $_POST["Muestra"], $_POST["Dano"], $_POST["Partido"], $humedad, $impureza, $_POST["Cantidad"]);
+      $a->SetDatos($_POST["ID"], $_POST["Muestra"], $_POST["Dano"], $_POST["Partido"], $humedad, $impureza, $_POST["Cantidad"], $_POST['estatus_ope']);
       $res = $a->Registrar();
       if ($res) header("location:../View_Laboratorio?Mensaje=2");
       else header("location:../View_Laboratorio?Mensaje=1 ");
@@ -66,7 +75,7 @@ function registrar_laboratorio()
 function rechazo()
 {
    $a = new Laboratorio_m();
-   $res = $a->Rechazo($_POST['ID']);
+   $res = $a->Rechazo($_POST['ID'],$_POST['observacion']);
    if ($res) header("location:../View_Laboratorio?Mensaje=2");
    else header("location:../View_Laboratorio?Mensaje=1 ");
 }

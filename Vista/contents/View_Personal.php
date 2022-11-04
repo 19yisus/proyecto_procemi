@@ -84,14 +84,14 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 															<option value="E">E</option>
 														</select>
 													</div>
-													<input type="text" pattern="[0-9]{7,8}" maxlength="8" minlength="7" name="Cedula" id="cedula" class="form-control" required>
+													<input type="text" pattern="[0-9]{7,8}" maxlength="8" minlength="7" name="Cedula" id="cedula" title="Solo se pueden ingresar caracteres númericos" class="form-control" required>
 												</div>
 											</div>
 										</div>
 										<div class="col-6">
 											<div class="form-group">
 												<label>Nombre</label>
-												<input type="text" maxlength="60" minlength="3" name="Nombre" id="nombre" class="form-control" required>
+												<input type="text" maxlength="25" minlength="4" name="Nombre" id="nombre" pattern="[A-Za-z ]+" title="Solo puedes ingresar caracteres alfabeticos" class="form-control" required>
 											</div>
 										</div>
 									</div>
@@ -99,7 +99,7 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 										<div class="col-6">
 											<div class="form-group">
 												<label>Apellido</label>
-												<input type="text" maxlength="60" minlength="3" name="Apellido" id="apellido" class="form-control" required>
+												<input type="text" maxlength="25" minlength="5" name="Apellido" id="apellido" class="form-control" pattern="[A-Za-z ]+" title="Solo puedes ingresar caracteres alfabeticos" required>
 											</div>
 										</div>
 										<div class="col-6">
@@ -119,7 +119,7 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 										<div class="col-6">
 											<div class="form-group">
 												<label>Dirección</label>
-												<input type="text" name="Direccion" id="direccion" class="form-control" required>
+												<input type="text" name="Direccion" id="direccion" class="form-control" pattern="[A-Za-z0-9 ]+" title="Solo se pueden ingresar caracteres numericos y alfabeticos" required>
 											</div>
 										</div>
 									</div>

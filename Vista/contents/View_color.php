@@ -26,10 +26,7 @@
 										<i class="material-icons">&#xE147;</i>
 										<span></span>
 									</a>
-									<a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal">
-										<i class="material-icons">&#xE15C;</i>
-										<span></span>
-									</a>
+	
 								</div>
 							</div>
 						</div>
@@ -59,9 +56,9 @@
 								</div>
 								<div class="modal-body">
 									<div class="form-group">
-										<label>color</label>
+										<label>Nombre del color</label>
 										<input type="hidden" name="ID" id="id">
-										<input type="text" name="Nombre" id="nombre" class="form-control" required>
+										<input type="text" name="Nombre" id="nombre" class="form-control" pattern="[A-Za-z ]+" title="Solo puedes ingresar caracteres alfabeticos" minlength="4" maxlength="12" required>
 									</div>
 								</div>
 								<div class="modal-footer">

@@ -13,7 +13,7 @@
 
   <div class="container">
     <div class="img">
-      <img src="<?php $this->Assets('img/laboratorioo.svg'); ?>" />
+      <img src="<?php $this->Assets('img/logo.png'); ?>" />
     </div>
 
     <div class="login-content">
@@ -23,7 +23,7 @@
         <img src="<?php $this->Assets('img/avatar.svg'); ?>" />
 
         <h2 class="title">Bienvenido</h2>
-        <h3 class="">laboratorio</h3>
+        <h3 class="">Laboratorio</h3>
         <div class="input-div uno">
           <div class="i">
             <i class="fas fa-user"></i>

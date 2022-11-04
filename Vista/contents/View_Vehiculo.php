@@ -29,15 +29,11 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 						<div class="table-title">
 							<div class="row">
 								<div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
-									<h2 class="ml-lg-2">Vehiculo</h2>
+									<h2 class="ml-lg-2">Vehiculo Registrados</h2>
 								</div>
 								<div class="col-sm-6 p-0 flex justify-content-lg-end justify-content-center">
 									<a href="#addEmployeeModal" class="btn btn-success" onclick="ResetarForm()" data-toggle="modal">
 										<i class="material-icons">&#xE147;</i>
-										<span></span>
-									</a>
-									<a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal">
-										<i class="material-icons">&#xE15C;</i>
 										<span></span>
 									</a>
 								</div>
@@ -70,7 +66,7 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title">vehiculo</h5>
+								<h5 class="modal-title">datos del vehiculo</h5>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
@@ -80,13 +76,13 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 									<div class="row">
 										<div class="col-6">
 											<div class="form-group">
-												<label>Placa</label>
+												<label>Placa del vehiculo</label>
 												<input type="text" name="Placa" id="placa" maxlength="7" minlength="7" pattern="[A-Z0-9]{7}" class="form-control" onkeyup="Mayuscula(this)" required>
 											</div>
 										</div>
 										<div class="col-6">
 											<div class="form-group">
-												<label>Modelo</label>
+												<label>Modelo del vehiculo</label>
 												<select name="Modelo" id="modelo" class="form-control" required>
 													<option value="">Seleccione una opción</option>
 													<?php while ($a = $modelo->fetch_assoc()) { ?>
@@ -128,12 +124,12 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 															<option value="J">J</option>
 														</select>
 													</div>
-													<input type="text" minlength="10" maxlength="10" name="rif_dueno" disabled="disabled" id="rif_dueno" class="form-control" required placeholder="Rif">
+													<input type="text" minlength="8" maxlength="10" name="rif_dueno" disabled="disabled" id="rif_dueno" class="form-control" pattern="[0-9]+" title="Solo puedes ingresar caracteres númericos" required>
 												</div>
 
 											</div>
 											<div class="form-group" id="divEmpresa">
-												<label>Empresa</label>
+												<label>nombre de la Empresa</label>
 												<select name="Empresa" id="empresa" class="form-control" required>
 													<option value="">Seleccione una opción</option>
 													<?php while ($a = $empresa->fetch_assoc()) { ?>
@@ -144,7 +140,7 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 										</div>
 										<div class="col-6">
 											<div class="form-group">
-												<label>Color</label>
+												<label>Color del vehiculo</label>
 												<select name="Color" id="color" class="form-control" required>
 													<option value="">Seleccione una opción</option>
 													<?php while ($a = $color->fetch_assoc()) { ?>
@@ -158,9 +154,9 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 									<div class="row">
 										<div class="col-6">
 											<div class="form-group">
-												<label>Peso</label>
+												<label>Capacidad del vehiculo</label>
 												<input type="hidden" name="ID" id="id">
-												<input type="number" pattern="[0-9]{1,5}(\,[0-9]{2})" step="0.01" max="99999.99" min="10.00" name="Peso" id="peso" class="form-control" required>
+												<input type="text" pattern="[0-9]{1,5}(\,[0-9]{2})" step="0.01" max="99999.99" min="10.00" name="Peso" id="peso" class="form-control" required>
 											</div>
 										</div>
 										<div class="col-6">
@@ -173,25 +169,28 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 									<div class="row">
 										<div class="col-6">
 											<div class="form-group">
-												<label>Año</label>
+												<label>Año del vehiculo</label>
 												<input type="number" step="1" pattern="[0-9]{4}" minlength="4" maxlength="4" name="Ano" id="ano" class="form-control" required>
-											</div>
-										</div>
-										<div class="col-6">
-											<div class="form-group">
-												<label>Peso Extra</label>
-												<input type="number" pattern="[0-9]{1,5}(\,[0-9]{2})" step="0.01" max="99999.99" min="10.00" disabled="disabled" id="peso_extra" name="Vehiculo_PesoSecundario" id="pesoextra" class="form-control">
 											</div>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-6">
 											<div class="form-group">
-												<label>Placa</label>
-												<input type="text" name="segunda_Placa" id="segunda_Placa" disabled="disabled" maxlength="7" minlength="7" pattern="[A-Z0-9]{7}" class="form-control" onkeyup="Mayuscula(this)" required>
+												<label>Peso Extra del vehiuclo</label>
+												<input type="number" pattern="[0-9]{1,5}(\,[0-9]{2})" step="0.01" max="99999.99" min="10.00" disabled="disabled" id="peso_extra" name="Vehiculo_PesoSecundario" id="pesoextra" class="form-control">
 											</div>
 										</div>
+									
+									
+										<div class="col-6">
+											<div class="form-group">
+												<label>Placa Extra del vehiculo</label>
+												<input type="text" name="segunda_Placa" id="segunda_Placa" disabled="disabled" maxlength="7" minlength="7" pattern="[A-Z0-9]{7}" class="form-control" onkeyup="Mayuscula(this)" required>
+											</div>
+										</div>	
 									</div>
+									
 
 								</div>
 								<div class="modal-footer">
@@ -399,5 +398,13 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 			/* El codigo de aqui abajo lo comente porque no le vi la utilidad, osea, lo comente y no vi cambios */
 		</script>
 </body>
-
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#peso").one("keyup",function(){
+			var value = $(this).val();
+			var dato = value += "KG";
+			$("#peso").val(dato);
+		})
+	})
+</script>
 </html>

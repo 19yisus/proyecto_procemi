@@ -57,7 +57,7 @@
 
 								<div class="modal-body">
 									<div class="form-group">
-										<label>Peso Salida</label>
+										<label>Peso Neto</label>
 										<input type="text" name="Peso" id="peso" class="form-control" required>
 									</div>
 

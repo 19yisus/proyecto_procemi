@@ -1,6 +1,4 @@
 <script>
-	var today = new Date();
-	var now = today.toLocaleString();
 </script>
 
 <div class="top-navbar">
@@ -15,8 +13,8 @@
 		<div class="xp-breadcrumbbar text-center">
 			<h4 class="page-title">Bienvenido</h4>
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="#">Que pongo</a></li>
-				<li class="breadcrumb-item active" aria-curent="page">Aqui?</li>
+				<h2 id="time">00:00:00</h2>
+				<h2 id="date">date</h2>
 			</ol>
 		</div>
 	</div>

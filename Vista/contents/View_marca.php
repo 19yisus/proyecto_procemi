@@ -26,10 +26,6 @@
 										<i class="material-icons">&#xE147;</i>
 										<span></span>
 									</a>
-									<a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal">
-										<i class="material-icons">&#xE15C;</i>
-										<span></span>
-									</a>
 								</div>
 							</div>
 						</div>
@@ -52,7 +48,7 @@
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title">Marcas</h5>
+									<h5 class="modal-title">Marcas del vehiculo</h5>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
@@ -61,7 +57,7 @@
 									<div class="form-group">
 										<label>Nombre</label>
 										<input type="hidden" name="ID" id="id">
-										<input type="text" name="Nombre" id="nombre" class="form-control" required>
+										<input type="text" name="Nombre" id="nombre" class="form-control" pattern="[A-Za-z ]+" title="Solo puedes ingresar caracteres alfabeticos" minlength="4" maxlength="15" required>
 									</div>
 								</div>
 								<div class="modal-footer">

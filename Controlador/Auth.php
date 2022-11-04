@@ -71,6 +71,7 @@ function login_user()
   $a = new Auth_m();
   $a->SetDatos($_POST);
   $res = $a->Loguear();
+
   if ($res !== 5) $vista = returnVista();
   else{
     $vista = "View_index";
@@ -126,7 +127,7 @@ function eliminar_user()
   $a = new Auth_m();
   // $a->SetDatos($_POST);
   // $res = $a->Eliminar();
-  // if($res) header ("location:../View_Login?Mensaje=3");
+  // if($res) header ("location:../View_Login?Me$2y$12$SQRNIjhWMZKYnzWvcT46g.RBrRrWsLFe1OV4vyqNodNovfQaNZWSe" ["nombre"]=> string(15) "primer romanero" ["rol_user"]=> string(1) "R" ["estatus_user"]=> string(1) "1" ["fecha_user"]=> strinsaje=3");
   // else header("location:../View_Login?Mensaje= 1 ");
 }
 

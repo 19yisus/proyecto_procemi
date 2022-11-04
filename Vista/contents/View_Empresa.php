@@ -55,38 +55,101 @@
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title">Empresa</h5>
+									<h5 class="modal-title">Datos de la empresa</h5>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
 								</div>
 								<div class="modal-body">
-									<div class="form-group">
-										<label>Encargado</label>
-										<input type="text" name="Encargado" id="encargado" class="form-control" required>
-									</div>
-									<div class="form-group">
-										<label>Rif</label>
-										<div class="input-group">
-											<div class="pretend">
-												<select name="tipoRif" id="tipo_rif" class="form-control">
-													<option value="J">J</option>
-													<option value="V">V</option>
-												</select>
+									<div class="row">
+										<div class="col-6">
+											<div class="form-group">
+												<label>Nombre de la empresa</label>
+												<input type="text" name="Nombre" id="nombre" class="form-control" pattern="[A-Za-z ]+" title="Solo puedes ingresar caracteres alfabeticos" minlength="4" maxlength="20" required>
 											</div>
-											<input type="text" minlength="10" maxlength="10" name="Rif" id="rif" class="form-control" required placeholder="Rif">
+										</div>
+										<div class="col-6">
+											<div class="form-group">
+												<label>Rif de la empresa</label>
+												<input type="text" name="Rif" id="rif" class="form-control" pattern="[0-9]+" title="Solo puedes ingresar caracteres númericos" minlength="8" maxlength="9" required>
+											</div>
 										</div>
 									</div>
-									<div class="form-group">
-										<label>Nombre</label>
-
-										<input type="text" name="Nombre" id="nombre" class="form-control" required>
+									<div class="row">
+										<div class="col-6">
+											<div class="form-group">
+												<label>Dirección de la empresa</label>
+												<input type="text" name="Ubicacion" id="ubicacion" class="form-control" pattern="[A-Za-z0-9 ]+" title="Solo puedes ingresar caracteres alfabeticos y números" minlength="4" maxlength="50" required>
+											</div>
+										</div>
+										<div class="col-6">
+											<div class="form-group">
+											<label>Télefono de la empresa</label>
+												<div class="input-group">
+												<div class="pretend">
+													<select name="codigo_area_e" id="codigo_area_e" class="form-control">
+														<option value="0412">0412</option>
+														<option value="0416">0416</option>
+														<option value="0414">0414</option>
+														<option value="0424">0424</option>
+													</select>
+												</div>
+												<input type="text" name="Telefono" id="Telefono" class="form-control" pattern="[0-9]+" title="Solo puedes ingresar caracteres umericos" minlength="7" maxlength="7" required>
+											</div>
+												
+												
+											</div>
+										</div>
 									</div>
-									<div class="form-group">
-										<label>Dirección</label>
-
-										<input type="text" name="Ubicacion" id="ubicacion" class="form-control" required>
+									<div class="row">
+										<div class="col-6">
+											<div class="form-group">
+											<label>Documento de identidad del encargado</label>
+											<div class="input-group">
+												<div class="pretend">
+													<select name="tipoRif" id="tipo_rif" class="form-control">
+														<option value="J">J</option>
+														<option value="V">V</option>
+													</select>
+												</div>
+												<input type="text" name="cedula_encargado" id="cedula_encargado" minlength="8" maxlength="10"  class="form-control" pattern="[0-9]+" title="Solo puedes ingresar caracteres númericos" required>
+											</div>
+											</div>
+										</div>
+										<div class="col-6">
+											<div class="form-group">
+												<label>Nombre del encargado</label>
+												<input type="text" name="Encargado" id="encargado" class="form-control" pattern="[A-Za-z ]+" title="Solo puedes ingresar caracteres alfabeticos" minlength="4" maxlength="20" required>
+											</div>
+										</div>
 									</div>
+									<div class="row">
+										<div class="col-6">
+											<div class="form-group">
+												<label>Télefono del encargado</label>
+												<div class="input-group">
+												<div class="pretend">
+													<select name="codigo_area" id="codigo_area" class="form-control">
+														<option value="0412">0412</option>
+														<option value="0416">0416</option>
+														<option value="0414">0414</option>
+														<option value="0424">0424</option>
+													</select>
+												</div>
+												<input type="text" name="telefono_encargado" id="telefono_encargado" class="form-control" pattern="[0-9]{7}"  title="Solo puedes ingresar caracteres númericos" minlength="7" maxlength="7" required>
+											</div>
+												
+											</div>
+										</div>
+										<div class="col-6">
+											<div class="form-group">
+												<label>Dirección del encargado</label>
+												<input type="text" name="direccion_encargado" id="direccion_encargado" class="form-control" pattern="[A-Za-z0-9 ]+" title="Solo puedes ingresar caracteres alfanumericos" minlength="4" maxlength="50" required>
+											</div>
+										</div>
+									</div>
+									
+									
 								</div>
 								<div class="modal-footer">
 									<input type="hidden" name="operacion" id="operacion" value="Registro">

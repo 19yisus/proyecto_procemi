@@ -172,14 +172,17 @@ class Entrada_m extends bd
     WHERE movimiento.ID = $id";
     $res = $this->ejecutar($sql)->fetch_assoc();
 
-    $sql2 = "SELECT * FROM user_transaction_cambios 
+    $sql2 = "SELECT usuarios.cedula_user,
+    usuarios.nombre,
+    usuarios.rol_user,
+    user_transaction_cambios.des_cambio,
+    user_transaction_cambios.fecha FROM user_transaction_cambios 
     INNER JOIN usuarios ON usuarios.id_usuario = user_transaction_cambios.user_id
     WHERE tran_id = $id";
 
-    $res2 = $this->ejecutar($sql);
+    $res2 = $this->ejecutar($sql2)->fetch_all(MYSQLI_ASSOC);
 
     require_once "modalData.php";
-    
   }
   /* No creo que sea necesario explicar esta parte, basciamente agregue las funciones de consultar todos, actualizar y consultar por id */
 
