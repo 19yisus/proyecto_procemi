@@ -17,6 +17,10 @@ if (isset($_POST["operacion"])) {
       registrar_user();
       break;
 
+    case 'cambiarStatus':
+      changeStatus();
+      break;
+
     case 'Actualizar':
       actualizar_user();
       break;
@@ -73,7 +77,7 @@ function login_user()
   $res = $a->Loguear();
 
   if ($res !== 5) $vista = returnVista();
-  else{
+  else {
     $vista = "View_index";
     $res = null;
   }
@@ -82,9 +86,9 @@ function login_user()
 function logout_user()
 {
   session_start();
-  if($_SESSION['rol_id'] == "L") $vista = "View_Login-laboratorio";
-  if($_SESSION['rol_id'] == "R") $vista = "View_Login-romanero";
-  if($_SESSION['rol_id'] == "A") $vista = "View_Login-laboratorio";
+  if ($_SESSION['rol_id'] == "L") $vista = "View_Login-laboratorio";
+  if ($_SESSION['rol_id'] == "R") $vista = "View_Login-romanero";
+  if ($_SESSION['rol_id'] == "A") $vista = "View_Login-laboratorio";
   session_unset();
   session_destroy();
   header("location: ../$vista");
@@ -94,8 +98,16 @@ function registrar_user()
   $a = new Auth_m();
   $a->SetDatos($_POST);
   $res = $a->Registrar();
-  if($res) header("location:../View_usuarios?Mensaje=2");
+  if ($res) header("location:../View_usuarios?Mensaje=2");
   else header("location:../View_usuarios?Mensaje= 1 ");
+}
+function changeStatus()
+{
+  $a = new Auth_m();
+  $a->SetDatos($_POST);
+  $res = $a->changeStatus();
+  if ($res) header("location:../View_usuarios?Mensaje=2");
+  else header("location:../View_usuarios?Mensaje=1 ");
 }
 
 function actualizar_user()

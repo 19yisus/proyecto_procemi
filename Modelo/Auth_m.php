@@ -75,8 +75,14 @@ class Auth_m extends bd
 
   public function Consultar_Todos()
   {
-    $res = $this->ejecutar("SELECT id_usuario,cedula_user,nombre,rol_user,fecha_user,estatus_user FROM usuarios WHERE estatus_user = 1;");
+    $res = $this->ejecutar("SELECT id_usuario,cedula_user,nombre,rol_user,fecha_user,estatus_user FROM usuarios;");
     if($res) $res = $res->fetch_all(MYSQLI_ASSOC); else $res = [];
+    return $res;
+  }
+
+  public function changeStatus(){
+    $sql = "UPDATE usuarios SET estatus_user = $this->estatus_user WHERE rol_user != 'A' AND id_usuario = $this->id";
+    $res = $this->ejecutar($sql);
     return $res;
   }
 }

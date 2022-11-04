@@ -33,6 +33,12 @@
                 </div>
               </div>
             </div>
+            <!-- formulario para la desactivacion de usuarios -->
+            <form style="display: none;" action="Controlador/Auth.php" method="post" id="form_desactivacion">
+              <input type="hidden" name="id" id="id_desac">
+              <input type="hidden" name="estatus" id="status_desac">
+              <input type="hidden" name="operacion" value="cambiarStatus">
+            </form>
             <!-- Tabla -->
             <table class="table table-striped table-hover" id="tabla">
               <thead>
@@ -182,7 +188,7 @@
             {
               data: "estatus_user",
               render(data) {
-                if (data) return "Activo"
+                if (data == 1) return "Activo"; else return "Desactivado";
               }
             },
             {
@@ -191,16 +197,17 @@
             {
               defaultContent: "",
               render(data, type, row) {
+                // <a href="#addEmployeeModal" class="edit" data-toggle="modal" onclick="consultarUno('${row.ID}')">
+								// 		<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
+								// 	</a>
+								// 	<a href="#deleteEmployeeModal" class="delete" id="delete" data-toggle="modal" onclick="cambiarEstatus('${row.ID}')">
+								// 		<i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
+								// 	</a>
                 let btn = `
-									<a href="#addEmployeeModal" class="edit" data-toggle="modal" onclick="consultarUno('${row.ID}')">
-										<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
-									</a>
-									<a href="#deleteEmployeeModal" class="delete" id="delete" data-toggle="modal" onclick="Eliminar('${row.ID}')">
-										<i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
-									</a>`;
+                  <button type="button" class="btn btn-secondary" onclick="cambiarEstatus('${row.id_usuario}',${row.estatus_user})">Desactivar</button>
+                  `;
 
-                // return btn;
-                return '';
+                return btn;
               }
             }
           ],
@@ -226,6 +233,12 @@
             $("#id").val(data.ID)
             $("#nombre").val(data.cargo_Nombre)
           }).catch(error => console.error(error))
+      }
+      const cambiarEstatus = (id, estado) => {
+        $("#id_desac").val(id);
+        if(estado == 1) estado = 0; else estado = 1
+        $("#status_desac").val(estado);
+        $("#form_desactivacion").submit();        
       }
       /* Bueno, en estas dos funciones solo estamos asignando valores, pero son funciones mas cortas ya que solo realizamos una accion */
       const crear_usuario = () => $("#operacion").val("Registro")
