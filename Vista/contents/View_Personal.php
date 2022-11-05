@@ -104,8 +104,20 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 										</div>
 										<div class="col-6">
 											<div class="form-group">
-												<label>Télefono</label>
-												<input type="tel" pattern="[0-9]{11}" title="Solo se aceptan numeros" maxlength="11" minlength="11" name="Telefono" id="telefono" class="form-control" required>
+											<label>Télefono</label>
+												<div class="input-group">
+												<div class="pretend">
+													<select name="codigo_area" id="codigo_area" class="form-control">
+														<option value="0412">0412</option>
+														<option value="0416">0416</option>
+														<option value="0414">0414</option>
+														<option value="0424">0424</option>
+													</select>
+												</div>
+												<input type="tel" pattern="[0-9]{7}" title="Solo se aceptan numeros" maxlength="7" minlength="7" name="Telefono" id="telefono" class="form-control" required>
+											</div>
+												
+												
 											</div>
 										</div>
 									</div>

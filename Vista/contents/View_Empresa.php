@@ -37,10 +37,14 @@
 						<table class="table table-striped table-hover" id="tabla">
 							<thead>
 								<th>ID</th>
-								<th>Encargado</th>
-								<th>Rif</th>
-								<th>Nombre</th>
-								<th>Ubicación</th>
+								<th>Nombre de la empresa</th>
+								<th>Rif de la empresa</th>
+								<th>direccion de la empresa</th>
+								<th>télefono de la empresa</th>
+								<th>Nombre del encargado</th>
+								<th>Cédula del encargado</th>
+								<th>télefono del encargado</th>
+								<th>dirección del encargado</th>
 								<th>Opciones</th>
 							</thead>
 							<tbody>
@@ -211,16 +215,28 @@
 							data: "ID"
 						},
 						{
-							data: "empresa_Encargado"
+							data: "empresa_Nombre"
 						},
 						{
 							data: "empresa_Rif"
 						},
 						{
-							data: "empresa_Nombre"
+							data: "empresa_Ubicacion"
 						},
 						{
-							data: "empresa_Ubicacion"
+							data: "empresa_Telefono"
+						},
+						{
+							data: "empresa_Encargado"
+						},
+						{
+							data: "empresa_CedulaE"
+						},
+						{
+							data: "empresa_TelefonoE"
+						},
+						{
+							data: "empresa_DireccionE"
 						},
 						{
 							defaultContent: "",
@@ -257,13 +273,22 @@
 						data
 					}) => {
 						$("#id").val(data.ID)
-						$("#encargado").val(data.empresa_Encargado)
-						let [tipo, cedula] = data.empresa_Rif.split("-")
-
-						$("#tipo_rif").val(tipo);
-						$("#rif").val(cedula);
+						let [codigo,rif] = data.empresa_Rif.split("-")
+						$("#rif").val(rif)
 						$("#nombre").val(data.empresa_Nombre)
 						$("#ubicacion").val(data.empresa_Ubicacion)
+						let [codigoE, telefonoE] = data.empresa_Telefono.split("-")
+						$("#codigo_area_e").val(codigoE)
+						$("#Telefono").val(telefonoE)
+						let [tipo, cedula] = data.empresa_CedulaE.split("-")
+						$("#tipoRif").val(tipo)
+						$("#cedula_encargado").val(cedula)
+						$("#encargado").val(data.empresa_Encargado)
+						$("#direccion_encargado").val(data.empresa_DireccionE)
+						let [tipo2, telefono] = data.empresa_TelefonoE.split("-")
+						$("#codigo_area").val(tipo2);
+						$("#telefono_encargado").val(telefono);
+						
 						document.querySelectorAll("#condition").forEach(item => {
 							if (item.value == data.empresa_condition) item.checked = true;
 						})

@@ -11,7 +11,6 @@
 			</div>
 		</div>
 		<div class="xp-breadcrumbbar text-center">
-			<h4 class="page-title">Bienvenido</h4>
 			<ol class="breadcrumb">
 				<h2 id="time">00:00:00</h2>
 				<h2 id="date">date</h2>

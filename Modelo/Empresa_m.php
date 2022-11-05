@@ -85,7 +85,16 @@ class Empresa_m extends bd
 
   public function Actualizar()
   {
-    $this->ejecutar("UPDATE empresa SET empresa_Encargado = '$this->encargado', empresa_Rif = '$this->rif', empresa_Nombre = '$this->nombre', empresa_Ubicacion = '$this->ubicacion' WHERE ID = $this->id");
+    $this->ejecutar("UPDATE empresa SET 
+      empresa_Rif = '$this->rif',
+      empresa_Encargado = '$this->encargado',
+      empresa_cedulaE = '$this->cedula_encargado',
+      empresa_telefonoE = '$this->telefono_encargado',
+      empresa_direccionE = '$this->direccion_encargado',
+      empresa_Nombre = '$this->nombre',
+      empresa_Ubicacion = '$this->ubicacion',
+      empresa_telefono = '$this->telefono'
+    WHERE ID = $this->id");
     return true;
   }
 

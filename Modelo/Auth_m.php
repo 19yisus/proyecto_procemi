@@ -20,7 +20,7 @@ class Auth_m extends bd
   {
     $this->id = isset($datos['id']) ? $datos['id'] : null;
     $this->cedula_user = isset($datos['cedula_user']) ? $datos['cedula_user'] : null;
-    $this->clave_user = isset($datos['clave']) ? $datos['clave'] : null;
+    $this->clave_user = isset($datos['clave_user']) ? $datos['clave_user'] : null;
     $this->nombre = isset($datos['nombre']) ? $datos['nombre'] : null;
     $this->rol_user = isset($datos['rol']) ? $datos['rol'] : null;
     $this->estatus_user = isset($datos['estatus']) ? $datos['estatus'] : null;

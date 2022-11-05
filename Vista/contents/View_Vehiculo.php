@@ -135,7 +135,9 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 													<?php while ($a = $empresa->fetch_assoc()) { ?>
 														<option value="<?php echo $a["ID"] ?>"><?php echo $a["empresa_Nombre"] ?></option>
 													<?php } ?>
+													
 												</select>
+												<input type="text" id="empresa2" name="Empresa" class="form-control" disabled>
 											</div>
 										</div>
 										<div class="col-6">
@@ -249,9 +251,14 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 				}
 			})
 			const manipulateDOM = (value) => {
+				if(value == "I"){
+					$("#empresa2").show(150);
+					$("#empresa2").val("Procemi");
+					$("#empresa").hide(150);
+				}
 				if (value != "E") {
 					$("#empresa").attr("disabled", true);
-
+					
 					if (value == "P") {
 						$("#divEmpresa").hide(150, () => {
 							$("#divRifDueno").show(150)
@@ -266,9 +273,10 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 						});
 					}
 				} else {
-					$("#empresa").removeAttr("disabled");
 					$("#divRifDueno").hide(150, () => {
 						$("#divEmpresa").show(150)
+						$("#empresa").show(150);
+						$("#empresa2").hide(150);
 						$("#rif_dueno").attr("disabled", true);
 						$("#tipo_rif").attr("disabled", true);
 					});
@@ -332,7 +340,7 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 						{
 							data: "empresa_Nombre",
 							render(data, type, row) {
-								if (row.condicion == "I") return "Interno";
+								if (row.condicion == "I") return "Procemi";
 								if (row.condicion == "P") return "Particular";
 								if (row.condicion == "E") return data;
 							}
@@ -398,13 +406,5 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 			/* El codigo de aqui abajo lo comente porque no le vi la utilidad, osea, lo comente y no vi cambios */
 		</script>
 </body>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$("#peso").one("keyup",function(){
-			var value = $(this).val();
-			var dato = value += "KG";
-			$("#peso").val(dato);
-		})
-	})
-</script>
+
 </html>

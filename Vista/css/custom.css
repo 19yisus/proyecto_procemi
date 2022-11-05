@@ -62,7 +62,8 @@ iconos, estilos,tipografia
 	   line-height:1.5em;
   }
 h2{
-	color: white;
+	color: black;
+	font-size: 15px;
 }
   p{
 	   font-size:15px;
@@ -265,7 +266,10 @@ overflow:auto;
 		  z-index:9;
 		  position:relative;
 		  padding:15px 30px;
-		  background-color:#3950b9;
+		  background-image:url("../img/logo_procemi.jpeg");
+		  background-size: 50% 100%;
+		  background-repeat: no-repeat;
+		  background-position: 50% 0%;
 	 }
 	 
 	 .xd-topbar{
@@ -297,7 +301,6 @@ overflow:auto;
 		 border-radius:0 50px 50px 0;
 		 padding:4px  15px;
 	 }
-	 
 	 
 	.xp-breadcrumbbar .page-title{
 		font-size:20px;
@@ -794,6 +797,8 @@ background-color:rgba(0,0,0,0.09);
 	
 	
 	
-	
+	#empresa2{
+		display: none;
+	 }
 	
   

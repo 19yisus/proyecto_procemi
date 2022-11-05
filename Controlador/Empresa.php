@@ -54,7 +54,7 @@
       $rif = $_POST['tipoRif']."-".$_POST['cedula_encargado'];
       $telefono_encargado = $_POST["codigo_area"]."-".$_POST["telefono_encargado"];
       $telefono_empresa = $_POST["codigo_area_e"]."-".$_POST["Telefono"];
-      $a->SetDatos(null,$_POST["Encargado"],$rif,$telefono_encargado,$_POST["direccion_encargado"],$_POST["Rif"],$_POST["Nombre"],$_POST["Ubicacion"],$telefono_empresa,$_POST['empresa_condition']);
+      $a->SetDatos(null,$_POST["Encargado"],$rif,$telefono_encargado,$_POST["direccion_encargado"],"J-".$_POST["Rif"],$_POST["Nombre"],$_POST["Ubicacion"],$telefono_empresa,$_POST['empresa_condition']);
       $res = $a->Registrar();
       if($res) header("location:../View_Empresa?Mensaje=2");
       else header("location:../View_Empresa?Mensaje= 1 ");
@@ -62,9 +62,10 @@
 
    function actualizar_empresa(){
       $a = new Empresa_m();
-      $rif = $_POST['tipoRif']."-".$_POST['Rif'];
-
-      $a->SetDatos(null,$_POST["Encargado"],$rif,$_POST["Nombre"],$_POST["Ubicacion"],$_POST['empresa_condition']);
+      $rif = $_POST['tipoRif']."-".$_POST['cedula_encargado'];
+      $telefono_encargado = $_POST["codigo_area"]."-".$_POST["telefono_encargado"];
+      $telefono_empresa = $_POST["codigo_area_e"]."-".$_POST["Telefono"];
+      $a->SetDatos($_POST["ID"],$_POST["Encargado"],$rif,$telefono_encargado,$_POST["direccion_encargado"],"J-".$_POST["Rif"],$_POST["Nombre"],$_POST["Ubicacion"],$telefono_empresa,null);
       $res = $a->Actualizar();
       if($res) header("location:../View_Empresa?Mensaje=2");
       else header("location:../View_Empresa?Mensaje= 1 ");

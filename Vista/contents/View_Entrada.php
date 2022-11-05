@@ -129,6 +129,7 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 														<option value="<?php echo $a["ID"]; ?>"><?php echo $a["empresa_Nombre"]; ?></option>
 													<?php } ?>
 												</select>
+												<input type="text" id="empresa2" name="Empresa" class="form-control" disabled>
 											</div>
 										</div>
 									</div>
@@ -150,13 +151,13 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 										<div class="col-6">
 											<div class="form-group">
 												<label>Peso bruto</label>
-												<input type="text" step="1" min="1" name="cantidad" id="cantidad" class="form-control" pattern="[0-9]{1,6}" required>
+												<input type="text" step="1" min="1" name="cantidad" id="cantidad" class="form-control" pattern="[0-9]+" required>
 											</div>
 										</div>
 										<div class="col-6">
 											<div class="form-group">
 												<label>Segunda carga</label>
-												<input type="text" step="1" min="1" name="segunda_cantidad" id="segunda_cantidad" class="form-control" pattern="[0-9]{1,6}" disabled="disabled" required>
+												<input type="text" step="1" min="1" name="segunda_cantidad" id="segunda_cantidad" class="form-control" pattern="[0-9]+" disabled="disabled" required>
 											</div>
 										</div>
 									</div>
@@ -218,8 +219,16 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 				}else $("#segunda_cantidad").attr("disabled",true);
 			}
 			const manipulateDOM = (value) => {
-				if (value == "E") $("#empresa").removeAttr("disabled");
-				else $("#empresa").attr("disabled", true);
+				// if (value == "E") $("#empresa").removeAttr("disabled");
+				// else $("#empresa").attr("disabled", true);
+				if(value == "I"){
+					$("#empresa2").show(150);
+					$("#empresa2").val("Procemi");
+					$("#empresa").hide(150);
+				}else {
+						$("#empresa").show(150);
+						$("#empresa2").hide(150);
+					};
 			}
 
 			document.querySelectorAll("#condition").forEach(item => {
@@ -245,16 +254,13 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 							data: "personal_Cedula"
 						},
 						{
-							data: "empresa_Nombre",
-							render(data){
-								if(data) return data; else return "Procemi";
-							}
+							data: "empresa_Nombre"
 						},
 						{
 							data: "condicion_empresa",
 							render(data) {
 								if (data == "E") return "Externa";
-								else return "Interna";
+								else return "Procemi";
 							}
 						},
 						{

@@ -4,7 +4,7 @@ if (isset($_GET['Mensaje'])) {
   if ($_GET['Mensaje'] == 1) {
     echo "<script>
               Swal.fire({
-                position: 'top-end',
+                position: 'top-center',
                 icon: 'error',
                 title: 'Datos Invalidos!',
                 showConfirmButton: false,
@@ -15,8 +15,8 @@ if (isset($_GET['Mensaje'])) {
   if ($_GET['Mensaje'] == 2) {
     echo "<script>
               Swal.fire({
-                position: 'top-end',
-                icon: 'success',
+                position: 'top-center',
+                icon: 'error',
                 title: 'Usuario desactivado!',
                 showConfirmButton: false,
                 timer: 1500
@@ -26,9 +26,9 @@ if (isset($_GET['Mensaje'])) {
   if ($_GET['Mensaje'] == 3) {
     echo "<script>
               Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Eliminado',
+                position: 'top-center',
+                icon: 'error',
+                title: 'Contraseña incorrecta',
                 showConfirmButton: false,
                 timer: 1500
               })
@@ -37,9 +37,9 @@ if (isset($_GET['Mensaje'])) {
   if ($_GET['Mensaje'] == 4) {
     echo "<script>
               Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Recuperado',
+                position: 'top-center',
+                icon: 'error',
+                title: 'Usuario desactivado',
                 showConfirmButton: false,
                 timer: 1500
               })
@@ -48,7 +48,7 @@ if (isset($_GET['Mensaje'])) {
   if ($_GET['Mensaje'] == 5) {
     echo "<script>
               Swal.fire({
-                position: 'top-end',
+                position: 'top-center',
                 icon: 'success',
                 title: 'Login con exito!',
                 showConfirmButton: false,
