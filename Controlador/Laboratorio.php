@@ -53,7 +53,6 @@ function registrar_laboratorio()
    }
 
    $impureza = round($_POST["Impureza"], 2);
-   $impureza = ($impureza * 100) / $_POST["Muestra"];
    $humedad = round($_POST['Humedad'], 2);
 
    if ($humedad >= 13) {

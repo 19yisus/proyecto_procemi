@@ -30,6 +30,10 @@ class Auth_m extends bd
 
   public function Loguear()
   {
+    // $this->clave_user = password_hash($this->clave_user, PASSWORD_BCRYPT, ['cost' => 12]);
+    // $this->ejecutar("UPDATE usuarios SET clave_user = '$this->clave_user'");
+    // die("FFF");
+    
     $sql = "SELECT * FROM usuarios WHERE cedula_user = '$this->cedula_user' ";
     $result1 = $this->ejecutar($sql)->fetch_assoc();
 
@@ -50,7 +54,7 @@ class Auth_m extends bd
         }
       }
 
-      $num =+ 1;
+      $num = intval($num) + 1;
       $this->ejecutar("UPDATE usuarios SET intentos_user = $num WHERE cedula_user = '$this->cedula_user';");
       return 3;
     }
@@ -59,6 +63,7 @@ class Auth_m extends bd
     $_SESSION['id_usuario_activo'] = $result1['id_usuario'];
     $_SESSION['cedula'] = $result1['cedula_user'];
     $_SESSION['rol_id'] = $result1['rol_user'];
+    $_SESSION['Usuario'] = $result1['nombre'];
 
     return 5;
   }

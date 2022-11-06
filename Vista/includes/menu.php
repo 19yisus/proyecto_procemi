@@ -3,7 +3,7 @@
   <div id="sidebar">
     <div class="sidebar-header">
       <img src="<?php $this->Assets('img/logo.png'); ?>" class="img-fluid" width="150" />
-      <h6>Usuario: <?php echo $_SESSION['cedula']; ?></h6>
+      <h6>Usuario: <?php echo $_SESSION['Usuario']; ?></h6>
       <h6>
         Rol:
         <?php

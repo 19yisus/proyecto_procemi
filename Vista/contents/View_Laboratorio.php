@@ -29,13 +29,15 @@
 								<th>ID</th>
 								<th>Placa</th>
 								<th>Cédula</th>
+								<th>Empresa</th>
 								<th>Producto</th>
 								<th>Cantidad</th>
 								<th>Muestra</th>
-								<th>Daño</th>
+								<th>granos Dañados</th>
+								<th>granos partidos</th>
 								<th>Humedad</th>
 								<th>Impureza</th>
-								<th>Cantidad restante</th>
+								<th>Estatus</th>
 								<th>Opciones</th>
 							</thead>
 							<tbody>
@@ -44,6 +46,24 @@
 						<!-- fIN de la tabla -->
 					</div>
 				</div>
+				<div class="modal fade" tabindex="-1" id="modalConsult" role="dialog">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Consulta</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body" id="modalConsulta">
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+						</div>
+					</div>
+				</div>
+			</div>
 				<!----Formulario emergente--------->
 				<form action="Controlador/Laboratorio.php" method="POST" id="formulario" autocomplete="off">
 					<div class="modal fade" tabindex="-1" id="addEmployeeModal" role="dialog">
@@ -136,6 +156,14 @@
 				</footer>
 				<?php $this->Component("scripts"); ?>
 				<script type="text/javascript">
+					const consultarModal = async (value) => {
+			await fetch("Controlador/Entrada.php?operacion=ConsultarModal&&id=" + value)
+				.then(response => response.text())
+				.then(result => {
+					console.log(value)
+					$("#modalConsulta").html(result)
+				}).catch(error => console.error(error))
+		}
 					const manipulateDOM = (value) => {
 						if (value == "D") {
 							$("#operacion").val("Rechazo");
@@ -187,6 +215,9 @@
 									data: "personal_Cedula"
 								},
 								{
+									data: "empresa_Nombre"
+								},
+								{
 									data: "producto_Nombre"
 								},
 								{
@@ -194,6 +225,9 @@
 								},
 								{
 									data: "m_Muestra"
+								},
+								{
+									data: "m_Partido"
 								},
 								{
 									data: "m_Dano"
@@ -205,16 +239,24 @@
 									data: "m_Impureza"
 								},
 								{
-									data: "m_PesoLab"
-								},
+							data: "status_proceso",
+							render(data) {
+								if (data == 'R') return "En Revisión";
+								if (data == 'D') return "Devuelto";
+								if (data == 'A') return "Aprobado";
+								if (data == 'S') return "En el Silo";
+							}
+						},
 								{
 									defaultContent: "",
 									render(data, type, row) {
 										let btn = `
 									<a href="#addEmployeeModal" class="Delete" id="delete" data-toggle="modal" onclick="consultarUno('${row.ID}')">
 									<i class="material-icons">&#xE147;</i>
-									</a>
-									`;
+									</a> 
+									<a href="#modalConsult" class="edit" data-toggle="modal" onclick="consultarModal('${row.ID}')">
+										<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
+									</a>`
 										return btn;
 									}
 								}

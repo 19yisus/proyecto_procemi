@@ -151,7 +151,7 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 										<div class="col-6">
 											<div class="form-group">
 												<label>Peso bruto</label>
-												<input type="text" step="1" min="1" name="cantidad" id="cantidad" class="form-control" pattern="[0-9]+" required>
+												<input type="text" step="1" min="1" name="cantidad" id="cantidad" class="form-control" pattern="[0-9]+" title="Solo puedes ingresar caracteres múmericos" required>
 											</div>
 										</div>
 										<div class="col-6">
@@ -225,8 +225,10 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 					$("#empresa2").show(150);
 					$("#empresa2").val("Procemi");
 					$("#empresa").hide(150);
+					$("#empresa").attr("disabled", true);
 				}else {
 						$("#empresa").show(150);
+						$("#empresa").attr("disabled", false);
 						$("#empresa2").hide(150);
 					};
 			}

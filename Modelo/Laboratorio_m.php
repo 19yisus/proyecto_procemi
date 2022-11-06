@@ -31,7 +31,7 @@ class Laboratorio_m extends bd
     session_start();
     try {
       
-      if($this->impureza != "NULL") $pesolab = ($this->cantidad - $this->impureza) - $this->humedad; else $pesolab = "NULL";
+      if($this->impureza != "NULL") $pesolab = ($this->humedad + $this->impureza); else $pesolab = "NULL";
 
       // var_dump($this);
       // die("SSS");
@@ -115,13 +115,15 @@ class Laboratorio_m extends bd
       vehiculo.vehiculo_Placa,
       personal.personal_Cedula,
       producto.producto_Nombre,
+      empresa.empresa_Nombre,
       movimiento_detalles.*
       FROM movimiento
       INNER JOIN vehiculo ON vehiculo.ID = movimiento.ID_vehiculo
       INNER JOIN personal ON personal.ID = movimiento.ID_personal
       INNER JOIN producto ON producto.ID = movimiento.ID_producto
+      INNER JOIN empresa ON empresa.ID = movimiento.ID_empresa
       INNER JOIN movimiento_detalles ON movimiento.ID = movimiento_detalles.id_detalle
-      WHERE m_Estatus = true AND status_proceso = 'R' ")->fetch_all(MYSQLI_ASSOC);
+      WHERE m_Estatus = true  ")->fetch_all(MYSQLI_ASSOC);
     return $res;
   }
   /* No creo que sea necesario explicar esta parte, basciamente agregue las funciones de consultar todos, actualizar y consultar por id */

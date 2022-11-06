@@ -54,116 +54,6 @@
 							<tbody>
 							</tbody>
 						</table>
-
-						<!-- <img src="<?php //$this->Assets('img/logo.jpg'); 
-														?>" width="300" class="img-fluid" /> -->
-						<!-- <div class="products-container">
-								<div class="product" data-name="p-1">
-									<img src="images/1.png" alt="">
-									<h3>Silo 1</h3>
-
-								</div>
-
-								<div class="product" data-name="p-2">
-									<img src="images/2.png" alt="">
-									<h3>Silo 2</h3>
-
-								</div>
-
-								<div class="product" data-name="p-3">
-									<img src="images/3.png" alt="">
-									<h3>Silo 3</h3>
-
-								</div>
-
-								<div class="product" data-name="p-4">
-									<img src="images/4.png" alt="">
-									<h3>Silo 4</h3>
-
-								</div>
-
-
-
-							</div> -->
-
-						<!-- <div class="products-preview">
-
-								<div class="preview" data-target="p-1">
-									<i class="fas fa-times"></i>
-									<img src="images/1.png" alt="">
-									<h3>Silo 1</h3>
-									<div class="stars">
-										<i class="fas fa-star"></i>
-										<i class="fas fa-star"></i>
-										<i class="fas fa-star"></i>
-										<i class="fas fa-star"></i>
-										<i class="fas fa-star-half-alt"></i>
-
-									</div>
-									<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, dolorem.</p>
-									<div class="price">/2.500</div>
-									<div class="buttons">
-
-									</div>
-								</div>
-
-								<div class="preview" data-target="p-2">
-									<i class="fas fa-times"></i>
-									<img src="images/2.png" alt="">
-									<h3>Silo 2</h3>
-									<div class="stars">
-										<i class="fas fa-star"></i>
-										<i class="fas fa-star"></i>
-										<i class="fas fa-star"></i>
-										<i class="fas fa-star"></i>
-										<i class="fas fa-star-half-alt"></i>
-
-									</div>
-									<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, dolorem.</p>
-									<div class="price">/2.500</div>
-									<div class="buttons">
-
-									</div>
-								</div>
-
-								<div class="preview" data-target="p-3">
-									<i class="fas fa-times"></i>
-									<img src="images/3.png" alt="">
-									<h3>Silo 3</h3>
-									<div class="stars">
-										<i class="fas fa-star"></i>
-										<i class="fas fa-star"></i>
-										<i class="fas fa-star"></i>
-										<i class="fas fa-star"></i>
-										<i class="fas fa-star-half-alt"></i>
-
-									</div>
-									<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, dolorem.</p>
-									<div class="price">/2.500</div>
-									<div class="buttons">
-
-									</div>
-								</div>
-
-								<div class="preview" data-target="p-4">
-									<i class="fas fa-times"></i>
-									<img src="images/4.png" alt="">
-									<h3>Silo 4</h3>
-									<div class="stars">
-										<i class="fas fa-star"></i>
-										<i class="fas fa-star"></i>
-										<i class="fas fa-star"></i>
-										<i class="fas fa-star"></i>
-										<i class="fas fa-star-half-alt"></i>
-
-									</div>
-									<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, dolorem.</p>
-									<div class="price">/2.500</div>
-									<div class="buttons">
-
-									</div>
-								</div>
-							</div> -->
 					</div>
 				</div>
 			</div>
@@ -244,10 +134,16 @@
 						data: "m_Dano"
 					},
 					{
-						data: "m_Humedad"
+						data: "m_Humedad",
+						render(data){
+							return data + "%"
+						}
 					},
 					{
-						data: "m_Impureza"
+						data: "m_Impureza",
+						render(data){
+							return data + "%"
+						}
 					},
 					{
 						data: "m_PesoLab"
