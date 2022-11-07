@@ -14,9 +14,9 @@
             actualizar_salida();
          break;
 
-         case 'Eliminar':
-            eliminar_salida();
-         break;
+         // case 'Eliminar':
+         //    eliminar_salida();
+         // break;
 
          default:
             echo "No es valida la peticion";
@@ -56,6 +56,10 @@
       echo json_encode(["data" => $datos], false);
    }
 
+   function actualizar_salida(){
+
+   }
+
    function consultar_uno(){
       $a = new Salida_m();
       $datos = $a->Consultar_Uno($_GET["id"]);
@@ -65,7 +69,7 @@
 
    function eliminar_laboratorio(){
       $a = new Laboratorio_m();
-      $a->SetDatos($_POST["ID"],null,null,null,null,null,null);
+      $a->SetDatos($_POST["ID"],null,null,null,null,null,null,null);
       $res = $a->Eliminar();
       if($res) header ("location:../Vista/laboratorio.php?Mensaje=3");
       else header("location:../Vista/laboratorio.php?Mensaje= algun codigo de error que uses ");

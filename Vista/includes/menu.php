@@ -72,7 +72,7 @@
             <i class="material-icons">equalizer</i>Reportes de sistema
           </a>
           <ul class="collapse list-unstyled menu" id="homeSubmenu3">
-            <li><a href="reportes_entrada.php">Todod los maestros y ovimientos </a></li>
+            <li><a href="View_pdf">Todod los maestros y ovimientos </a></li>
           </ul>
         </li>
       <?php } ?>

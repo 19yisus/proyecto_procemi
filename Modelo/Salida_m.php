@@ -29,12 +29,16 @@ class Salida_m extends bd
   {
     session_start();
     try {
+      // var_dump($this->peso, $this->cantidad, $this->silo);
+      
       $total_peso = ($this->cantidad - $this->peso);
       $sql1 = "UPDATE movimiento_detalles SET 
         m_pesoFinal = $this->peso, 
         m_Total = $total_peso
         WHERE id_detalle = $this->id";
 
+      // var_dump($sql1);
+      // die("FF");
       $con = $this->beginTransaccion();
       $result = $this->queryTransaccion($sql1);
 
@@ -87,7 +91,8 @@ class Salida_m extends bd
       INNER JOIN producto ON producto.ID = movimiento.ID_producto
       LEFT JOIN empresa ON empresa.ID = movimiento.ID_empresa
       INNER JOIN movimiento_detalles ON movimiento.ID = movimiento_detalles.id_detalle
-      WHERE m_PesoLab <> '' AND status_proceso = 'A' ")->fetch_all(MYSQLI_ASSOC);
+      WHERE status_proceso = 'A' OR status_proceso = 'S'")->fetch_all(MYSQLI_ASSOC);
+      // m_PesoLab <> '' AND 
     return $res;
   }
   /* No creo que sea necesario explicar esta parte, basciamente agregue las funciones de consultar todos, actualizar y consultar por id */

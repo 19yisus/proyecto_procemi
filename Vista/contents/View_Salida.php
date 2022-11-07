@@ -65,7 +65,7 @@
 									<div class="form-group">
 										<input type="hidden" name="Cantidad" id="cantidad">
 										<label>Silos</label>
-										<select name="Silo" class="form-control" required>
+										<select name="Silo" id="silo" class="form-control" required>
 											<option value="1">Silo 1</option>
 											<option value="2">Silo 2</option>
 											<option value="3">Silo 3</option>
@@ -134,8 +134,8 @@
 									defaultContent: "",
 									render(data, type, row) {
 										let btn = `
-									<a href="#addEmployeeModal" class="Delete" id="delete" data-toggle="modal" onclick="consultarUno('${row.ID}')">
-									<i class="material-icons">&#xE147;</i>
+										<a href="#addEmployeeModal" class="edit" data-toggle="modal" onclick="consultarUno('${row.ID}')">
+										<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
 									</a>
 									`;
 										return btn;
@@ -151,9 +151,11 @@
 							.then(({
 								data
 							}) => {
+								console.log(data)
 								$("#id").val(data.ID)
 								$("#cantidad").val(data.m_Cantidad)
-								$("#peso").val(data.m_PesoFinal)
+								$("#peso").val(data.PesoNeto)
+								if(data.m_Silo != "N") $("#silo").val(data.m_Silo)
 							}).catch(error => console.error(error))
 					}
 					/* 

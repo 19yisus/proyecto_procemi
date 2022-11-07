@@ -33,6 +33,12 @@
                 </div>
               </div>
             </div>
+            <!-- formulario para la desactivacion de usuarios -->
+            <form style="display: none;" action="Controlador/Auth.php" method="post" id="form_desactivacion">
+              <input type="hidden" name="id" id="id_desac">
+              <input type="hidden" name="estatus" id="status_desac">
+              <input type="hidden" name="operacion" value="cambiarStatus">
+            </form>
             <!-- Tabla -->
             <table class="table table-striped table-hover" id="tabla">
               <thead>
@@ -198,9 +204,16 @@
 									<a href="#deleteEmployeeModal" class="delete" id="delete" data-toggle="modal" onclick="Eliminar('${row.ID}')">
 										<i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
 									</a>`;
+                let sms = (row.estatus_user == 1) ? "Desactivar" : "Activar";
+                let color = (row.estatus_user == 1) ? "success" : "danger";
+                let btn_desactivar = `
+                  <button type="button" class="btn btn-${color}" onclick="cambiarEstatus('${row.id_usuario}',${row.estatus_user})">
+                    ${sms}
+                  </button>`;
 
-                // return btn;
-                return '';
+                if(row.rol_user != "A"){
+                  return btn_desactivar;
+                }
               }
             }
           ],
@@ -226,6 +239,13 @@
             $("#id").val(data.ID)
             $("#nombre").val(data.cargo_Nombre)
           }).catch(error => console.error(error))
+      }
+      const cambiarEstatus = (id, estado) => {
+        $("#id_desac").val(id);
+        if (estado == 1) estado = 0;
+        else estado = 1
+        $("#status_desac").val(estado);
+        $("#form_desactivacion").submit();
       }
       /* Bueno, en estas dos funciones solo estamos asignando valores, pero son funciones mas cortas ya que solo realizamos una accion */
       const crear_usuario = () => $("#operacion").val("Registro")
