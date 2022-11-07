@@ -49,7 +49,7 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 								<th>Placa</th>
 								<th>Cédula</th>
 								<th>Empresa</th>
-								<th>Condición de la empresa</th>
+								<!-- <th>Condición de la empresa</th> -->
 								<th>Producto</th>
 								<th>Peso bruto</th>
 								<th>Estado</th>
@@ -256,15 +256,19 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 							data: "personal_Cedula"
 						},
 						{
-							data: "empresa_Nombre"
-						},
-						{
-							data: "condicion_empresa",
-							render(data) {
-								if (data == "E") return "Externa";
+							data: "empresa_Nombre",
+							render(data, type, row) {
+								if (row.condicion_empresa == "E") return data;
 								else return "Procemi";
 							}
 						},
+						// {
+						// 	data: "condicion_empresa",
+						// 	render(data) {
+						// 		if (data == "E") return "Externa";
+						// 		else return "Procemi";
+						// 	}
+						// },
 						{
 							data: "producto_Nombre"
 						},

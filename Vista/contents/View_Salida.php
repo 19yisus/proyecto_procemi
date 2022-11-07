@@ -33,7 +33,7 @@
 								<th>Producto</th>
 								<th>Cantidad</th>
 								<th>Peso Salida</th>
-								<th>Cantidad Producto</th>
+								<!-- <th>Cantidad Producto</th> -->
 								<th>Silo</th>
 								<th>Opciones</th>
 							</thead>
@@ -56,12 +56,26 @@
 								</div>
 
 								<div class="modal-body">
-									<div class="form-group">
-										<label>Peso Neto</label>
-										<input type="text" name="Peso" id="peso" class="form-control" required>
+									<div class="row">
+										<div class="col-4">
+											<div class="form-group">
+												<label>Peso Tara</label>
+												<input type="number" step="1" name="Tara" id="peso" class="form-control" required>
+											</div>
+										</div>
+										<div class="col-4">
+											<div class="form-group">
+												<label>Peso Bruto</label>
+												<input type="number" step="1" name="peso_bruto" id="peso_bruto" class="form-control" readonly required>
+											</div>
+										</div>
+										<div class="col-4">
+											<div class="form-group">
+												<label>Peso Neto</label>
+												<input type="number" step="1" name="peso_neto" id="peso_neto" class="form-control" readonly required>
+											</div>
+										</div>
 									</div>
-
-
 									<div class="form-group">
 										<input type="hidden" name="Cantidad" id="cantidad">
 										<label>Silos</label>
@@ -71,6 +85,26 @@
 											<option value="3">Silo 3</option>
 											<option value="4">Silo 4</option>
 										</select>
+									</div>
+									<div class="row">
+										<div class="col-4">
+											<div class="form-group">
+												<label>Descripción del producto</label>
+												<input type="text" id="des_product" class="form-control" disabled>
+											</div>
+										</div>
+										<div class="col-4">
+											<div class="form-group">
+												<label>Cédula del chofer</label>
+												<input type="text" id="ced_chofer" class="form-control" disabled>
+											</div>
+										</div>
+										<div class="col-4">
+											<div class="form-group">
+												<label>Placa del vehiculo</label>
+												<input type="text" id="placa_vehi" class="form-control" disabled>
+											</div>
+										</div>
 									</div>
 
 								</div>
@@ -94,6 +128,12 @@
 				</footer>
 				<?php $this->Component("scripts"); ?>
 				<script type="text/javascript">
+					$("#peso").keyup(e => {
+						let peso_bruto = parseInt($("#peso_bruto").val());
+						let valor = parseInt(e.target.value);
+						$("#peso_neto").val(peso_bruto - valor)
+					});
+
 					$(document).ready(() => {
 						/* Creamos el datatable y por medio de la propiedad ajax, le damos la url a consultar y asignamos la propiedad dataSrc, le damos el valor data (ya que es lo que mando desde el controlador)
 						 asigno las columnas donde van, y agrego los botones con su evento onclick para las operaciones
@@ -124,9 +164,9 @@
 								{
 									data: "m_pesoFinal"
 								},
-								{
-									data: "m_Total"
-								},
+								// {
+								// 	data: "m_Total"
+								// },
 								{
 									data: "m_Silo"
 								},
@@ -154,8 +194,13 @@
 								console.log(data)
 								$("#id").val(data.ID)
 								$("#cantidad").val(data.m_Cantidad)
+								$("#peso_bruto").val(data.m_Cantidad)
+								$("#peso_neto").val(data.m_Cantidad)
 								$("#peso").val(data.PesoNeto)
-								if(data.m_Silo != "N") $("#silo").val(data.m_Silo)
+								$("#des_product").val(data.producto_Nombre)
+								$("#ced_chofer").val(data.personal_Cedula)
+								$("#placa_vehi").val(data.vehiculo_Placa)
+								if (data.m_Silo != "N") $("#silo").val(data.m_Silo)
 							}).catch(error => console.error(error))
 					}
 					/* 

@@ -19,7 +19,7 @@ function consultar_Reporte()
 	$pdf = new FPDF();
 	$pdf->AddPage("L");
 	$pdf->SetFont("Arial", "B", 6);
-	$pdf->Cell(273, 7, "MAIZ MIRIAM SALAZAR, ALMACENAMIENTO EN COSECHA INVIERNO 2021", 1, 0, "C");
+	$pdf->Cell(273, 7, "MAIZ MIRIAM SALAZAR, ALMACENAMIENTO EN SILOS PROCEMI COSECHA INVIERNO 2021", 1, 0, "C");
 	$pdf->Ln();
 	$pdf->Cell(15, 7, "Fecha", 1, 0, "C");
 	$pdf->Cell(20, 7, "Chofer", 1, 0, "C");

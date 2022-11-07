@@ -43,7 +43,7 @@
 
    function registrar_salida(){
       $a = new Salida_m();
-      $a->SetDatos($_POST["ID"],$_POST["Peso"],$_POST["Cantidad"],$_POST["Silo"]);
+      $a->SetDatos($_POST["ID"],$_POST["Tara"],$_POST["Cantidad"],$_POST["Silo"], $_POST['peso_neto']);
       $res = $a->Registrar();
       if($res) header("location:../View_Salida?Mensaje=2");
       else header("location:../View_Salida?Mensaje=1 ");

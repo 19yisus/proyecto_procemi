@@ -4,23 +4,25 @@ require("Conexion.php");
 class Salida_m extends bd
 {
   //Variables privadas que solo pueden ser accedidas desde la clase donde se crean
-  private $id, $peso, $cantidad, $silo;
+  private $id, $peso, $cantidad, $silo, $tara, $pesoAcon;
   //Funcion constructora, se ejecuta automaticamente al instanciar la clase 
   //Este se hace para dejar las variables con un string vacio
   public function __construct()
   {
     $this->id =
       $this->peso =
-      $this->cantidad =
+      $this->cantidad = $this->tara = $this->pesoAcon = 
       $this->silo = "";
   }
   //Aqui asignamos las variables y le colocamos condicionales de una linea
-  public function SetDatos($id, $peso, $cantidad, $silo)
+  public function SetDatos($id, $tara, $cantidad, $silo, $pesoAcon)
   {
     //Basicamente si la variable tiene algo entra en el "?" y retorna el id, si no tiene nada entra en el ":" y retorna null
     $this->id = isset($id) ? $id : null;
-    $this->peso = isset($peso) ? $peso : null;
-    $this->cantidad = isset($cantidad) ? $cantidad : null;
+    // $this->peso = isset($peso) ? $peso : null;
+    $this->cantidad = isset($cantidad) ? $cantidad : null;-
+    $this->tara = isset($tara) ? $tara : null;
+    $this->pesoAcon = isset($pesoAcon) ? $pesoAcon : null;
     $this->silo = isset($silo) ? $silo : null;
   }
   //Se hace las operaciones y se retorna un booleano, aqui podemos aplicar mas validaciones para mayor seguridad
@@ -30,11 +32,10 @@ class Salida_m extends bd
     session_start();
     try {
       // var_dump($this->peso, $this->cantidad, $this->silo);
-      
-      $total_peso = ($this->cantidad - $this->peso);
+      // $total_peso = ($this->cantidad - $this->peso);
       $sql1 = "UPDATE movimiento_detalles SET 
-        m_pesoFinal = $this->peso, 
-        m_Total = $total_peso
+        m_pesoFinal = $this->tara, 
+        m_PesoAcon = $this->pesoAcon
         WHERE id_detalle = $this->id";
 
       // var_dump($sql1);
@@ -105,7 +106,15 @@ class Salida_m extends bd
 
   public function Consultar_Uno($id)
   {
-    $res = $this->ejecutar("SELECT * FROM movimiento INNER JOIN movimiento_detalles ON movimiento_detalles.id_detalle = movimiento.ID WHERE ID = $id")->fetch_assoc();
+    $res = $this->ejecutar("SELECT *,
+    vehiculo.vehiculo_PLaca,
+    personal.personal_Cedula,
+    personal.personal_Nacionalidad,producto.producto_Nombre FROM movimiento 
+    INNER JOIN movimiento_detalles ON movimiento_detalles.id_detalle = movimiento.ID 
+    INNER JOIN vehiculo ON vehiculo.ID = movimiento.ID_Vehiculo
+    INNER JOIN personal ON personal.ID = movimiento.ID_Personal
+    INNER JOIN producto ON producto.ID = movimiento.ID_Producto
+    WHERE movimiento.ID = $id")->fetch_assoc();
     return $res;
   }
 

@@ -37,7 +37,7 @@
 								<th>Placa</th>
 								<th>Cédula</th>
 								<th>Empresa</th>
-								<th>Condición de la empresa</th>
+								<!-- <th>Condición de la empresa</th> -->
 								<th>Producto</th>
 								<th>Cantidad</th>
 								<th>Muestra</th>
@@ -46,7 +46,7 @@
 								<th>Impureza</th>
 								<th>Cantidad restante</th>
 								<th>Peso Salida</th>
-								<th>Cantidad Producto</th>
+								<!-- <th>Cantidad Producto</th> -->
 								<th>Silo</th>
 								<th>Estado</th>
 								<th>Opciones</th>
@@ -109,15 +109,19 @@
 						data: "personal_Cedula"
 					},
 					{
-						data: "empresa_Nombre"
-					},
-					{
-						data: "condicion_empresa",
-						render(data) {
-							if (data == "E") return "Externa";
-							else return "Interna";
+						data: "empresa_Nombre",
+						render(data, type, row) {
+							if (row.condicion_empresa == "E") return data;
+							else return "Procemi";
 						}
 					},
+					// {
+					// 	data: "condicion_empresa",
+					// 	render(data) {
+					// 		if (data == "E") return "Externa";
+					// 		else return "Interna";
+					// 	}
+					// },
 					{
 						data: "producto_Nombre"
 					},
@@ -135,13 +139,13 @@
 					},
 					{
 						data: "m_Humedad",
-						render(data){
+						render(data) {
 							return data + "%"
 						}
 					},
 					{
 						data: "m_Impureza",
-						render(data){
+						render(data) {
 							return data + "%"
 						}
 					},
@@ -155,12 +159,12 @@
 							return data + " KG.";
 						}
 					},
-					{
-						data: "m_Total",
-						render(data) {
-							return data + " KG.";
-						}
-					},
+					// {
+					// 	data: "m_Total",
+					// 	render(data) {
+					// 		return data + " KG.";
+					// 	}
+					// },
 					{
 						data: "m_Silo"
 					},
