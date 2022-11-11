@@ -16,12 +16,26 @@ class Reporte_m extends bd
         vehiculo.vehiculo_Placa
     FROM
         movimiento
-    INNER JOIN movimiento_detalles ON movimiento_detalles.id_detalle = movimiento.ID
-    INNER JOIN vehiculo ON vehiculo.ID = movimiento.ID_Vehiculo
-    INNER JOIN personal ON personal.ID = movimiento.ID_Personal
-    INNER JOIN producto ON producto.ID = movimiento.ID_Producto
-    INNER JOIN empresa ON empresa.ID = movimiento.ID_Empresa
+    left JOIN movimiento_detalles ON movimiento_detalles.id_detalle = movimiento.ID
+    left JOIN vehiculo ON vehiculo.ID = movimiento.ID_Vehiculo
+    left JOIN personal ON personal.ID = movimiento.ID_Personal
+    left JOIN producto ON producto.ID = movimiento.ID_Producto
+    left JOIN empresa ON empresa.ID = movimiento.ID_Empresa
     WHERE movimiento.m_Fecha BETWEEN '$desde' AND '$hasta'; ")->fetch_all(MYSQLI_ASSOC);
-    return $res;
+
+    $datos = [];
+    foreach($res as $mov){
+      $id = $mov['ID'];
+      
+      $result = $this->ejecutar("SELECT * FROM user_transaction_cambios 
+        INNER JOIN usuarios ON usuarios.id_usuario = user_transaction_cambios.user_id
+        WHERE user_transaction_cambios.tran_id = $id;")->fetch_all(MYSQLI_ASSOC);
+
+      array_push($datos,[
+        'mov' => $mov,
+        'cambios' => $result
+      ]);
+    }
+    return $datos;
   }
 }

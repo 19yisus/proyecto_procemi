@@ -8,6 +8,12 @@ body,html{
 	padding:0px;
 }
 
+/* .porcentaje::-webkit-input-placeholder{
+	content: 'asdfas' !important;
+	color: black;
+	background-color: red !important;
+} */
+
 
 /*==========================================================
 iconos, estilos,tipografia
@@ -62,7 +68,7 @@ iconos, estilos,tipografia
 	   line-height:1.5em;
   }
 h2{
-	color: black;
+	color: rgb(3, 3, 3);
 	font-size: 15px;
 }
   p{
@@ -266,8 +272,8 @@ overflow:auto;
 		  z-index:9;
 		  position:relative;
 		  padding:15px 30px;
-		  background-image:url("../img/logo_procemi.jpeg");
-		  background-size: 50% 100%;
+		  background-image:url("../img/1-removebg.png");
+		  background-size: 30% 90%;
 		  background-repeat: no-repeat;
 		  background-position: 50% 0%;
 	 }

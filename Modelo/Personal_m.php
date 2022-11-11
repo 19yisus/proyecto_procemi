@@ -1,33 +1,41 @@
 <?php
-  require ("Conexion.php");
+require("Conexion.php");
 
-  class Personal_m extends bd{
-    //Variables privadas que solo pueden ser accedidas desde la clase donde se crean
-    private $id, $nombre, $apellido, $nacionalidad, $cedula, $telefono, $correo, $direccion, $empresa, $cargo, $fecha;
-    //Funcion constructora, se ejecuta automaticamente al instanciar la clase 
-    //Este se hace para dejar las variables con un string vacio
-    public function __construct(){
-      $this->id = $this->nombre = $this->apellido = $this->nacionalidad = $this->cedula = $this->telefono = $this->correo = $this->direccion = $this->empresa = $this->cargo = $this->fecha = ""; 
-    }
-    //Aqui asignamos las variables y le colocamos condicionales de una linea
-    public function SetDatos($id, $nombre, $apellido, $nacionalidad, $cedula, $telefono, $correo, $direccion, $empresa ,$cargo){
-      //Basicamente si la variable tiene algo entra en el "?" y retorna el id, si no tiene nada entra en el ":" y retorna null
-      $this->id = isset($id) ? $id : null;
-      $this->nombre = isset($nombre) ? $nombre : null;
-      $this->apellido = isset($apellido) ? $apellido : null;
-      $this->nacionalidad = isset($nacionalidad) ? $nacionalidad : null;
-      $this->cedula = isset($cedula) ? $cedula : null;
-      $this->telefono = isset($telefono) ? $telefono : null;
-      $this->correo = isset($correo) ? $correo : null;
-      $this->direccion = isset($direccion) ? $direccion : null;
-      $this->empresa = isset($empresa) ? $empresa : null;
-      $this->cargo = isset($cargo) ? $cargo : null;
-      $this->fecha = date('m-d-Y');
-    }
-    //Se hace las operaciones y se retorna un booleano, aqui podemos aplicar mas validaciones para mayor seguridad
-    //Por ejemplo validar que la operacion se realizo, y validar si hubo algun tipo de error
-    public function Registrar(){
-      $sql = "INSERT INTO personal (
+class Personal_m extends bd
+{
+  //Variables privadas que solo pueden ser accedidas desde la clase donde se crean
+  private $id, $nombre, $apellido, $nacionalidad, $cedula, $telefono, $correo, $direccion, $empresa, $cargo, $fecha;
+  //Funcion constructora, se ejecuta automaticamente al instanciar la clase 
+  //Este se hace para dejar las variables con un string vacio
+  public function __construct()
+  {
+    $this->id = $this->nombre = $this->apellido = $this->nacionalidad = $this->cedula = $this->telefono = $this->correo = $this->direccion = $this->empresa = $this->cargo = $this->fecha = "";
+  }
+  //Aqui asignamos las variables y le colocamos condicionales de una linea
+  public function SetDatos($id, $nombre, $apellido, $nacionalidad, $cedula, $telefono, $correo, $direccion, $empresa, $cargo)
+  {
+    //Basicamente si la variable tiene algo entra en el "?" y retorna el id, si no tiene nada entra en el ":" y retorna null
+    $this->id = isset($id) ? $id : null;
+    $this->nombre = isset($nombre) ? $nombre : null;
+    $this->apellido = isset($apellido) ? $apellido : null;
+    $this->nacionalidad = isset($nacionalidad) ? $nacionalidad : null;
+    $this->cedula = isset($cedula) ? $cedula : null;
+    $this->telefono = isset($telefono) ? $telefono : null;
+    $this->correo = isset($correo) ? $correo : null;
+    $this->direccion = isset($direccion) ? $direccion : null;
+    $this->empresa = isset($empresa) ? $empresa : null;
+    $this->cargo = isset($cargo) ? $cargo : null;
+    $this->fecha = date('m-d-Y');
+  }
+  //Se hace las operaciones y se retorna un booleano, aqui podemos aplicar mas validaciones para mayor seguridad
+  //Por ejemplo validar que la operacion se realizo, y validar si hubo algun tipo de error
+  public function Registrar()
+  {
+    $res = $this->ejecutar("SELECT * FROM personal WHERE personal_Cedula = '$this->cedula';")->fetch_all(MYSQLI_ASSOC);
+
+    if (isset($res[0])) return 5;
+
+    $sql = "INSERT INTO personal (
         personal_Cedula,
         personal_Nombre,
         personal_Apellido,
@@ -52,25 +60,28 @@
         $this->cargo,
         $this->empresa)";
 
-      $result = $this->ejecutar($sql);
-      return $result;
-    }
+    $result = $this->ejecutar($sql);
+    return $result;
+  }
 
-    public function Consultar_Todos(){
-      $res = $this->ejecutar("SELECT 
+  public function Consultar_Todos()
+  {
+    $res = $this->ejecutar("SELECT 
       personal.*,
       cargo.cargo_Nombre,
       empresa.empresa_Nombre
       FROM personal INNER JOIN cargo ON cargo.ID = personal.ID_Cargo
       INNER JOIN empresa ON empresa.ID = personal.ID_Empresa
       WHERE personal_Estatus = true");
-      if($res) $res = $res->fetch_all(MYSQLI_ASSOC); else $res = [];
-      return $res;
-    }
-    /* No creo que sea necesario explicar esta parte, basciamente agregue las funciones de consultar todos, actualizar y consultar por id */
+    if ($res) $res = $res->fetch_all(MYSQLI_ASSOC);
+    else $res = [];
+    return $res;
+  }
+  /* No creo que sea necesario explicar esta parte, basciamente agregue las funciones de consultar todos, actualizar y consultar por id */
 
-    public function Actualizar(){
-      /*
+  public function Actualizar()
+  {
+    /*
       if ($this->nombre != ""){
         $this->ejecutar("UPDATE personal SET personal_Nombre = '$this->nombre' WHERE ID = $this->id");
       }
@@ -100,9 +111,9 @@
       }
       */
 
-    
 
-      $this->ejecutar("UPDATE personal SET 
+
+    $this->ejecutar("UPDATE personal SET 
       personal_Cedula = '$this->cedula',
       personal_Nombre = '$this->nombre',
       personal_Apellido = '$this->apellido',
@@ -113,31 +124,37 @@
       ID_Cargo = $this->cargo,
       ID_Empresa = $this->empresa
       WHERE ID = $this->id");
-      return true;
-    }
+    return true;
+  }
 
-    public function Consultar_Uno($id){
-      $res = $this->ejecutar("SELECT * FROM personal WHERE id = $id");
-      if($res) $res = $res->fetch_assoc(); else $res = [];
-      return $res;
-    }
+  public function Consultar_Uno($id)
+  {
+    $res = $this->ejecutar("SELECT * FROM personal WHERE id = $id");
+    if ($res) $res = $res->fetch_assoc();
+    else $res = [];
+    return $res;
+  }
 
-    public function ConsultarCedula($cedula){
-      $res = $this->ejecutar("SELECT * FROM personal WHERE personal_Cedula = $cedula");
-      if($res) $res = $res->fetch_assoc(); else $res = [];
-      return $res;
-    }
+  public function ConsultarCedula($cedula)
+  {
+    $res = $this->ejecutar("SELECT * FROM personal WHERE personal_Cedula = $cedula");
+    if ($res) $res = $res->fetch_assoc();
+    else $res = [];
+    return $res;
+  }
 
-    public function Eliminar(){
-      $this->ejecutar("UPDATE personal SET personal_Estatus = false WHERE ID = $this->id");
-      return true;
-    }
+  public function Eliminar()
+  {
+    $this->ejecutar("UPDATE personal SET personal_Estatus = false WHERE ID = $this->id");
+    return true;
+  }
 
-    
-     /* */
 
-     public function Consultar_E(){
-      $res = $this->ejecutar("SELECT 
+  /* */
+
+  public function Consultar_E()
+  {
+    $res = $this->ejecutar("SELECT 
       personal.ID, 
       personal.personal_Nombre, 
       personal.personal_Apellido,
@@ -151,12 +168,12 @@
       FROM personal INNER JOIN cargo ON cargo.ID = personal.ID_Cargo
       INNER JOIN empresa ON empresa.ID = personal.ID_Empresa
       WHERE personal_Estatus = false")->fetch_all(MYSQLI_ASSOC);
-      return $res;
-    }
+    return $res;
+  }
 
-    public function Recuperar(){
-      $this->ejecutar("UPDATE personal SET personal_Estatus = true WHERE id = $this->id");
-      return true;
-    }
-    
+  public function Recuperar()
+  {
+    $this->ejecutar("UPDATE personal SET personal_Estatus = true WHERE id = $this->id");
+    return true;
+  }
 }

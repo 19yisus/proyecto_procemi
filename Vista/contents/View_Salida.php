@@ -19,7 +19,7 @@
 						<div class="table-title">
 							<div class="row">
 								<div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
-									<h2 class="ml-lg-2">Salida</h2>
+									<h2 class="ml-lg-2 text-light">Salida</h2>
 								</div>
 							</div>
 						</div>
@@ -31,8 +31,8 @@
 								<th>Cédula</th>
 								<th>Empresa</th>
 								<th>Producto</th>
-								<th>Cantidad</th>
-								<th>Peso Salida</th>
+								<th>Peso Bruto</th>
+								<th>Peso Tara</th>
 								<!-- <th>Cantidad Producto</th> -->
 								<th>Silo</th>
 								<th>Opciones</th>
@@ -43,20 +43,64 @@
 						<!-- fIN de la tabla -->
 					</div>
 				</div>
+				<div class="modal fade" tabindex="-1" id="modalConsult" role="dialog">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Consulta</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body" id="modalConsulta">
+
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+							</div>
+						</div>
+					</div>
+				</div>
 				<!----Formulario emergente--------->
 				<form action="Controlador/Salida.php" method="POST">
 					<div class="modal fade" tabindex="-1" id="addEmployeeModal" role="dialog">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title">Salida</h5>
+									<h5 class="modal-title">Salida del producto</h5>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
 								</div>
 
 								<div class="modal-body">
-									<div class="row">
+									<div class="row" style="text-align: center">
+										<div class="col-3">
+											<div class="form-group">
+												<label>Nombre del producto</label>
+												<input type="text" id="des_product" class="form-control" disabled style="background : white; border: none; text-align: center">
+											</div>
+										</div>
+										<div class="col-3">
+											<div class="form-group">
+												<label>Cédula del chofer</label>
+												<input type="text" id="ced_chofer" class="form-control" disabled style="background : white; border: none; text-align: center">
+											</div>
+										</div>
+										<div class="col-3">
+											<div class="form-group">
+												<label>Placa del vehiculo</label>
+												<input type="text" id="placa_vehi" class="form-control" disabled style="background : white; border: none; text-align: center">
+											</div>
+										</div>
+										<div class="col-3">
+											<div class="form-group">
+												<label>Nombre de la empresa</label>
+												<input type="text" id="empresa_nombre" class="form-control" disabled style="background : white; border: none; text-align: center">
+											</div>
+										</div>
+									</div>
+									<div class="row" style="text-align: center">
 										<div class="col-4">
 											<div class="form-group">
 												<label>Peso Tara</label>
@@ -66,13 +110,13 @@
 										<div class="col-4">
 											<div class="form-group">
 												<label>Peso Bruto</label>
-												<input type="number" step="1" name="peso_bruto" id="peso_bruto" class="form-control" readonly required>
+												<input type="number" step="1" name="peso_bruto" id="peso_bruto" class="form-control" readonly required style="background : white; border: none; text-align: center">
 											</div>
 										</div>
 										<div class="col-4">
 											<div class="form-group">
 												<label>Peso Neto</label>
-												<input type="number" step="1" name="peso_neto" id="peso_neto" class="form-control" readonly required>
+												<input type="number" step="1" name="peso_neto" id="peso_neto" class="form-control" readonly required style="background : white; border: none; text-align: center">
 											</div>
 										</div>
 									</div>
@@ -86,30 +130,12 @@
 											<option value="4">Silo 4</option>
 										</select>
 									</div>
-									<div class="row">
-										<div class="col-4">
-											<div class="form-group">
-												<label>Descripción del producto</label>
-												<input type="text" id="des_product" class="form-control" disabled>
-											</div>
-										</div>
-										<div class="col-4">
-											<div class="form-group">
-												<label>Cédula del chofer</label>
-												<input type="text" id="ced_chofer" class="form-control" disabled>
-											</div>
-										</div>
-										<div class="col-4">
-											<div class="form-group">
-												<label>Placa del vehiculo</label>
-												<input type="text" id="placa_vehi" class="form-control" disabled>
-											</div>
-										</div>
-									</div>
 
 								</div>
 								<div class="modal-footer">
 									<input type="hidden" name="ID" id="id">
+									<input type="hidden" name="Humedad" id="Humedad">
+									<input type="hidden" name="Impureza" id="Impureza">
 									<input type="hidden" name="operacion" id="operacion" value="Registro">
 									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 									<button type="submit" name="Registro" class="btn btn-success">Enviar</button>
@@ -128,11 +154,20 @@
 				</footer>
 				<?php $this->Component("scripts"); ?>
 				<script type="text/javascript">
+					const consultarModal = async (value) => {
+						await fetch("Controlador/Entrada.php?operacion=ConsultarModal&&id=" + value)
+							.then(response => response.text())
+							.then(result => {
+								console.log(value)
+								$("#modalConsulta").html(result)
+							}).catch(error => console.error(error))
+					}
 					$("#peso").keyup(e => {
 						let peso_bruto = parseInt($("#peso_bruto").val());
 						let valor = parseInt(e.target.value);
 						$("#peso_neto").val(peso_bruto - valor)
 					});
+
 
 					$(document).ready(() => {
 						/* Creamos el datatable y por medio de la propiedad ajax, le damos la url a consultar y asignamos la propiedad dataSrc, le damos el valor data (ya que es lo que mando desde el controlador)
@@ -153,16 +188,26 @@
 									data: "personal_Cedula"
 								},
 								{
-									data: "empresa_Nombre"
+									data: "empresa_Nombre",
+									render(data, type, row) {
+										if (row.condicion_empresa == "E") return data;
+										else return "Procemi";
+									}
 								},
 								{
 									data: "producto_Nombre"
 								},
 								{
-									data: "m_Cantidad"
+									data: "m_Cantidad",
+									render(data) {
+										return data + " KG.";
+									}
 								},
 								{
-									data: "m_pesoFinal"
+									data: "m_pesoFinal",
+									render(data) {
+										return data + " KG.";
+									}
 								},
 								// {
 								// 	data: "m_Total"
@@ -176,6 +221,9 @@
 										let btn = `
 										<a href="#addEmployeeModal" class="edit" data-toggle="modal" onclick="consultarUno('${row.ID}')">
 										<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
+										</a>
+										<a href="#modalConsult" class="edit" data-toggle="modal" onclick="consultarModal('${row.ID}')">
+									<i class="material-icons">apps</i>
 									</a>
 									`;
 										return btn;
@@ -191,15 +239,23 @@
 							.then(({
 								data
 							}) => {
-								console.log(data)
 								$("#id").val(data.ID)
 								$("#cantidad").val(data.m_Cantidad)
 								$("#peso_bruto").val(data.m_Cantidad)
 								$("#peso_neto").val(data.m_Cantidad)
 								$("#peso").val(data.PesoNeto)
+								$("#peso").attr("max", (data.m_Cantidad - 1))
 								$("#des_product").val(data.producto_Nombre)
 								$("#ced_chofer").val(data.personal_Cedula)
 								$("#placa_vehi").val(data.vehiculo_Placa)
+								if (data.empresa_Nombre == null) {
+									$("#empresa_nombre").val("Procemi");
+								} else {
+									$("#empresa_nombre").val(data.empresa_Nombre);
+								}
+								$("#id").val(data.ID)
+								$("#Humedad").val(data.m_Humedad)
+								$("#Impureza").val(data.m_Impureza)
 								if (data.m_Silo != "N") $("#silo").val(data.m_Silo)
 							}).catch(error => console.error(error))
 					}

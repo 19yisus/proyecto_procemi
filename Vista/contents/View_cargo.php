@@ -1,6 +1,7 @@
 <!-- Para empezar, optimice las lineas de codigo, y le di identacion al codigo para que se va mas ordenao y legible, como veras varias secciones de la pagina ya no estan.
 	A estas secciones las estoy trabajando como componentes reutilizable, para no tener el mismo codigo repetido en todas las paginas -->
 <!doctype html>
+<link rel="stylesheet" href="C:\xampp\htdocs\proyecto_procemi-master\Vista\css\custom.css">
 <html lang="en">
 <?php $this->Component("header"); ?>
 <body>
@@ -18,7 +19,7 @@
 						<div class="table-title">
 							<div class="row">
 								<div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
-									<h2 class="ml-lg-2">Cargos de los empleados</h2>
+									<h2 class="ml-lg-2 text-light">Cargos de los empleados</h2>
 								</div>
 								<div class="col-sm-6 p-0 flex justify-content-lg-end justify-content-center">
 									<a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal" onclick="crear_cargo()">

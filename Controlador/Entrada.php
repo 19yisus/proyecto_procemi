@@ -90,7 +90,7 @@
 
    function eliminar_entrada(){
       $a = new Entrada_m();
-      $a->SetDatos($_POST["ID"],null,null,null,null,null,null,null,null,null,null,null);
+      $a->SetDatos($_POST["ID"],null,null,null,null,null,null,null,null,null,null);
       $res = $a->Eliminar();
       if($res) header ("location:../View_Entrada?Mensaje=3");
       else header("location:../View_Entrada?Mensaje= 1 ");

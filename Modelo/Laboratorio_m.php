@@ -121,11 +121,11 @@ class Laboratorio_m extends bd
       INNER JOIN vehiculo ON vehiculo.ID = movimiento.ID_vehiculo
       INNER JOIN personal ON personal.ID = movimiento.ID_personal
       INNER JOIN producto ON producto.ID = movimiento.ID_producto
-      INNER JOIN empresa ON empresa.ID = movimiento.ID_empresa
-      INNER JOIN movimiento_detalles ON movimiento.ID = movimiento_detalles.id_detalle
-      WHERE m_Estatus = true  ")->fetch_all(MYSQLI_ASSOC);
+      LEFT JOIN empresa ON empresa.ID = movimiento.ID_empresa
+      INNER JOIN movimiento_detalles ON movimiento.ID = movimiento_detalles.id_detalle ")->fetch_all(MYSQLI_ASSOC);
     return $res;
   }
+  
   /* No creo que sea necesario explicar esta parte, basciamente agregue las funciones de consultar todos, actualizar y consultar por id */
 
   public function Actualizar()
@@ -136,7 +136,22 @@ class Laboratorio_m extends bd
 
   public function Consultar_Uno($id)
   {
-    $res = $this->ejecutar("SELECT * FROM movimiento INNER JOIN movimiento_detalles ON movimiento_detalles.id_detalle = movimiento.ID WHERE ID = $id")->fetch_assoc();
+    $res = $this->ejecutar("SELECT 
+    movimiento.*,
+    movimiento_detalles.*,
+    vehiculo.vehiculo_Placa,
+    personal.personal_Cedula,
+    personal.personal_Nacionalidad,
+    producto.producto_Nombre,
+    empresa.empresa_Nombre 
+    FROM 
+    movimiento 
+    INNER JOIN movimiento_detalles ON movimiento_detalles.id_detalle = movimiento.ID 
+    INNER JOIN vehiculo ON vehiculo.ID = movimiento.ID_Vehiculo
+    INNER JOIN personal ON personal.ID = movimiento.ID_Personal
+    INNER JOIN producto ON producto.ID = movimiento.ID_Producto
+    LEFT JOIN empresa ON empresa.ID = movimiento.ID_Empresa
+    WHERE movimiento.ID = $id")->fetch_assoc();
     return $res;
   }
 

@@ -19,7 +19,7 @@
 						<div class="table-title">
 							<div class="row">
 								<div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
-									<h2 class="ml-lg-2">Marca de vehiculo</h2>
+									<h2 class="ml-lg-2 text-light">Marca de vehiculo</h2>
 								</div>
 								<div class="col-sm-6 p-0 flex justify-content-lg-end justify-content-center">
 									<a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal" onclick="crear_marca()">
@@ -55,7 +55,7 @@
 								</div>
 								<div class="modal-body">
 									<div class="form-group">
-										<label>Nombre</label>
+										<label>Nombre de la marca</label>
 										<input type="hidden" name="ID" id="id">
 										<input type="text" name="Nombre" id="nombre" class="form-control" pattern="[A-Za-z ]+" title="Solo puedes ingresar caracteres alfabeticos" minlength="4" maxlength="15" required>
 									</div>

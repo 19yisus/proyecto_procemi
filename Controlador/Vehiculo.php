@@ -61,6 +61,7 @@
       if(!isset($_POST["Empresa"])) $empresa = null; else $empresa = $_POST["Empresa"];
       $a->SetDatos(null,$_POST["Placa"],$_POST["Modelo"],$empresa,$_POST["Color"],$_POST["Peso"],$_POST["Ano"],$if_doble,$pesoExtra,$_POST['condicion'],$rif, $segundaPlaca);
       $res = $a->Registrar();
+      if($res === 5) header("location:../View_Vehiculo?Mensaje=5");
       if($res) header("location:../View_Vehiculo?Mensaje=2");
       else header("location:../View_Vehiculo?Mensaje= 1 ");
    }

@@ -53,6 +53,7 @@
       $a = new Cargo_m();
       $a->SetDatos(null,$_POST["Nombre"]);
       $res = $a->Registrar();
+      if($res === 5) header("location:../View_cargo?Mensaje=5");
       if($res) header("location: ../View_cargo?Mensaje=2");
       else header("location: ../View_cargo?Mensaje=1 ");
    }
@@ -103,6 +104,3 @@
       if($res) header ("location:../View_Cargo_E?Mensaje=4");
       else header("location:../View_Cargo_E?Mensaje= 1 ");
    }
-
-
-?>

@@ -15,7 +15,7 @@ if ($res['status_proceso'] == "R") $estatus_proceso = "En Revisión";
         <th scope="col">estatus</th>
         <th scope="col">condición de la empresa</th>
         <th scope="col">Nombre del Producto</th>
-        <th scope="col">Peso neto</th>
+
         <th>Peso acondiciado al 12%</th>
         <th scope="col">Silo</th>
       </tr>
@@ -26,7 +26,7 @@ if ($res['status_proceso'] == "R") $estatus_proceso = "En Revisión";
         <td><?php echo  $estatus_proceso; ?></td>
         <td><?php echo $condicion; ?></td>
         <td><?php echo $res['producto_Nombre']; ?></td>
-        <td><?php echo $res['m_Cantidad'] . " KG.";; ?></td>
+        <td><?php echo $res['m_PesoAcon'] . " KG.";; ?></td>
         <th></th>
         <td><?php echo $res['m_Silo']; ?></td>
       </tr>
@@ -42,18 +42,23 @@ if ($res['status_proceso'] == "R") $estatus_proceso = "En Revisión";
         <th scope="col">Muestra</th>
         <th scope="col">Impureza</th>
         <th scope="col">Humedad</th>
+        <th scope="col">Desc. por humedad</th>
+        <th scope="col">desc. por impureza</th>
         <th scope="col">Total de KG descontados</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <th scope="row"><?php echo $res['m_Cantidad'] . " KG."; ?></th>
-        <td><?php echo $res['m_Dano']; ?></td>
-        <td><?php echo $res['m_Partido']; ?></td>
-        <td><?php echo $res['m_Muestra']; ?></td>
+        <td><?php echo $res['m_Dano'] . "%"; ?></td>
+        <td><?php echo $res['m_Partido'] . "%"; ?></td>
+        <td><?php echo $res['m_Muestra'] . "KG"; ?></td>
         <td><?php echo $res['m_Impureza'] . " %"; ?></td>
         <td><?php echo $res['m_Humedad'] . " %"; ?></td>
-        <td><?php echo $res['m_PesoLab'] . " KG "; ?></td>
+        <td><?php echo $res['m_Desc_Humedad'] . " KG"; ?></td>
+        <td><?php echo $res['m_Desc_Impureza'] . " KG"; ?></td>
+        <td><?php echo $res['m_TotalDesc'] . " KG"; ?></td>
+        
       </tr>
     </tbody>
   </table>

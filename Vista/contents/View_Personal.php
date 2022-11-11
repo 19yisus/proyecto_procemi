@@ -27,7 +27,7 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 						<div class="table-title">
 							<div class="row">
 								<div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
-									<h2 class="ml-lg-2">Personal</h2>
+									<h2 class="ml-lg-2 text-light">Personal</h2>
 								</div>
 								<div class="col-sm-6 p-0 flex justify-content-lg-end justify-content-center">
 									<a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal" onclick="crear_personal()">

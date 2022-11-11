@@ -42,11 +42,36 @@
    }      
 
    function registrar_salida(){
+      $humedad = ($_POST["Humedad"]/100) * $_POST["peso_neto"];
+      $impureza = $_POST["Impureza"];
       $a = new Salida_m();
-      $a->SetDatos($_POST["ID"],$_POST["Tara"],$_POST["Cantidad"],$_POST["Silo"], $_POST['peso_neto']);
-      $res = $a->Registrar();
-      if($res) header("location:../View_Salida?Mensaje=2");
-      else header("location:../View_Salida?Mensaje=1 ");
+
+      if ($_POST["Humedad"] >= 13){
+         $humedad = ($_POST["Humedad"] - 12)/88 ;
+         $humedad = $humedad * $_POST["peso_neto"];
+         $humedad =  round($humedad, 2);
+
+         $m_humedad = $_POST["peso_neto"] - $humedad;
+         $m_impureza =($m_humedad/100) *  $impureza;
+         $m_impureza = round($m_impureza, 2);
+
+         $totalDes = ($humedad + $m_impureza);
+         $totalAcon = $_POST["peso_neto"] - $totalDes;
+      
+
+         
+         
+         $a->SetDatos($_POST["ID"],$_POST["Tara"],$_POST["Cantidad"],$_POST["Silo"],$humedad,$m_impureza,$totalDes,$totalAcon,$_POST["peso_neto"]);
+         $res = $a->Registrar();
+         if($res) header("location:../View_Salida?Mensaje=2");
+         else header("location:../View_Salida?Mensaje=1 ");
+      }else{
+         $a->SetDatos($_POST["ID"],$_POST["Tara"],$_POST["Cantidad"],$_POST["Silo"],$humedad,$m_impureza,$totalDes,$totalAcon,$_POST["peso_neto"]);
+         $res = $a->Registrar();
+         if($res) header("location:../View_Salida?Mensaje=2");
+         else header("location:../View_Salida?Mensaje=1 ");
+      }
+      
    }
 
    function consultar_salidas(){

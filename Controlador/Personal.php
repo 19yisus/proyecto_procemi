@@ -57,6 +57,7 @@
       $telefono = $_POST["codigo_area"]."-".$_POST["Telefono"];
       $a->SetDatos(null,$_POST["Nombre"],$_POST["Apellido"],$_POST["Nacionalidad"],$_POST["Cedula"],$telefono,$_POST["Correo"],$_POST["Direccion"],$_POST["Empresa"],$_POST["Cargo"]);
       $res = $a->Registrar();
+      if($res === 5) header("location:../View_Personal?Mensaje=5");
       if($res) header("location:../View_Personal?Mensaje=2");
       else header("location:../View_Personal?Mensaje= 1 ");
    }

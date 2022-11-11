@@ -19,7 +19,7 @@
 						<div class="table-title">
 							<div class="row">
 								<div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
-									<h2 class="ml-lg-2">Laboratorio</h2>
+									<h2 class="ml-lg-2 text-light">Laboratorio</h2>
 								</div>
 							</div>
 						</div>
@@ -33,8 +33,8 @@
 								<th>Producto</th>
 								<th>Cantidad</th>
 								<th>Muestra</th>
-								<th>granos Dañados</th>
 								<th>granos partidos</th>
+								<th>granos Dañados</th>
 								<th>Humedad</th>
 								<th>Impureza</th>
 								<th>Estatus</th>
@@ -47,23 +47,23 @@
 					</div>
 				</div>
 				<div class="modal fade" tabindex="-1" id="modalConsult" role="dialog">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title">Consulta</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body" id="modalConsulta">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Consulta</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body" id="modalConsulta">
 
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 				<!----Formulario emergente--------->
 				<form action="Controlador/Laboratorio.php" method="POST" id="formulario" autocomplete="off">
 					<div class="modal fade" tabindex="-1" id="addEmployeeModal" role="dialog">
@@ -76,12 +76,43 @@
 									</button>
 								</div>
 								<div class="modal-body">
+									<div class="row" style="text-align: center">
+										<div class="col-3">
+											<div class="form-group">
+												<label>Nombre del producto</label>
+												<input type="text" id="des_product" class="form-control" disabled style="background : white; border: none; text-align: center">
+											</div>
+										</div>
+										<div class="col-3">
+											<div class="form-group">
+												<label>Cédula del chofer</label>
+												<input type="text" id="ced_chofer" class="form-control" disabled style="background : white; border: none; text-align: center">
+											</div>
+										</div>
+										<div class="col-3">
+											<div class="form-group">
+												<label>Placa del vehiculo</label>
+												<input type="text" id="placa_vehi" class="form-control" disabled style="background : white; border: none; text-align: center">
+											</div>
+										</div>
+										<div class="col-3">
+											<div class="form-group">
+												<label>Nombre de la empresa</label>
+												<input type="text" id="empresa_nombre" class="form-control" disabled style="background : white; border: none; text-align: center">
+											</div>
+										</div>
+									</div>
 									<input type="hidden" name="Cantidad" id="cantidad">
 									<div class="row">
 										<div class="col-12">
 											<div class="form-group" id="div_muestra">
 												<label>Muestra</label>
-												<input type="number" step="1" pattern="[0-9]{1,11}" min="Solo se aceptan numeros" minlength="1" maxlength="11" name="Muestra" id="muestra" class="form-control" required>
+												<div class="input-group">
+													<input type="number" step="1" pattern="[0-9]{1,11}" min="Solo se aceptan numeros" minlength="1" maxlength="11" name="Muestra" id="muestra" class="form-control" required>
+													<div class="input-group-append">
+														<span class="input-group-text">%</span>
+													</div>
+												</div>
 											</div>
 											<div class="form-group" id="div_obser" style="display: none;">
 												<label>Observación</label>
@@ -110,13 +141,23 @@
 										<div class="col-6">
 											<div class="form-group">
 												<label>Grano Dañado</label>
-												<input type="text" pattern="[0-9]{1,11}" min="Solo se aceptan numeros" minlength="1" maxlength="11" name="Dano" id="dano" class="form-control" required disabled="disabled">
+												<div class="input-group">
+													<input type="text" step="00.1" min="00.1" min="Solo se aceptan numeros" minlength="1" maxlength="11" name="Dano" id="dano" class="form-control porcentaje" required disabled="disabled">
+													<div class="input-group-append">
+														<span class="input-group-text">KG</span>
+													</div>
+												</div>
 											</div>
 										</div>
 										<div class="col-6">
 											<div class="form-group">
 												<label>Grano Partido</label>
-												<input type="text" pattern="[0-9]{1,11}" min="Solo se aceptan numeros" minlength="1" maxlength="11" name="Partido" id="partido" class="form-control" required disabled="disabled">
+												<div class="input-group">
+													<input type="text" step="00.1" min="00.1" min="Solo se aceptan numeros" minlength="1" maxlength="11" name="Partido" id="partido" class="form-control" required disabled="disabled">
+													<div class="input-group-append">
+														<span class="input-group-text">KG</span>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -124,17 +165,28 @@
 										<div class="col-6">
 											<div class="form-group">
 												<label>Humedad</label>
-												<input type="number" step="00.1" min="00.1" min="Solo se aceptan numeros" maxlength="3" name="Humedad" id="humedad" class="form-control" required disabled="disabled">
+												<div class="input-group">
+													<input type="number" step="00.1" min="00.1" min="Solo se aceptan numeros" maxlength="4" name="Humedad" id="humedad" class="form-control" required disabled="disabled">
+													<div class="input-group-append">
+														<span class="input-group-text">%</span>
+													</div>
+												</div>
 											</div>
 										</div>
 										<div class="col-6">
 											<div class="form-group">
 												<input type="hidden" name="ID" id="id">
 												<label>Impureza</label>
-												<input type="number" step="00.1" min="Solo se aceptan numeros" min="00.1" maxlength="3" name="Impureza" id="impureza" class="form-control" required disabled="disabled">
+												<div class="input-group">
+													<input type="number" step="00.1" min="Solo se aceptan numeros" min="00.1" maxlength="4" name="Impureza" id="impureza" class="form-control" required disabled="disabled">
+													<div class="input-group-append">
+														<span class="input-group-text">%</span>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>
+
 								</div>
 								<div class="modal-footer">
 									<input type="hidden" name="operacion" id="operacion" value="Registro">
@@ -157,13 +209,13 @@
 				<?php $this->Component("scripts"); ?>
 				<script type="text/javascript">
 					const consultarModal = async (value) => {
-			await fetch("Controlador/Entrada.php?operacion=ConsultarModal&&id=" + value)
-				.then(response => response.text())
-				.then(result => {
-					console.log(value)
-					$("#modalConsulta").html(result)
-				}).catch(error => console.error(error))
-		}
+						await fetch("Controlador/Entrada.php?operacion=ConsultarModal&&id=" + value)
+							.then(response => response.text())
+							.then(result => {
+								console.log(value)
+								$("#modalConsulta").html(result)
+							}).catch(error => console.error(error))
+					}
 					const manipulateDOM = (value) => {
 						if (value == "D") {
 							$("#operacion").val("Rechazo");
@@ -215,7 +267,11 @@
 									data: "personal_Cedula"
 								},
 								{
-									data: "empresa_Nombre"
+									data: "empresa_Nombre",
+									render(data, type, row) {
+										if (row.condicion_empresa == "E") return data;
+										else return "Procemi";
+									}
 								},
 								{
 									data: "producto_Nombre"
@@ -239,14 +295,14 @@
 									data: "m_Impureza"
 								},
 								{
-							data: "status_proceso",
-							render(data) {
-								if (data == 'R') return "En Revisión";
-								if (data == 'D') return "Devuelto";
-								if (data == 'A') return "Aprobado";
-								if (data == 'S') return "En el Silo";
-							}
-						},
+									data: "status_proceso",
+									render(data) {
+										if (data == 'R') return "En Revisión";
+										if (data == 'D') return "Devuelto";
+										if (data == 'A') return "Aprobado";
+										if (data == 'S') return "En el Silo";
+									}
+								},
 								{
 									defaultContent: "",
 									render(data, type, row) {
@@ -255,7 +311,7 @@
 									<i class="material-icons">&#xE147;</i>
 									</a> 
 									<a href="#modalConsult" class="edit" data-toggle="modal" onclick="consultarModal('${row.ID}')">
-										<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
+									<i class="material-icons">apps</i>
 									</a>`
 										return btn;
 									}
@@ -273,7 +329,8 @@
 							.then(({
 								data
 							}) => {
-								console.log(data.m_Muestra);
+								console.log(data);
+
 								$("#id").val(data.ID)
 								$("#cantidad").val(data.m_Cantidad)
 								$("#muestra").val(data.m_Muestra)
@@ -285,10 +342,18 @@
 
 									$("#muestra").attr("max", data.m_Cantidad)
 									$("#dano").val(data.m_Dano)
+									$("#partido").val(data.m_Partido);
 									$("#humedad").val(data.m_Humedad)
 									$("#impureza").val(data.m_Impureza)
 								}
-
+								$("#des_product").val(data.producto_Nombre)
+								$("#ced_chofer").val(data.personal_Cedula)
+								$("#placa_vehi").val(data.vehiculo_Placa)
+								if (data.empresa_Nombre == null) {
+									$("#empresa_nombre").val("Procemi");
+								} else {
+									$("#empresa_nombre").val(data.empresa_Nombre);
+								}
 							}).catch(error => console.error(error))
 					}
 					/* 

@@ -1,5 +1,5 @@
  <!--JavaScript -->
- <script src="Vista/js/clock.js"></script>
+ <script src="<?php $this->Assets('js/clock.js'); ?>"></script>
  <!-- Bootstrap JS -->
  <script src="<?php $this->Assets('js/jquery-3.3.1.slim.min.js'); ?>"></script>
  <script src="<?php $this->Assets('js/popper.min.js'); ?>"></script>
@@ -13,18 +13,18 @@
  <!-- Alertas -->
  <script src="<?php $this->Assets('js/SweetAlert2.js'); ?>"></script>
  <script type="text/javascript">
-	$(document).ready(function() {
-		$(".xp-menubar").on('click', function() {
-			$("#sidebar").toggleClass('active');
-			$("#content").toggleClass('active');
-		});
+   $(document).ready(function() {
+     $(".xp-menubar").on('click', function() {
+       $("#sidebar").toggleClass('active');
+       $("#content").toggleClass('active');
+     });
 
-		$('.xp-menubar,.body-overlay').on('click', function() {
-			$("#sidebar,.body-overlay").toggleClass('show-nav');
-		});
+     $('.xp-menubar,.body-overlay').on('click', function() {
+       $("#sidebar,.body-overlay").toggleClass('show-nav');
+     });
 
-	});
-</script>
+   });
+ </script>
 
  <?php
   if (isset($_GET['Mensaje'])) {
@@ -67,6 +67,17 @@
                 position: 'top-end',
                 icon: 'success',
                 title: 'Recuperado',
+                showConfirmButton: false,
+                timer: 1500
+              })
+            </script>";
+    }
+    if ($_GET['Mensaje'] == 5) {
+      echo "<script>
+              Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Ya existe este registro',
                 showConfirmButton: false,
                 timer: 1500
               })

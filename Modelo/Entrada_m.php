@@ -82,10 +82,10 @@ class Entrada_m extends bd
       $sql2 = "INSERT INTO movimiento_detalles(
           id_detalle,
           m_Cantidad, m_Dano, m_Partido, m_Muestra, m_Humedad,
-          m_Impureza, m_PesoLab, m_PesoFinal, m_Total) 
+          m_Impureza, m_PesoLab, m_PesoFinal) 
         VALUES (
           '$id_mov',
-          '$this->cantidad',null,null,null,null,null,null,null,null)";
+          '$this->cantidad',null,null,null,null,null,null,null)";
       $result = $this->queryTransaccion($sql2);
 
       if (!$result) {

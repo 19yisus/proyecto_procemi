@@ -31,7 +31,7 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 						<div class="table-title">
 							<div class="row">
 								<div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
-									<h2 class="ml-lg-2">entradas realizadas</h2>
+									<h2 class="ml-lg-2 text-light">entradas realizadas</h2>
 								</div>
 								<div class="col-sm-6 p-0 flex justify-content-lg-end justify-content-center">
 									<a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal" onclick="crear_entrada()">
@@ -61,13 +61,31 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 						<!-- fIN de la tabla -->
 					</div>
 				</div>
+				<div class="modal fade" tabindex="-1" id="modalConsult" role="dialog">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Consulta</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body" id="modalConsulta">
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+						</div>
+					</div>
+				</div>
+			</div>
 				<!----Formulario emergente--------->
 				<form action="Controlador/Entrada.php" method="post">
 					<div class="modal fade" tabindex="-1" id="addEmployeeModal" role="dialog">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title">Entrada</h5>
+									<h5 class="modal-title">Entrada de Producto</h5>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
@@ -151,13 +169,13 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 										<div class="col-6">
 											<div class="form-group">
 												<label>Peso bruto</label>
-												<input type="text" step="1" min="1" name="cantidad" id="cantidad" class="form-control" pattern="[0-9]+" title="Solo puedes ingresar caracteres múmericos" required>
+												<input type="text" step="1" min="1" name="cantidad" id="cantidad" class="form-control" pattern="[0-9]+" title="Solo puedes ingresar caracteres múmericos" placeholder="KG" required>
 											</div>
 										</div>
 										<div class="col-6">
 											<div class="form-group">
 												<label>Segunda carga</label>
-												<input type="text" step="1" min="1" name="segunda_cantidad" id="segunda_cantidad" class="form-control" pattern="[0-9]+" disabled="disabled" required>
+												<input type="text" step="1" min="1" name="segunda_cantidad" id="segunda_cantidad" class="form-control" pattern="[0-9]+" disabled="disabled" placeholder="KG" required>
 											</div>
 										</div>
 									</div>
@@ -209,6 +227,14 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 		</footer>
 		<?php $this->Component("scripts"); ?>
 		<script type="text/javascript">
+			const consultarModal = async (value) => {
+			await fetch("Controlador/Entrada.php?operacion=ConsultarModal&&id=" + value)
+				.then(response => response.text())
+				.then(result => {
+					console.log(value)
+					$("#modalConsulta").html(result)
+				}).catch(error => console.error(error))
+		}
 			const capadidad_vehiculo = (value) => {
 				let select = document.getElementById("Placa");	
 				$("#cantidad").attr("max",parseInt(select.options[value].getAttribute("data-capacidad")))
@@ -293,10 +319,14 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 									</a>
 									<a href="#deleteEmployeeModal" class="delete" id="delete" data-toggle="modal" onclick="Eliminar('${row.ID}')">
 										<i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
-									</a>`;
+									</a>
+									<a href="#modalConsult" class="edit" data-toggle="modal" onclick="consultarModal('${row.ID}')">
+									<i class="material-icons">apps</i>
+									</a>
+									`;
 
-								if (row.status_proceso == "D") return btn;
-								return null;
+								return btn;
+								
 							}
 						}
 					],

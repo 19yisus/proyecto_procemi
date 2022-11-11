@@ -15,7 +15,7 @@
     </div>
     <ul class="list-unstyled component m-0">
     <li class="active">
-        <a href="View_index" class="dashboard"><i class="material-icons">dashboard</i>Menu </a>
+        <a href="View_index" class="dashboard"><i class="material-icons">dashboard</i>Inicio </a>
     </li>
     <?php if ($_SESSION['rol_id'] == "A") { ?>
         <li class="dropdown">

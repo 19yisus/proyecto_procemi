@@ -50,21 +50,8 @@ function registrar_laboratorio()
       $res = $a->Registrar();
       if ($res) header("location:../View_Laboratorio?Mensaje=2");
       else header("location:../View_Laboratorio?Mensaje=1 ");
-   }
-
-   $impureza = round($_POST["Impureza"], 2);
-   $humedad = round($_POST['Humedad'], 2);
-
-   if ($humedad >= 13) {
-      $humedad = (12 - $humedad) / 88;
-      $humedad = round($humedad, 2);
-
-      $a->SetDatos($_POST["ID"], $_POST["Muestra"], $_POST["Dano"], $_POST["Partido"], $humedad, $impureza, $_POST["Cantidad"], $_POST['estatus_ope']);
-      $res = $a->Registrar();
-      if ($res) header("location:../View_Laboratorio?Mensaje=2");
-      else header("location:../View_Laboratorio?Mensaje=1 ");
    } else {
-      $a->SetDatos($_POST["ID"], $_POST["Muestra"], $_POST["Dano"], $_POST["Partido"], $humedad, $impureza, $_POST["Cantidad"], $_POST['estatus_ope']);
+      $a->SetDatos($_POST["ID"], $_POST["Muestra"], $_POST["Dano"], $_POST["Partido"], $_POST["Humedad"], $_POST["Impureza"], $_POST["Cantidad"], $_POST['estatus_ope']);
       $res = $a->Registrar();
       if ($res) header("location:../View_Laboratorio?Mensaje=2");
       else header("location:../View_Laboratorio?Mensaje=1 ");

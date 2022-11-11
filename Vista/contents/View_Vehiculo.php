@@ -29,7 +29,7 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 						<div class="table-title">
 							<div class="row">
 								<div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
-									<h2 class="ml-lg-2">Vehiculo Registrados</h2>
+									<h2 class="ml-lg-2 text-light">Vehiculo Registrados</h2>
 								</div>
 								<div class="col-sm-6 p-0 flex justify-content-lg-end justify-content-center">
 									<a href="#addEmployeeModal" class="btn btn-success" onclick="ResetarForm()" data-toggle="modal">
@@ -135,7 +135,7 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 													<?php while ($a = $empresa->fetch_assoc()) { ?>
 														<option value="<?php echo $a["ID"] ?>"><?php echo $a["empresa_Nombre"] ?></option>
 													<?php } ?>
-													
+
 												</select>
 												<input type="text" id="empresa2" name="Empresa" class="form-control" disabled>
 											</div>
@@ -158,7 +158,7 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 											<div class="form-group">
 												<label>Capacidad del vehiculo</label>
 												<input type="hidden" name="ID" id="id">
-												<input type="text" pattern="[0-9]{1,5}(\,[0-9]{2})" step="0.01" max="99999.99" min="10.00" name="Peso" id="peso" class="form-control" required>
+												<input type="text" pattern="[0-9]{1,5}(\,[0-9]{2})" step="0.01" max="99999.99" min="10.00" name="Peso" id="peso" class="form-control" placeholder="KG" required>
 											</div>
 										</div>
 										<div class="col-6">
@@ -183,16 +183,16 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 												<input type="number" pattern="[0-9]{1,5}(\,[0-9]{2})" step="0.01" max="99999.99" min="10.00" disabled="disabled" id="peso_extra" name="Vehiculo_PesoSecundario" id="pesoextra" class="form-control">
 											</div>
 										</div>
-									
-									
+
+
 										<div class="col-6">
 											<div class="form-group">
 												<label>Placa Extra del vehiculo</label>
 												<input type="text" name="segunda_Placa" id="segunda_Placa" disabled="disabled" maxlength="7" minlength="7" pattern="[A-Z0-9]{7}" class="form-control" onkeyup="Mayuscula(this)" required>
 											</div>
-										</div>	
+										</div>
 									</div>
-									
+
 
 								</div>
 								<div class="modal-footer">
@@ -241,6 +241,30 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 		</footer>
 		<?php $this->Component("scripts"); ?>
 		<script type="text/javascript">
+			document.getElementById("formRegistro").addEventListener("submit", (e) => {
+				e.preventDefault();
+				if ($("#if_doble")[0].checked) {
+					if ($("#placa").val() == $("#segunda_Placa").val()) {
+						alert("La placa principal del vehiculo y la secundaria no pueden ser iguales")
+						$("#segunda_Placa").val('');
+						return false;
+
+					} else {
+						$("#formRegistro").submit();
+					}
+				} else {
+					$("#formRegistro").submit();
+				}
+			})
+			$("#segunda_Placa").keyup(e => {
+				if (e.target.value != "") {
+					if ($("#placa").val() == e.target.value) {
+						alert("La placa principal del vehiculo y la secundaria no pueden ser iguales")
+						$("#segunda_Placa").val('');
+					}
+				}
+			})
+
 			document.getElementById("if_doble").addEventListener("click", (e) => {
 				if (!e.target.checked) {
 					$("#peso_extra").attr("disabled", true);
@@ -251,14 +275,14 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 				}
 			})
 			const manipulateDOM = (value) => {
-				if(value == "I"){
+				if (value == "I") {
 					$("#empresa2").show(150);
 					$("#empresa2").val("Procemi");
 					$("#empresa").hide(150);
 				}
 				if (value != "E") {
 					$("#empresa").attr("disabled", true);
-					
+
 					if (value == "P") {
 						$("#divEmpresa").hide(150, () => {
 							$("#divRifDueno").show(150)
@@ -279,6 +303,7 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 						$("#empresa2").hide(150);
 						$("#rif_dueno").attr("disabled", true);
 						$("#tipo_rif").attr("disabled", true);
+						$("#empresa").removeAttr("disabled");
 					});
 				}
 			}
@@ -310,8 +335,8 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 						},
 						{
 							data: "segunda_Placa",
-							render(data){
-								if(data == "") return "No tiene";
+							render(data) {
+								if (data == "") return "No tiene";
 								else return data;
 							}
 						},
@@ -326,15 +351,15 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 						},
 						{
 							data: "vehiculo_Peso",
-							render(data){
-								return data+" KG.";
+							render(data) {
+								return data + " KG.";
 							}
 						},
 						{
 							data: "Vehiculo_PesoSecundario",
-							render(data){
-								if(data == "") return "No tiene";
-								else return data+" KG.";
+							render(data) {
+								if (data == "") return "No tiene";
+								else return data + " KG.";
 							}
 						},
 						{
