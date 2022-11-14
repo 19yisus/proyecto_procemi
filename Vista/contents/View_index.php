@@ -30,30 +30,41 @@
 							</div>
 						</div>
 						<br>
-						<table class="table table-striped table-hover" id="tabla">
-							<thead>
-								<th>ID</th>
-								<th>Fecha</th>
-								<th>Placa</th>
-								<th>Cédula</th>
-								<th>Empresa</th>
-								<!-- <th>Condición de la empresa</th> -->
-								<th>Producto</th>
-								<th>Cantidad</th>
-								<th>Muestra</th>
-								<th>Daño</th>
-								<th>Humedad</th>
-								<th>Impureza</th>
-								<th>Cantidad restante</th>
-								<th>Peso Salida</th>
-								<!-- <th>Cantidad Producto</th> -->
-								<th>Silo</th>
-								<th>Estado</th>
-								<th>Opciones</th>
-							</thead>
-							<tbody>
-							</tbody>
-						</table>
+						<?php if ($_SESSION['rol_id'] == "R") { ?>
+							<table class="table table-striped table-hover" id="tabla">
+								<thead>
+									<th>ID</th>
+									<th>Fecha</th>
+									<th>Placa</th>
+									<th>Cédula</th>
+									<th>Empresa</th>
+									<!-- <th>Condición de la empresa</th> -->
+									<th>Producto</th>
+									<th>Cantidad</th>
+									<th>Muestra</th>
+									<th>Daño</th>
+									<th>Humedad</th>
+									<th>Impureza</th>
+									<th>Cantidad restante</th>
+									<th>Peso Salida</th>
+									<!-- <th>Cantidad Producto</th> -->
+									<th>Silo</th>
+									<th>Estado</th>
+									<th>Opciones</th>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						<?php
+						}
+						if ($_SESSION['rol_id'] == "L") {
+						?>
+							<div class="text-center">
+								<div class="col-6 mx-auto">
+									<h1>Vista para laboratorio</h1>
+								</div>
+							</div>
+						<?php } ?>
 					</div>
 				</div>
 			</div>

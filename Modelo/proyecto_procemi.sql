@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 06-11-2022 a las 14:54:55
+-- Tiempo de generación: 14-11-2022 a las 05:30:49
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 7.4.22
 
@@ -112,7 +112,7 @@ CREATE TABLE `movimiento` (
   `m_Silo` char(1) COLLATE utf8_spanish_ci NOT NULL,
   `m_Estatus` tinyint(1) NOT NULL,
   `status_proceso` enum('R','A','S','D') COLLATE utf8_spanish_ci NOT NULL,
-  `m_Fecha` date NOT NULL,
+  `m_Fecha` datetime NOT NULL,
   `observacion` varchar(250) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -125,18 +125,20 @@ CREATE TABLE `movimiento` (
 CREATE TABLE `movimiento_detalles` (
   `id_detalle` int(11) NOT NULL,
   `m_Cantidad` int(11) NOT NULL,
-  `m_Dano` int(11) DEFAULT NULL,
-  `m_Partido` int(11) DEFAULT NULL,
+  `m_Dano` decimal(4,2) DEFAULT NULL,
+  `m_Partido` decimal(4,2) DEFAULT NULL,
   `m_Muestra` int(11) DEFAULT NULL,
   `m_Humedad` decimal(4,2) DEFAULT NULL,
   `m_Impureza` decimal(4,2) DEFAULT NULL,
   `m_PesoLab` decimal(8,2) DEFAULT NULL,
   `m_pesoFinal` decimal(8,2) DEFAULT NULL,
   `m_Total` decimal(8,2) DEFAULT NULL,
-  `m_PesoNeto` int(11) DEFAULT NULL,
-  `m_Desc_Humedad` int(11) DEFAULT NULL,
-  `m_Desc_Impureza` int(11) DEFAULT NULL,
-  `m_PesoAcon` int(11) DEFAULT NULL
+  `m_TotalDesc` decimal(10,2) DEFAULT NULL,
+  `m_Desc_Humedad` decimal(10,2) DEFAULT NULL,
+  `m_Desc_Impureza` decimal(10,2) DEFAULT NULL,
+  `m_PesoAcon` decimal(10,2) DEFAULT NULL,
+  `m_PesoNeto` int(11) NOT NULL,
+  `m_FechaLab` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -151,13 +153,14 @@ CREATE TABLE `personal` (
   `personal_Nombre` varchar(60) COLLATE utf8_spanish_ci DEFAULT NULL,
   `personal_Apellido` varchar(60) COLLATE utf8_spanish_ci DEFAULT NULL,
   `personal_Nacionalidad` char(1) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `personal_Telefono` char(11) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `personal_Telefono` char(12) COLLATE utf8_spanish_ci DEFAULT NULL,
   `personal_Correo` varchar(120) COLLATE utf8_spanish_ci DEFAULT NULL,
   `personal_Direccion` varchar(120) COLLATE utf8_spanish_ci DEFAULT NULL,
   `personal_Estatus` tinyint(1) NOT NULL,
   `personal_Fecha` date NOT NULL,
+  `personal_condicion` enum('I','E') COLLATE utf8_spanish_ci NOT NULL,
   `ID_Cargo` int(11) DEFAULT NULL,
-  `ID_Empresa` int(11) NOT NULL
+  `ID_Empresa` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -197,6 +200,10 @@ CREATE TABLE `usuarios` (
   `cedula_user` char(8) COLLATE utf8_spanish_ci NOT NULL,
   `clave_user` varchar(120) COLLATE utf8_spanish_ci NOT NULL,
   `nombre` varchar(60) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `Nacionalidad` char(1) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `Telefono` char(12) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `Correo` varchar(120) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `Direccion` varchar(120) COLLATE utf8_spanish_ci DEFAULT NULL,
   `rol_user` enum('R','A','L') COLLATE utf8_spanish_ci NOT NULL,
   `estatus_user` tinyint(1) NOT NULL,
   `fecha_user` date NOT NULL,
@@ -207,12 +214,12 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id_usuario`, `cedula_user`, `clave_user`, `nombre`, `rol_user`, `estatus_user`, `fecha_user`, `intentos_user`) VALUES
-(1, '12345678', '$2y$12$ET7BsjhVu/ow0FxiNmGWFOSeJkwMCCDizzxv7SoOz8/VIobX65Br6', 'administrador', 'A', 1, '2022-10-29', NULL),
-(2, '22222222', '$2y$12$ET7BsjhVu/ow0FxiNmGWFOSeJkwMCCDizzxv7SoOz8/VIobX65Br6', 'primer romanero', 'R', 1, '2022-10-30', NULL),
-(3, '33333333', '$2y$12$ET7BsjhVu/ow0FxiNmGWFOSeJkwMCCDizzxv7SoOz8/VIobX65Br6', 'primer laboratorio', 'L', 1, '2022-10-30', NULL),
-(4, '12123123', '$2y$12$ET7BsjhVu/ow0FxiNmGWFOSeJkwMCCDizzxv7SoOz8/VIobX65Br6', 'segundo romanero', 'R', 1, '2022-10-31', NULL),
-(6, '27672767', '$2y$12$ET7BsjhVu/ow0FxiNmGWFOSeJkwMCCDizzxv7SoOz8/VIobX65Br6', 'Ricardo Fenomeno', 'R', 1, '2022-11-02', 1);
+INSERT INTO `usuarios` (`id_usuario`, `cedula_user`, `clave_user`, `nombre`, `Nacionalidad`, `Telefono`, `Correo`, `Direccion`, `rol_user`, `estatus_user`, `fecha_user`, `intentos_user`) VALUES
+(1, '12345678', '$2y$12$ET7BsjhVu/ow0FxiNmGWFOSeJkwMCCDizzxv7SoOz8/VIobX65Br6', 'administrador', NULL, NULL, NULL, NULL, 'A', 1, '2022-10-29', NULL),
+(2, '22222222', '$2y$12$eY59CnNwmKFzHPO1090Kv.XxBPSKvrmXwQucvhyltfeqzwYxSkDuO', 'roberto', 'V', '0412-4645645', 'fasdfadsfadsf@gmai.com', 'fasdfasdfadsf', 'R', 1, '2022-10-30', 0),
+(3, '33333333', '$2y$12$ET7BsjhVu/ow0FxiNmGWFOSeJkwMCCDizzxv7SoOz8/VIobX65Br6', 'primer laboratorio', NULL, NULL, NULL, NULL, 'L', 1, '2022-10-30', 1),
+(4, '12123123', '$2y$12$ET7BsjhVu/ow0FxiNmGWFOSeJkwMCCDizzxv7SoOz8/VIobX65Br6', 'segundo romanero', NULL, NULL, NULL, NULL, 'R', 1, '2022-10-31', NULL),
+(6, '27672767', '$2y$12$ET7BsjhVu/ow0FxiNmGWFOSeJkwMCCDizzxv7SoOz8/VIobX65Br6', 'Ricardo Fenomeno', NULL, NULL, NULL, NULL, 'R', 1, '2022-11-02', 1);
 
 -- --------------------------------------------------------
 
