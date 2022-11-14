@@ -19,6 +19,10 @@
     //Se hace las operaciones y se retorna un booleano, aqui podemos aplicar mas validaciones para mayor seguridad
     //Por ejemplo validar que la operacion se realizo, y validar si hubo algun tipo de error
     public function Registrar(){
+      $res = $this->ejecutar("SELECT * FROM marca WHERE marca_Nombre = '$this->nombre';")->fetch_all(MYSQLI_ASSOC);
+      if (isset($res[0])) return 5;
+      
+
       $sql = "INSERT INTO marca(marca_Nombre,marca_Estatus,marca_Fecha) VALUES ('$this->nombre',true,NOW())";
       $result = $this->ejecutar($sql);
       return $result;

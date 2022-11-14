@@ -4,7 +4,7 @@ require("Conexion.php");
 class Laboratorio_m extends bd
 {
   //Variables privadas que solo pueden ser accedidas desde la clase donde se crean
-  private $id, $muestra, $dano, $partido, $humedad, $impureza, $cantidad, $status;
+  private $id, $muestra, $dano, $partido, $humedad, $impureza, $cantidad, $estatus;
   //Funcion constructora, se ejecuta automaticamente al instanciar la clase 
   //Este se hace para dejar las variables con un string vacio
   public function __construct()

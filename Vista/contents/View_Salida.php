@@ -48,6 +48,7 @@
 						<div class="modal-content">
 							<div class="modal-header">
 								<h5 class="modal-title">Consulta</h5>
+								
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
@@ -68,6 +69,14 @@
 							<div class="modal-content">
 								<div class="modal-header">
 									<h5 class="modal-title">Salida del producto</h5>
+									<div class="negra">
+										<div class="hora">
+										<h8 aria-label="Close" data-dismiss="modal"id="form_time">00:00:00</h8>
+										</div>
+										<div class="fecha">
+										<h8 class="modal-title"id="form_date">date</h8>
+										</div>
+									</div>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
@@ -206,7 +215,8 @@
 								{
 									data: "m_pesoFinal",
 									render(data) {
-										return data + " KG.";
+										if (data == null)return "Sin pesar";
+										else return data + " KG.";
 									}
 								},
 								// {

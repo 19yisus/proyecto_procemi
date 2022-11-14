@@ -38,7 +38,7 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 										<i class="material-icons">&#xE147;</i>
 										<span></span>
 									</a>
-									
+
 								</div>
 							</div>
 						</div>
@@ -62,23 +62,24 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 					</div>
 				</div>
 				<div class="modal fade" tabindex="-1" id="modalConsult" role="dialog">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title">Consulta</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body" id="modalConsulta">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Consulta</h5>
 
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body" id="modalConsulta">
+
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 				<!----Formulario emergente--------->
 				<form action="Controlador/Entrada.php" method="post">
 					<div class="modal fade" tabindex="-1" id="addEmployeeModal" role="dialog">
@@ -86,13 +87,21 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 							<div class="modal-content">
 								<div class="modal-header">
 									<h5 class="modal-title">Entrada de Producto</h5>
+									<div class="negra">
+										<div class="hora">
+											<h8 aria-label="Close" data-dismiss="modal" id="form_time">00:00:00</h8>
+										</div>
+										<div class="fecha">
+											<h8 class="modal-title" id="form_date">date</h8>
+										</div>
+									</div>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
 								</div>
 								<div class="modal-body">
 
-								<div class="row">
+									<div class="row">
 										<div class="col-6">
 											<div class="form-group">
 												<label>Producto</label>
@@ -117,7 +126,7 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 												</select>
 											</div>
 										</div>
-										</div>
+									</div>
 
 
 									<div class="row">
@@ -163,19 +172,29 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 												</select>
 											</div>
 										</div>
-										
+
 									</div>
 									<div class="row">
 										<div class="col-6">
 											<div class="form-group">
 												<label>Peso bruto</label>
-												<input type="text" step="1" min="1" name="cantidad" id="cantidad" class="form-control" pattern="[0-9]+" title="Solo puedes ingresar caracteres múmericos" placeholder="KG" required>
+												<div class="input-group">
+													<input type="text" step="1" min="1" name="cantidad" id="cantidad" class="form-control" pattern="[0-9]+" title="Solo puedes ingresar caracteres múmericos"  required>
+													<div class="input-group-append">
+														<span class="input-group-text">KG</span>
+													</div>
+												</div>
 											</div>
 										</div>
 										<div class="col-6">
 											<div class="form-group">
 												<label>Segunda carga</label>
-												<input type="text" step="1" min="1" name="segunda_cantidad" id="segunda_cantidad" class="form-control" pattern="[0-9]+" disabled="disabled" placeholder="KG" required>
+												<div class="input-group">
+													<input type="text" step="1" min="1" name="segunda_cantidad" id="segunda_cantidad" class="form-control" pattern="[0-9]+" disabled="disabled" required>
+													<div class="input-group-append">
+														<span class="input-group-text">KG</span>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -228,35 +247,35 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 		<?php $this->Component("scripts"); ?>
 		<script type="text/javascript">
 			const consultarModal = async (value) => {
-			await fetch("Controlador/Entrada.php?operacion=ConsultarModal&&id=" + value)
-				.then(response => response.text())
-				.then(result => {
-					console.log(value)
-					$("#modalConsulta").html(result)
-				}).catch(error => console.error(error))
-		}
+				await fetch("Controlador/Entrada.php?operacion=ConsultarModal&&id=" + value)
+					.then(response => response.text())
+					.then(result => {
+						console.log(value)
+						$("#modalConsulta").html(result)
+					}).catch(error => console.error(error))
+			}
 			const capadidad_vehiculo = (value) => {
-				let select = document.getElementById("Placa");	
-				$("#cantidad").attr("max",parseInt(select.options[value].getAttribute("data-capacidad")))
+				let select = document.getElementById("Placa");
+				$("#cantidad").attr("max", parseInt(select.options[value].getAttribute("data-capacidad")))
 				let capacidad_secundaria = parseInt(select.options[value].getAttribute("data-2capacidad"));
-				if(capacidad_secundaria > 0){
+				if (capacidad_secundaria > 0) {
 					$("#segunda_cantidad").removeAttr("disabled");
-					$("#segunda_cantidad").attr("max",capacidad_secundaria);
-				}else $("#segunda_cantidad").attr("disabled",true);
+					$("#segunda_cantidad").attr("max", capacidad_secundaria);
+				} else $("#segunda_cantidad").attr("disabled", true);
 			}
 			const manipulateDOM = (value) => {
 				// if (value == "E") $("#empresa").removeAttr("disabled");
 				// else $("#empresa").attr("disabled", true);
-				if(value == "I"){
+				if (value == "I") {
 					$("#empresa2").show(150);
 					$("#empresa2").val("Procemi");
 					$("#empresa").hide(150);
 					$("#empresa").attr("disabled", true);
-				}else {
-						$("#empresa").show(150);
-						$("#empresa").attr("disabled", false);
-						$("#empresa2").hide(150);
-					};
+				} else {
+					$("#empresa").show(150);
+					$("#empresa").attr("disabled", false);
+					$("#empresa2").hide(150);
+				};
 			}
 
 			document.querySelectorAll("#condition").forEach(item => {
@@ -299,7 +318,10 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 							data: "producto_Nombre"
 						},
 						{
-							data: "m_Cantidad"
+							data: "m_Cantidad",
+							render(data) {
+										return data + " KG.";
+									}
 						},
 						{
 							data: "status_proceso",
@@ -326,7 +348,7 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 									`;
 
 								return btn;
-								
+
 							}
 						}
 					],
@@ -419,7 +441,7 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 			// })
 		</script>
 
-		
+
 </body>
 
 </html>

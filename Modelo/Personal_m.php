@@ -4,7 +4,7 @@ require("Conexion.php");
 class Personal_m extends bd
 {
   //Variables privadas que solo pueden ser accedidas desde la clase donde se crean
-  private $id, $nombre, $apellido, $nacionalidad, $cedula, $telefono, $correo, $direccion, $empresa, $cargo, $fecha;
+  private $id, $nombre, $apellido, $nacionalidad, $cedula, $telefono, $correo, $direccion, $empresa, $cargo, $condicion;
   //Funcion constructora, se ejecuta automaticamente al instanciar la clase 
   //Este se hace para dejar las variables con un string vacio
   public function __construct()
@@ -12,7 +12,7 @@ class Personal_m extends bd
     $this->id = $this->nombre = $this->apellido = $this->nacionalidad = $this->cedula = $this->telefono = $this->correo = $this->direccion = $this->empresa = $this->cargo = $this->fecha = "";
   }
   //Aqui asignamos las variables y le colocamos condicionales de una linea
-  public function SetDatos($id, $nombre, $apellido, $nacionalidad, $cedula, $telefono, $correo, $direccion, $empresa, $cargo)
+  public function SetDatos($id, $nombre, $apellido, $nacionalidad, $cedula, $telefono, $correo, $direccion, $empresa, $cargo, $condicion)
   {
     //Basicamente si la variable tiene algo entra en el "?" y retorna el id, si no tiene nada entra en el ":" y retorna null
     $this->id = isset($id) ? $id : null;
@@ -23,17 +23,16 @@ class Personal_m extends bd
     $this->telefono = isset($telefono) ? $telefono : null;
     $this->correo = isset($correo) ? $correo : null;
     $this->direccion = isset($direccion) ? $direccion : null;
-    $this->empresa = isset($empresa) ? $empresa : null;
-    $this->cargo = isset($cargo) ? $cargo : null;
-    $this->fecha = date('m-d-Y');
+    $this->empresa = isset($empresa) ? $empresa : "null";
+    $this->cargo = isset($cargo) ? $cargo : "null";
+    $this->condicion = isset($condicion) ? $condicion : null;
   }
   //Se hace las operaciones y se retorna un booleano, aqui podemos aplicar mas validaciones para mayor seguridad
   //Por ejemplo validar que la operacion se realizo, y validar si hubo algun tipo de error
   public function Registrar()
   {
     $res = $this->ejecutar("SELECT * FROM personal WHERE personal_Cedula = '$this->cedula';")->fetch_all(MYSQLI_ASSOC);
-
-    if (isset($res[0])) return 5;
+    if (isset($res[0]) && $res[0] != '') return 5;
 
     $sql = "INSERT INTO personal (
         personal_Cedula,
@@ -45,6 +44,7 @@ class Personal_m extends bd
         personal_Direccion,
         personal_Estatus,
         personal_Fecha,
+        personal_condicion,
         ID_Cargo,
         ID_Empresa) 
       VALUES (
@@ -57,6 +57,7 @@ class Personal_m extends bd
         '$this->direccion',
         true,
         NOW(),
+        '$this->condicion',
         $this->cargo,
         $this->empresa)";
 
@@ -70,8 +71,8 @@ class Personal_m extends bd
       personal.*,
       cargo.cargo_Nombre,
       empresa.empresa_Nombre
-      FROM personal INNER JOIN cargo ON cargo.ID = personal.ID_Cargo
-      INNER JOIN empresa ON empresa.ID = personal.ID_Empresa
+      FROM personal LEFT JOIN cargo ON cargo.ID = personal.ID_Cargo
+      LEFT JOIN empresa ON empresa.ID = personal.ID_Empresa
       WHERE personal_Estatus = true");
     if ($res) $res = $res->fetch_all(MYSQLI_ASSOC);
     else $res = [];
@@ -81,37 +82,8 @@ class Personal_m extends bd
 
   public function Actualizar()
   {
-    /*
-      if ($this->nombre != ""){
-        $this->ejecutar("UPDATE personal SET personal_Nombre = '$this->nombre' WHERE ID = $this->id");
-      }
-
-      else if ($this->apellido != ""){
-        $this->ejecutar("UPDATE personal SET personal_Apellido = '$this->apellido' WHERE ID = $this->id");
-      }
-
-      else if ($this->nacionalidad != ""){
-        $this->ejecutar("UPDATE personal SET personal_Nacionalidad = '$this->nacionalidad' WHERE ID = $this->id");
-      }
-
-      else if ($this->cedula != ""){
-        $this->ejecutar("UPDATE personal SET personal_Cedula = '$this->cedula' WHERE ID = $this->id");
-      }
-      
-      else if ($this->telefono != ""){
-        $this->ejecutar("UPDATE personal SET personal_Telefono = '$this->telefono' WHERE ID = $this->id");
-      }
-
-      else if ($this->correo != ""){
-        $this->ejecutar("UPDATE personal SET personal_Correo = '$this->correo' WHERE ID = $this->id");
-      }
-
-      else if ($this->direccion != ""){
-        $this->ejecutar("UPDATE personal SET personal_Direccion = '$this->direccion' WHERE ID = $this->id");
-      }
-      */
-
-
+    $res = $this->ejecutar("SELECT * FROM personal WHERE ID != $this->id AND personal_Cedula = '$this->cedula';")->fetch_all(MYSQLI_ASSOC);
+    if (isset($res[0]) && $res[0] != '') return 5;
 
     $this->ejecutar("UPDATE personal SET 
       personal_Cedula = '$this->cedula',
@@ -121,6 +93,7 @@ class Personal_m extends bd
       personal_Telefono = '$this->telefono',
       personal_Correo = '$this->correo',
       personal_Direccion = '$this->direccion',
+      personal_condicion = '$this->condicion',
       ID_Cargo = $this->cargo,
       ID_Empresa = $this->empresa
       WHERE ID = $this->id");

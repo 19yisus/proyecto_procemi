@@ -67,6 +67,14 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 						<div class="modal-content">
 							<div class="modal-header">
 								<h5 class="modal-title">datos del vehiculo</h5>
+								<div class="negra">
+									<div class="hora">
+										<h8 aria-label="Close" data-dismiss="modal" id="form_time">00:00:00</h8>
+									</div>
+									<div class="fecha">
+										<h8 class="modal-title" id="form_date">date</h8>
+									</div>
+								</div>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
@@ -157,8 +165,14 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 										<div class="col-6">
 											<div class="form-group">
 												<label>Capacidad del vehiculo</label>
-												<input type="hidden" name="ID" id="id">
-												<input type="text" pattern="[0-9]{1,5}(\,[0-9]{2})" step="0.01" max="99999.99" min="10.00" name="Peso" id="peso" class="form-control" placeholder="KG" required>
+												<div class="input-group">
+
+													<input type="hidden" name="ID" id="id">
+													<input type="text" pattern="[0-9]{1,5}(\,[0-9]{2})" step="0.01" max="99999.99" min="10.00" name="Peso" id="peso" class="form-control" required>
+													<div class="input-group-append">
+														<span class="input-group-text">KG</span>
+													</div>
+												</div>
 											</div>
 										</div>
 										<div class="col-6">
@@ -172,7 +186,7 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 										<div class="col-6">
 											<div class="form-group">
 												<label>Año del vehiculo</label>
-												<input type="number" step="1" pattern="[0-9]{4}" minlength="4" maxlength="4" name="Ano" id="ano" class="form-control" required>
+												<input type="text" step="1" pattern="[0-9]+" minlength="4" maxlength="4" name="Ano" id="ano" class="form-control" title="Solo puedes ingresar caracteres númericos" required>
 											</div>
 										</div>
 									</div>
@@ -180,7 +194,12 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 										<div class="col-6">
 											<div class="form-group">
 												<label>Peso Extra del vehiuclo</label>
-												<input type="number" pattern="[0-9]{1,5}(\,[0-9]{2})" step="0.01" max="99999.99" min="10.00" disabled="disabled" id="peso_extra" name="Vehiculo_PesoSecundario" id="pesoextra" class="form-control">
+												<div class="input-group">
+													<input type="number" pattern="[0-9]{1,5}(\,[0-9]{2})" step="0.01" max="99999.99" min="10.00" disabled="disabled" id="peso_extra" name="Vehiculo_PesoSecundario" id="pesoextra" class="form-control">
+													<div class="input-group-append">
+														<span class="input-group-text">KG</span>
+													</div>
+												</div>
 											</div>
 										</div>
 
@@ -336,7 +355,7 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 						{
 							data: "segunda_Placa",
 							render(data) {
-								if (data == "") return "No tiene";
+								if (data == null) return "No tiene";
 								else return data;
 							}
 						},
@@ -356,9 +375,9 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 							}
 						},
 						{
-							data: "Vehiculo_PesoSecundario",
+							data: "vehiculo_PesoSecundario",
 							render(data) {
-								if (data == "") return "No tiene";
+								if (data == null) return "No tiene";
 								else return data + " KG.";
 							}
 						},

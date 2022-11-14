@@ -72,23 +72,62 @@
                     <div class="col-6">
                       <div class="form-group">
                         <label>Cédula</label>
-                        <input type="hidden" name="ID" id="id">
-                        <input type="text" class="form-control" maxlength="8" minlength="7" pattern="[0-9]{7,8}" title="Solo se aceptan numeros" required class="input" name="cedula_user" id="" />
+                        <div class="input-group">
+                          <div class="pretend">
+                            <select name="Nacionalidad" id="Nacionalidad" class="form-control">
+                              <option value="V">V</option>
+                              <option value="E">E</option>
+                            </select>
+                          </div>
+                          <input type="hidden" name="id" id="id">
+                          <input type="text" pattern="[0-9]{7,8}" maxlength="8" minlength="7" name="cedula_user" id="cedula" title="Solo se pueden ingresar caracteres númericos" class="form-control" required>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label>Nombre y Apellido</label>
+                        <input type="text" minlength="2" maxlength="60" name="nombre" id="nombre" class="form-control" required>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label>Télefono</label>
+                        <div class="input-group">
+                          <div class="pretend">
+                            <select name="codigo_area" id="codigo_area" class="form-control">
+                              <option value="0412">0412</option>
+                              <option value="0416">0416</option>
+                              <option value="0414">0414</option>
+                              <option value="0424">0424</option>
+                            </select>
+                          </div>
+                          <input type="tel" pattern="[0-9]{7}" title="Solo se aceptan numeros" maxlength="7" minlength="7" name="Telefono" id="telefono" class="form-control" required>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label>Correo</label>
+                        <input type="email" maxlength="120" minlength="20" name="Correo" id="correo" class="form-control" required>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label>Dirección</label>
+                        <input type="text" name="Direccion" id="direccion" class="form-control" pattern="[A-Za-z0-9 ]+" title="Solo se pueden ingresar caracteres numericos y alfabeticos" required>
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
                         <label>Clave</label>
                         <input type="password" minlength="8" name="clave_user" id="clave" class="form-control" required>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="form-group">
-                        <label>Nombre y Apellido</label>
-                        <input type="text" minlength="2" maxlength="60" name="nombre" id="nombre" class="form-control" required>
                       </div>
                     </div>
                   </div>
@@ -209,9 +248,12 @@
                 let btn_desactivar = `
                   <button type="button" class="btn btn-${color}" onclick="cambiarEstatus('${row.id_usuario}',${row.estatus_user})">
                     ${sms}
-                  </button>`;
+                  </button>
+                  <a href="#addEmployeeModal" class="edit" data-toggle="modal" onclick="consultarUno('${row.id_usuario}')">
+										<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
+									</a>`;
 
-                if(row.rol_user != "A"){
+                if (row.rol_user != "A") {
                   return btn_desactivar;
                 }
               }
@@ -231,13 +273,24 @@
       */
       const consultarUno = async (id) => {
         $("#operacion").val("Actualizar");
-        await fetch("Controlador/Cargo.php?operacion=ConsultarUno&&id=" + id)
+        await fetch("Controlador/Auth.php?operacion=ConsultarUno&&id=" + id)
           .then(response => response.json())
           .then(({
             data
           }) => {
-            $("#id").val(data.ID)
-            $("#nombre").val(data.cargo_Nombre)
+            console.log(data)
+            $("#id").val(data.id_usuario)
+            $("#cedula").val(data.cedula_user)
+            $("#Nacionalidad").val(data.Nacionalidad)
+            $("#nombre").val(data.nombre)
+            $("#correo").val(data.Correo)
+            $("#direccion").val(data.Direccion)
+            let [codigo, telefono] = data.telefono.split("-");
+            $("#codigo_area").val(codigo);
+            $("#telefono").val(telefono);
+            document.querySelectorAll("#rol").forEach(item => {
+							if (item.value == data.rol_user) item.checked = true;
+						})
           }).catch(error => console.error(error))
       }
       const cambiarEstatus = (id, estado) => {

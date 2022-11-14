@@ -113,10 +113,10 @@ function changeStatus()
 function actualizar_user()
 {
   $a = new Auth_m();
-  // $a->SetDatos($_POST);
-  // $res = $a->Actualizar();
-  // if($res) header("location:../View_Login?Mensaje=2");
-  // else header("location:../View_Login?Mensaje= 1 ");
+  $a->SetDatos($_POST);
+  $res = $a->Actualizar();
+  if ($res) header("location:../View_usuarios?Mensaje=2");
+  else header("location:../View_usuarios?Mensaje=1 ");
 }
 
 function consultar_users()
@@ -130,8 +130,8 @@ function consultar_users()
 function consultar_uno()
 {
   $a = new Auth_m();
-  // $datos = $a->Consultar_Uno($_GET["id"]);
-  // echo json_encode(["data" => $datos], false);
+  $datos = $a->Consultar_Uno($_GET["id"]);
+  echo json_encode(["data" => $datos], false);
 }
 
 function eliminar_user()

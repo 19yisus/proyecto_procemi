@@ -60,6 +60,14 @@
 							<div class="modal-content">
 								<div class="modal-header">
 									<h5 class="modal-title">Datos de la empresa</h5>
+									<div class="negra">
+										<div class="hora">
+										<h8 aria-label="Close" data-dismiss="modal"id="form_time">00:00:00</h8>
+										</div>
+										<div class="fecha">
+										<h8 class="modal-title"id="form_date">date</h8>
+										</div>
+									</div>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>

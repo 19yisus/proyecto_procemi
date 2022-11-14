@@ -53,8 +53,8 @@
       $a = new color_m();
       $a->SetDatos(null,$_POST["Nombre"]);
       $res = $a->Registrar();
-      if($res === 5) header("location:../View_color?Mensaje=5");
-      if($res) header("location:../View_color?Mensaje=2");
+      if($res === 5) header("location:../View_color?Mensaje=2");
+      if($res) header("location:../View_color?Mensaje=5");
       else header("location:../View_color?Mensaje= 1 ");
    }
 

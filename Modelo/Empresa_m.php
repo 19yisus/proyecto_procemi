@@ -4,37 +4,35 @@ require("Conexion.php");
 class Empresa_m extends bd
 {
   //Variables privadas que solo pueden ser accedidas desde la clase donde se crean
-  private $id, $encargado, $cedula_encargado, $telefono_encargado, $direccion_encargado, $rif, $nombre, $telefono, $ubicacion, $fecha ;
+  private $id, $encargado, $cedula_encargado, $telefono_encargado, $direccion_encargado, $rif, $nombre, $telefono, $ubicacion, $fecha;
   //Funcion constructora, se ejecuta automaticamente al instanciar la clase 
   //Este se hace para dejar las variables con un string vacio
   public function __construct()
   {
-    $this->id = 
-    $this->encargado = 
-    $this->cedula_encargado = 
-    $this->telefono_encargado = 
-    $this->direccion_encargado = 
-    $this->rif = 
-    $this->nombre = 
-    $this->ubicacion = 
-    $this->telefono =
-    $this->fecha = 
-    $this->empresa_condition = "";
+    $this->id =
+      $this->encargado =
+      $this->cedula_encargado =
+      $this->telefono_encargado =
+      $this->direccion_encargado =
+      $this->rif =
+      $this->nombre =
+      $this->ubicacion =
+      $this->telefono =
+      $this->fecha =
+      $this->empresa_condition = "";
   }
   //Aqui asignamos las variables y le colocamos condicionales de una linea
   public function SetDatos(
-    $id, 
-    $encargado, 
+    $id,
+    $encargado,
     $cedula_encargado,
     $telefono_encargado,
     $direccion_encargado,
-    $rif, 
-    $nombre, 
-    $ubicacion, 
-    $telefono,
-    $condition
-    )
-  {
+    $rif,
+    $nombre,
+    $ubicacion,
+    $telefono
+  ) {
     //Basicamente si la variable tiene algo entra en el "?" y retorna el id, si no tiene nada entra en el ":" y retorna null
     $this->id = isset($id) ? $id : null;
     $this->encargado = isset($encargado) ? $encargado : null;
@@ -43,7 +41,7 @@ class Empresa_m extends bd
     $this->direccion_encargado = isset($direccion_encargado) ? $direccion_encargado : null;
     $this->rif = isset($rif) ? $rif : null;
     $this->nombre = isset($nombre) ? $nombre : null;
-    $this->ubicacion = isset($ubicacion) ? $ubicacion : null; 
+    $this->ubicacion = isset($ubicacion) ? $ubicacion : null;
     $this->telefono = isset($telefono) ? $telefono : null;
     $this->fecha = date('m-d-Y');
   }
@@ -51,6 +49,9 @@ class Empresa_m extends bd
   //Por ejemplo validar que la operacion se realizo, y validar si hubo algun tipo de error
   public function Registrar()
   {
+    $res = $this->ejecutar("SELECT * FROM empresa WHERE empresa_Rif = '$this->rif' OR empresa_Nombre = '$this->nombre';")->fetch_all(MYSQLI_ASSOC);
+    if (isset($res[0])) return 5;
+
     $result = $this->ejecutar("INSERT INTO empresa(
       empresa_Rif,
       empresa_Encargado,

@@ -53,7 +53,8 @@
       $a = new Producto_m();
       $a->SetDatos(null,$_POST["Nombre"]);
       $res = $a->Registrar();
-      if($res) header("location:../View_Producto?Mensaje=2");
+      if($res === 5) header("location:../View_Producto?Mensaje=2");
+      if($res) header("location: ../View_Producto?Mensaje=5");
       else header("location:../View_Producto?Mensaje=1 ");
    }
 

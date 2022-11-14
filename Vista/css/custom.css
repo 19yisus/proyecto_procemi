@@ -797,10 +797,27 @@ background-color:rgba(0,0,0,0.09);
 	}
 	
 	
+	.negra{
+		font-size: 12px;
+		position: relative;
+		left: 50%;
+		
+		
+
+	}
+	.negra .hora, .negra .fecha {
+		display: inline-block;
+		margin: 15px;
+		
+	}
 	
 	
-	
-	
+	.as{
+		display: flex;	
+	}
+	.as_t{
+		margin: 0 10px;
+	}
 	
 	
 	#empresa2{

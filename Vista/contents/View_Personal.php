@@ -67,7 +67,15 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title">Personal</h5>
+									<h5 class="modal-title">Datos del Personal</h5>
+									<div class="negra">
+										<div class="hora">
+											<h8 aria-label="Close" data-dismiss="modal" id="form_time">00:00:00</h8>
+										</div>
+										<div class="fecha">
+											<h8 class="modal-title" id="form_date">date</h8>
+										</div>
+									</div>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
@@ -104,20 +112,20 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 										</div>
 										<div class="col-6">
 											<div class="form-group">
-											<label>Télefono</label>
+												<label>Télefono</label>
 												<div class="input-group">
-												<div class="pretend">
-													<select name="codigo_area" id="codigo_area" class="form-control">
-														<option value="0412">0412</option>
-														<option value="0416">0416</option>
-														<option value="0414">0414</option>
-														<option value="0424">0424</option>
-													</select>
+													<div class="pretend">
+														<select name="codigo_area" id="codigo_area" class="form-control">
+															<option value="0412">0412</option>
+															<option value="0416">0416</option>
+															<option value="0414">0414</option>
+															<option value="0424">0424</option>
+														</select>
+													</div>
+													<input type="tel" pattern="[0-9]{7}" title="Solo se aceptan numeros" maxlength="7" minlength="7" name="Telefono" id="telefono" class="form-control" required>
 												</div>
-												<input type="tel" pattern="[0-9]{7}" title="Solo se aceptan numeros" maxlength="7" minlength="7" name="Telefono" id="telefono" class="form-control" required>
-											</div>
-												
-												
+
+
 											</div>
 										</div>
 									</div>
@@ -136,10 +144,28 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 										</div>
 									</div>
 									<div class="row">
+										<div class="col-12">
+											<div class="d-flex flex-column">
+												<label for="">Condición del personal</label>
+												<div class="d-flex flex-row justify-content-around">
+													<div class="form-check ml-2 mr-2">
+														<input type="radio" name="condicion" value="E" id="condition" class="form-check-input" required>
+														<small class="form-check-label">Externo</small>
+													</div>
+													<div class="form-check">
+														<input type="radio" name="condicion" value="I" id="condition" class="form-check-input" required>
+														<small class="form-check-label">Interno</small>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
 										<div class="col-6">
 											<div class="form-group">
 												<label>Empresa</label>
-												<select name="Empresa" class="form-control" required>
+												<input type="text" id="empresa2" name="Empresa" class="form-control" style="display: none;" disabled>
+												<select name="Empresa" id="sel_empresa" class="form-control" required>
 													<option value="">Seleccione una opción</option>
 													<?php while ($a = $empresa->fetch_assoc()) { ?>
 														<option name="Empresa" id="empresa" value="<?php echo $a["ID"] ?>"><?php echo $a["empresa_Nombre"] ?></option>
@@ -207,6 +233,22 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 		</footer>
 		<?php $this->Component("scripts"); ?>
 		<script type="text/javascript">
+			document.querySelectorAll("#condition").forEach(item => {
+				item.addEventListener("change", (e) => manipulateDOM(e.target.value))
+			})
+
+			const manipulateDOM = (value) => {
+				if (value == "I") {
+					$("#empresa2").show(150);
+					$("#empresa2").val("Procemi");
+					$("#sel_empresa").hide(150);
+					$("#sel_empresa").attr("disabled", true);
+				} else {
+					$("#empresa2").hide(150);
+					$("#sel_empresa").show(150);
+					$("#sel_empresa").removeAttr("disabled");
+				}
+			}
 			$(document).ready(() => {
 				/* Creamos el datatable y por medio de la propiedad ajax, le damos la url a consultar y asignamos la propiedad dataSrc, le damos el valor data (ya que es lo que mando desde el controlador)
 				 asigno las columnas donde van, y agrego los botones con su evento onclick para las operaciones
@@ -242,7 +284,11 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 							data: "personal_Direccion"
 						},
 						{
-							data: "empresa_Nombre"
+							data: "empresa_Nombre",
+							render(data) {
+								if (data) return data;
+								else return "Procemi";
+							}
 						},
 						{
 							data: "cargo_Nombre"
@@ -281,12 +327,18 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 					.then(({
 						data
 					}) => {
+						document.querySelectorAll("#condition").forEach(item => {
+							if (item.value == data.personal_condicion) item.checked = true;
+						})
+						manipulateDOM(data.personal_condicion);
 						$("#id").val(data.ID)
 						$("#nombre").val(data.personal_Nombre)
 						$("#apellido").val(data.personal_Apellido)
 						$("#Nacionalidad").val(data.personal_Nacionalidad)
 						$("#cedula").val(data.personal_Cedula)
-						$("#telefono").val(data.personal_Telefono)
+						let [codigo, dato2] = data.personal_Telefono.split("-")
+						$("#codigo_area").val(codigo)
+						$("#telefono").val(dato2)
 						$("#correo").val(data.personal_Correo)
 						$("#direccion").val(data.personal_Direccion)
 						$("#cargo").val(data.ID_Cargo)

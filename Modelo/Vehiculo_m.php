@@ -41,7 +41,15 @@
     }
 
     public function Consultar_Todos(){
-      $res = $this->ejecutar("SELECT vehiculo.*, marca.marca_Nombre, modelo.modelo_Nombre, color.color_Nombre, vehiculo.vehiculo_Peso, vehiculo.vehiculo_Ano, empresa.empresa_Nombre 
+      $res = $this->ejecutar("SELECT 
+      vehiculo.*, 
+      marca.marca_Nombre, 
+      modelo.modelo_Nombre, 
+      color.color_Nombre, 
+      vehiculo.vehiculo_Peso, 
+      vehiculo.vehiculo_Ano,
+      vehiculo.segunda_Placa, 
+      empresa.empresa_Nombre 
       FROM vehiculo 
       INNER JOIN modelo ON modelo.ID = vehiculo.ID_Modelo
       INNER JOIN color on color.ID = vehiculo.ID_Color  

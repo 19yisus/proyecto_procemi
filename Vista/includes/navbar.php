@@ -12,10 +12,11 @@
 		</div>
 		<div class="xp-breadcrumbbar text-center">
 			<ol class="breadcrumb"><br>
-			
-			<class id="as"> <br></class>
-				<h2 id="time">00:00:00</h2>
-				<h2 id="date">date</h2>
+
+				<div class="as"> <br>
+					<h2 id="time" class="as_t">00:00:00</h2>
+					<h2 id="date" class="as_t">date</h2>
+				</div>
 			</ol>
 		</div>
 	</div>

@@ -1,11 +1,51 @@
 <?php
 if ($res['condicion_empresa'] == "E") $condicion = "Externa";
-else $condicion = "Interna";
+else $condicion = "Procemi";
 
 if ($res['status_proceso'] == "S") $estatus_proceso = "En el Silo";
-if ($res['status_proceso'] == "R") $estatus_proceso = "Rechazado";
+if ($res['status_proceso'] == "R") $estatus_proceso = "Rechazado por laboratorio";
 if ($res['status_proceso'] == "A") $estatus_proceso = "Aprobado por laboratorio";
 if ($res['status_proceso'] == "R") $estatus_proceso = "En Revisión";
+
+if ($res['segunda_Placa'] == null) $segunda_Placa = "No tiene";
+else $segunda_Placa = $res["segunda_Placa"];
+
+if ($res['Vehiculo_PesoSecundario'] == 0) $segundo_Peso = "No tiene";
+else $segundo_Peso = $res['Vehiculo_PesoSecundario']; 
+
+if ($res['m_Cantidad'] == "") $muestra = "No ingresada";
+else $muestra = $res['m_Cantidad'] . "KG";
+
+if ($res['m_Dano'] == "")$daño = "Sin analizar";
+else $daño = $res['m_Dano'] . "%";
+
+if ($res['m_Partido']=="")$partido = "Sin analizar";
+else $partido = $res['m_Partido'] . "%";
+
+if ($res['m_Muestra'] == "")$muestra = "Sin ingresar";
+else $muestra = $res['m_Muestra'] . "KG";
+
+if ($res['m_Impureza'] == "")$impureza = "Sin analizar";
+else $impureza = $res['m_Impureza'] . "%";
+
+if ($res['m_Humedad'] == "")$humedad = "sin analizar";
+else $humedad = $res['m_Humedad'] . "%";
+
+if ($res['m_Desc_Humedad'] == "")$descHumedad = "sin analizar";
+else $descHumedad = $res['m_Desc_Humedad'] . "KG";
+
+if ($res['m_Desc_Impureza'] == "")$descImpureza = "sin analizar";
+else $descImpureza = $res['m_Desc_Impureza'] . "KG";
+
+if ($res['m_TotalDesc'] == "")$totalDesc = "sin analizar";
+else $totalDesc = $res['m_TotalDesc'] . "KG";
+
+if ($res['m_PesoAcon'] == "")$pesoAcon = "Sin analizar";
+else $pesoAcon = $res['m_PesoAcon'] . "KG";
+
+if ($res['m_Silo']=='N')$silo = "Sin almacenar";
+else $silo = $res['m_Silo'];
+
 ?>
 <div class="row">
   <table class="table">
@@ -26,9 +66,8 @@ if ($res['status_proceso'] == "R") $estatus_proceso = "En Revisión";
         <td><?php echo  $estatus_proceso; ?></td>
         <td><?php echo $condicion; ?></td>
         <td><?php echo $res['producto_Nombre']; ?></td>
-        <td><?php echo $res['m_PesoAcon'] . " KG.";; ?></td>
-        <th></th>
-        <td><?php echo $res['m_Silo']; ?></td>
+        <td><?php echo $pesoAcon?></td>
+        <td><?php echo $silo ?></td>
       </tr>
     </tbody>
   </table>
@@ -49,16 +88,16 @@ if ($res['status_proceso'] == "R") $estatus_proceso = "En Revisión";
     </thead>
     <tbody>
       <tr>
-        <th scope="row"><?php echo $res['m_Cantidad'] . " KG."; ?></th>
-        <td><?php echo $res['m_Dano'] . "%"; ?></td>
-        <td><?php echo $res['m_Partido'] . "%"; ?></td>
-        <td><?php echo $res['m_Muestra'] . "KG"; ?></td>
-        <td><?php echo $res['m_Impureza'] . " %"; ?></td>
-        <td><?php echo $res['m_Humedad'] . " %"; ?></td>
-        <td><?php echo $res['m_Desc_Humedad'] . " KG"; ?></td>
-        <td><?php echo $res['m_Desc_Impureza'] . " KG"; ?></td>
-        <td><?php echo $res['m_TotalDesc'] . " KG"; ?></td>
-        
+        <th scope="row"><?php echo $muestra ?></th>
+        <td><?php echo $daño ?></td>
+        <td><?php echo $partido ?></td>
+        <td><?php echo $muestra?></td>
+        <td><?php echo $impureza?></td>
+        <td><?php echo $humedad?></td>
+        <td><?php echo $descHumedad ?></td>
+        <td><?php echo $descImpureza ?></td>
+        <td><?php echo $totalDesc ?></td>
+
       </tr>
     </tbody>
   </table>
@@ -106,9 +145,20 @@ if ($res['status_proceso'] == "R") $estatus_proceso = "En Revisión";
     <tbody>
       <tr>
         <th scope="row"><?php echo $res['vehiculo_Placa']; ?></th>
-        <td><?php echo $res['segunda_Placa']; ?></td>
+        <td>
+          <?php
+          echo $segunda_Placa;
+          ?>
+        </td>
+
         <td><?php echo $res['vehiculo_Peso'] . "KG"; ?></td>
-        <td><?php echo $res['Vehiculo_PesoSecundario'] . "KG"; ?></td>
+
+        <td>
+          <?php
+          echo $segundo_Peso;
+          ?>
+        </td>
+
         <?php if ($res['condicion'] == "P") { ?>
           <td><?php echo $res['rif_dueno']; ?></td>
         <?php } ?>
@@ -147,13 +197,18 @@ if ($res['status_proceso'] == "R") $estatus_proceso = "En Revisión";
       </tr>
     </thead>
     <tbody>
-      <?php //while ($item = $res2->fetch_assoc()) { ?>
+      <?php //while ($item = $res2->fetch_assoc()) { 
+      ?>
         <tr>
-          <th scope="row"><?php //echo $item['cedula_user']; ?></th>
-          <td><?php //echo $item['rol_user']; ?></td>
-          <td><?php //echo $item['des_cambio']; ?></td>
+          <th scope="row"><?php //echo $item['cedula_user']; 
+                          ?></th>
+          <td><?php //echo $item['rol_user']; 
+              ?></td>
+          <td><?php //echo $item['des_cambio']; 
+              ?></td>
         </tr>
-      <?php //} ?>
+      <?php //} 
+      ?>
 
     </tbody>
   </table> -->

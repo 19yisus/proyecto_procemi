@@ -1,6 +1,13 @@
 const time = document.getElementById('time');
 const date = document.getElementById('date');
 
+const form_time = document.getElementById('form_time');
+const form_date = document.getElementById('form_date');
+
+
+
+
+
 const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
     "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
 ];
@@ -15,5 +22,9 @@ const interval = setInterval(() => {
 
     time.innerHTML = local.toLocaleTimeString();
     date.innerHTML = `${day} ${monthNames[month]} ${year}`;
+
+    form_time.innerHTML = local.toLocaleTimeString();
+    form_date.innerHTML = `${day} ${monthNames[month]} ${year}`;
+    
 
 }, 1000);
