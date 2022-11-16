@@ -51,7 +51,7 @@
 						<div class="modal-content">
 							<div class="modal-header">
 								<h5 class="modal-title">Consulta</h5>
-								
+
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
@@ -74,10 +74,10 @@
 									<h5 class="modal-title">Laboratorio</h5>
 									<div class="negra">
 										<div class="hora">
-										<h8 aria-label="Close" data-dismiss="modal"id="form_time">00:00:00</h8>
+											<h8 aria-label="Close" data-dismiss="modal" id="form_time">00:00:00</h8>
 										</div>
 										<div class="fecha">
-										<h8 class="modal-title"id="form_date">date</h8>
+											<h8 class="modal-title" id="form_date">date</h8>
 										</div>
 									</div>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -117,7 +117,7 @@
 											<div class="form-group" id="div_muestra">
 												<label>Muestra</label>
 												<div class="input-group">
-													<input type="number" step="1" pattern="[0-9]{1,11}" min="Solo se aceptan numeros" minlength="1" maxlength="11" name="Muestra" id="muestra" class="form-control" required>
+													<input type="number" step="1" pattern="[0-9]{1,11}" min="Solo se aceptan numeros" minlength="1" maxlength="3" name="Muestra" id="muestra" class="form-control" required>
 													<div class="input-group-append">
 														<span class="input-group-text">%</span>
 													</div>
@@ -151,7 +151,7 @@
 											<div class="form-group">
 												<label>Grano Dañado</label>
 												<div class="input-group">
-													<input type="text" step="00.1" min="00.1" min="Solo se aceptan numeros" minlength="1" maxlength="11" name="Dano" id="dano" class="form-control porcentaje" required disabled="disabled">
+													<input type="number" step="00.1" min="00.1" min="0.01" max="100" minlength="1" maxlength="3" name="Dano" id="dano" class="form-control porcentaje" required disabled="disabled">
 													<div class="input-group-append">
 														<span class="input-group-text">%</span>
 													</div>
@@ -162,7 +162,7 @@
 											<div class="form-group">
 												<label>Grano Partido</label>
 												<div class="input-group">
-													<input type="text" step="00.1" min="00.1" min="Solo se aceptan numeros" minlength="1" maxlength="11" name="Partido" id="partido" class="form-control" required disabled="disabled">
+													<input type="number" step="00.1" min="00.1" min="0.01" max="100" minlength="1" maxlength="3" name="Partido" id="partido" class="form-control" required disabled="disabled">
 													<div class="input-group-append">
 														<span class="input-group-text">%</span>
 													</div>
@@ -233,24 +233,24 @@
 								$("#div_obser").show(150)
 								$("#observacion").removeAttr("disabled");
 
-								$("#muestra").attr("disabled", true);
-								$("#peso").attr("disabled", true);
-								$("#humedad").attr("disabled", true);
-								$("#impureza").attr("disabled", true);
-								$("#dano").attr("disabled", true);
-								$("#partido").attr("disabled", true);
+								// $("#muestra").attr("disabled", true);
+								// $("#peso").attr("disabled", true);
+								// $("#humedad").attr("disabled", true);
+								// $("#impureza").attr("disabled", true);
+								// $("#dano").attr("disabled", true);
+								// $("#partido").attr("disabled", true);
 							});
 						} else {
 							$("#operacion").val("Registro");
 							$("#observacion").attr("disabled", true);
 							$("#div_obser").hide(150, () => {
 								$("#div_muestra").show(150)
-								$("#muestra").removeAttr("disabled");
-								$("#peso").removeAttr("disabled");
-								$("#humedad").removeAttr("disabled");
-								$("#impureza").removeAttr("disabled");
-								$("#dano").removeAttr("disabled");
-								$("#partido").removeAttr("disabled");
+								// $("#muestra").removeAttr("disabled");
+								// $("#peso").removeAttr("disabled");
+								// $("#humedad").removeAttr("disabled");
+								// $("#impureza").removeAttr("disabled");
+								// $("#dano").removeAttr("disabled");
+								// $("#partido").removeAttr("disabled");
 							});
 						}
 					}
@@ -287,42 +287,42 @@
 								},
 								{
 									data: "m_Cantidad",
-									render(data){
+									render(data) {
 										return data + "KG";
 									}
 								},
 								{
 									data: "m_Muestra",
-									render(data){
-										if(data == null) return "Sin muestra";
+									render(data) {
+										if (data == null) return "Sin muestra";
 										else return data + "%";
 									}
 								},
 								{
 									data: "m_Dano",
-									render(data){
-										if(data == null) return "Sin analizar";
+									render(data) {
+										if (data == null) return "Sin analizar";
 										else return data + "%";
 									}
 								},
 								{
 									data: "m_Partido",
-									render(data){
-										if(data == null) return "Sin analizar";
+									render(data) {
+										if (data == null) return "Sin analizar";
 										else return data + "%";
 									}
 								},
 								{
 									data: "m_Humedad",
-									render(data){
-										if(data == null) return "Sin analizar";
+									render(data) {
+										if (data == null) return "Sin analizar";
 										else return data + "%";
 									}
 								},
 								{
 									data: "m_Impureza",
-									render(data){
-										if(data == null) return "Sin analizar";
+									render(data) {
+										if (data == null) return "Sin analizar";
 										else return data + "%";
 									}
 								},
@@ -330,6 +330,7 @@
 									data: "status_proceso",
 									render(data) {
 										if (data == 'R') return "En Revisión";
+										if (data == 'P') return "Por analizar";
 										if (data == 'D') return "Devuelto por laboratorio";
 										if (data == 'A') return "Aprobado por laboratorio";
 										if (data == 'S') return "En el Silo";
@@ -366,18 +367,26 @@
 								$("#id").val(data.ID)
 								$("#cantidad").val(data.m_Cantidad)
 								$("#muestra").val(data.m_Muestra)
+								$("#muestra").attr("max", data.m_Cantidad)
 
 								if (data.m_Muestra != null) {
-									document.querySelectorAll("#estatus_ope").forEach(item => {
-										$(item).removeAttr("disabled");
-									})
+									console.log(data.m_Impureza)
+									if (data.m_Impureza != null) {
+										document.querySelectorAll("#estatus_ope").forEach(item => {
+											$(item).removeAttr("disabled");
+										})
+									}
 
-									$("#muestra").attr("max", data.m_Cantidad)
 									$("#dano").val(data.m_Dano)
 									$("#partido").val(data.m_Partido);
 									$("#humedad").val(data.m_Humedad)
 									$("#impureza").val(data.m_Impureza)
-									$("#estatus_ope").val(data.m_)
+
+									$("#dano").removeAttr("disabled")
+									$("#partido").removeAttr("disabled");
+									$("#humedad").removeAttr("disabled")
+									$("#impureza").removeAttr("disabled")
+									// $("#estatus_ope").val(data.m_)
 								}
 								$("#des_product").val(data.producto_Nombre)
 								$cedula = data.personal_Nacionalidad + "-" + data.personal_Cedula;

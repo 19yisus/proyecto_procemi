@@ -195,15 +195,14 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 											<div class="form-group">
 												<label>Peso Extra del vehiuclo</label>
 												<div class="input-group">
-													<input type="number" pattern="[0-9]{1,5}(\,[0-9]{2})" step="0.01" max="99999.99" min="10.00" disabled="disabled" id="peso_extra" name="Vehiculo_PesoSecundario" id="pesoextra" class="form-control">
+													<input type="number" pattern="[0-9]{1,5}(\,[0-9]{2})" step="0.01" max="99999.99" min="10.00" disabled="disabled" id="peso_extra" name="Vehiculo_PesoSecundario" class="form-control">
 													<div class="input-group-append">
 														<span class="input-group-text">KG</span>
 													</div>
 												</div>
 											</div>
 										</div>
-
-
+										
 										<div class="col-6">
 											<div class="form-group">
 												<label>Placa Extra del vehiculo</label>
@@ -284,15 +283,18 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 				}
 			})
 
-			document.getElementById("if_doble").addEventListener("click", (e) => {
-				if (!e.target.checked) {
+			document.getElementById("if_doble").addEventListener("click", (e) => manipulatePlaca(e.target.checked))
+
+			const manipulatePlaca = (value) =>{
+				console.log(value)
+				if (!value || value == 0) {
 					$("#peso_extra").attr("disabled", true);
 					$("#segunda_Placa").attr("disabled", true);
 				} else {
 					$("#peso_extra").removeAttr("disabled");
 					$("#segunda_Placa").removeAttr("disabled");
 				}
-			})
+			}
 			const manipulateDOM = (value) => {
 				if (value == "I") {
 					$("#empresa2").show(150);
@@ -375,9 +377,9 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 							}
 						},
 						{
-							data: "vehiculo_PesoSecundario",
+							data: "Vehiculo_PesoSecundario",
 							render(data) {
-								if (data == null) return "No tiene";
+								if (data == "0.00") return "No tiene";
 								else return data + " KG.";
 							}
 						},
@@ -430,6 +432,8 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 							if (item.value == data.condicion) item.checked = true;
 						})
 						manipulateDOM(data.condicion);
+						manipulatePlaca(data.if_doble);
+						console.log(data);
 
 						$("#id").val(data.ID)
 						$("#placa").val(data.vehiculo_Placa)
@@ -438,6 +442,9 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 						$("#color").val(data.ID_Color)
 						$("#peso").val(data.vehiculo_Peso)
 						$("#ano").val(data.vehiculo_Ano)
+						$("#peso_extra").val(data.Vehiculo_PesoSecundario)
+						$("#segunda_Placa").val(data.segunda_Placa);
+						$("#if_doble").attr("checked", data.if_doble)
 						let [tipo, cedula] = data.rif_dueno.split("-")
 
 						$("#tipo_rif").val(tipo);

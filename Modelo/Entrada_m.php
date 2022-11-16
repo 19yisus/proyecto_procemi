@@ -60,12 +60,12 @@ class Entrada_m extends bd
     try {
       $sql1 = "INSERT INTO movimiento(
           ID_Vehiculo, ID_Personal,
-          ID_Producto, ID_Empresa,condicion_empresa,
+          ID_Producto, ID_Empresa,condicion_empresa,observacion,
           
           m_Silo, m_Estatus,status_proceso,m_Fecha) 
           VALUES (
-          $this->id_vehiculo,$this->id_personal,$this->id_producto,$this->id_empresa,'$this->condicion_empresa',
-          'N',1,'R',NOW()
+          $this->id_vehiculo,$this->id_personal,$this->id_producto,$this->id_empresa,'$this->condicion_empresa','',
+          'N',1,'P',NOW()
           )";
 
       $con = $this->beginTransaccion();
@@ -82,10 +82,10 @@ class Entrada_m extends bd
       $sql2 = "INSERT INTO movimiento_detalles(
           id_detalle,
           m_Cantidad, m_Dano, m_Partido, m_Muestra, m_Humedad,
-          m_Impureza, m_PesoLab, m_PesoFinal) 
+          m_Impureza, m_PesoLab, m_PesoFinal,m_PesoNeto) 
         VALUES (
           '$id_mov',
-          '$this->cantidad',null,null,null,null,null,null,null)";
+          '$this->cantidad',null,null,null,null,null,null,null,0)";
       $result = $this->queryTransaccion($sql2);
 
       if (!$result) {
@@ -192,7 +192,7 @@ class Entrada_m extends bd
       ID_Personal = $this->id_personal,
       ID_Empresa = $this->id_empresa,
       ID_Producto = $this->id_producto,
-      status_proceso = 'R'
+      status_proceso = 'P'
       WHERE ID = $this->id";
       $con = $this->beginTransaccion();
       $result = $this->queryTransaccion($sql1);

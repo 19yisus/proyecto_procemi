@@ -179,7 +179,7 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 											<div class="form-group">
 												<label>Peso bruto</label>
 												<div class="input-group">
-													<input type="text" step="1" min="1" name="cantidad" id="cantidad" class="form-control" pattern="[0-9]+" title="Solo puedes ingresar caracteres múmericos"  required>
+													<input type="number" step="1" min="1" name="cantidad" id="cantidad" class="form-control" pattern="[0-9]+" title="Solo puedes ingresar caracteres múmericos"  required>
 													<div class="input-group-append">
 														<span class="input-group-text">KG</span>
 													</div>
@@ -190,7 +190,7 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 											<div class="form-group">
 												<label>Segunda carga</label>
 												<div class="input-group">
-													<input type="text" step="1" min="1" name="segunda_cantidad" id="segunda_cantidad" class="form-control" pattern="[0-9]+" disabled="disabled" required>
+													<input type="number" step="1" min="1" name="segunda_cantidad" id="segunda_cantidad" class="form-control" pattern="[0-9]+" disabled="disabled" required>
 													<div class="input-group-append">
 														<span class="input-group-text">KG</span>
 													</div>
@@ -327,6 +327,7 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 							data: "status_proceso",
 							render(data) {
 								if (data == 'R') return "En Revisión";
+								if (data == 'P') return "Por analizar";
 								if (data == 'D') return "Devuelto";
 								if (data == 'A') return "Aprobado";
 								if (data == 'S') return "En el Silo";

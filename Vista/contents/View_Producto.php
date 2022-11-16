@@ -69,7 +69,7 @@
 									<div class="form-group">
 										<label>nobre del Producto</label>
 										<input type="hidden" name="ID" id="id">
-										<input type="text" name="Nombre" id="nombre" class="form-control"  pattern="[A-Za-z ]+" title="Solo puedes ingresar caracteres alfabeticos" minlength="4" maxlength="15" required>
+										<input type="text" name="Nombre" id="nombre" class="form-control"  pattern="[a-zA-Zñ ]+" title="Solo puedes ingresar caracteres alfabeticos" minlength="4" maxlength="15" required>
 									</div>
 								</div>
 								<div class="modal-footer">

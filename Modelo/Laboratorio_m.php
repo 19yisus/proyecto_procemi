@@ -22,7 +22,7 @@ class Laboratorio_m extends bd
     $this->humedad = isset($humedad) ? $humedad : "NULL";
     $this->impureza = isset($impureza) ? $impureza : "NULL";
     $this->cantidad = isset($cantidad) ? $cantidad : "NULL";
-    $this->estatus_ope = isset($estatus) ? $estatus : "A";
+    $this->estatus_ope = isset($estatus) ? $estatus : "NULL";
   }
   //Se hace las operaciones y se retorna un booleano, aqui podemos aplicar mas validaciones para mayor seguridad
   //Por ejemplo validar que la operacion se realizo, y validar si hubo algun tipo de error
@@ -53,7 +53,7 @@ class Laboratorio_m extends bd
         return false;
       }
 
-      if ($this->dano == "NULL"){
+      if ($this->estatus_ope == "NULL"){
         $ope = "U";
         $proceso = "R";
       }else{
