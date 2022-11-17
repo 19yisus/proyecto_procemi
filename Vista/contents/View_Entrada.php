@@ -1,12 +1,20 @@
 <?php
 include("Modelo/Conexion.php");
 $a = new bd();
-$vehiculo = $a->ejecutar("SELECT vehiculo.*,modelo.modelo_Nombre,marca.marca_Nombre FROM vehiculo
+$vehiculos_unSolo_peso = $a->ejecutar("SELECT vehiculo.*,modelo.modelo_Nombre,marca.marca_Nombre FROM vehiculo
 	INNER JOIN modelo ON modelo.ID = vehiculo.ID_Modelo
-	INNER JOIN marca ON marca.ID = modelo.ID_Marca WHERE vehiculo.vehiculo_Estatus = 1;");
+	INNER JOIN marca ON marca.ID = modelo.ID_Marca WHERE 
+	vehiculo.Vehiculo_PesoSecundario = 0 AND vehiculo.vehiculo_Estatus = 1;");
+
+$vehiculos_Doble_peso = $a->ejecutar("SELECT vehiculo.*,modelo.modelo_Nombre,marca.marca_Nombre FROM vehiculo
+	INNER JOIN modelo ON modelo.ID = vehiculo.ID_Modelo
+	INNER JOIN marca ON marca.ID = modelo.ID_Marca WHERE 
+	vehiculo.Vehiculo_PesoSecundario != 0 AND vehiculo.vehiculo_Estatus = 1;");
+
 $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 $producto = $a->ejecutar("SELECT * FROM producto WHERE producto_Estatus = true");
-$vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = true");
+// $vehiculos_unSolo_peso = $a->ejecutar("SELECT * FROM vehiculo WHERE Vehiculo_PesoSecundario = 0 AND vehiculo_Estatus = true");
+// $vehiculos_Doble_peso = $a->ejecutar("SELECT * FROM vehiculo WHERE Vehiculo_PesoSecundario != 0 AND vehiculo_Estatus = true");
 $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true");
 ?>
 
@@ -113,17 +121,41 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 												</select>
 											</div>
 										</div>
-										<div class="col-6">
+										<div class="col-4">
 											<div class="form-group">
 												<label>Vehiculo</label>
 												<select onchange="capadidad_vehiculo(this.value)" name="id_vehiculo" id="Placa" class="form-control" required>
 													<option value="">Seleccione una opción</option>
-													<?php while ($a = $vehiculo->fetch_assoc()) {
+													<?php while ($a = $vehiculos_unSolo_peso->fetch_assoc()) {
 													?>
 														<option value="<?php echo $a["ID"]; ?>" data-capacidad="<?php echo $a['vehiculo_Peso']; ?>" data-2capacidad="<?php echo $a['Vehiculo_PesoSecundario']; ?>"><?php echo $a["vehiculo_Placa"] . " - " . $a["modelo_Nombre"] . " - " . $a["marca_Nombre"]; ?></option>
 													<?php }
 													?>
 												</select>
+
+												<select onchange="capadidad_vehiculo(this.value)" name="id_vehiculo" id="Placa_segundo" class="form-control" required disabled style="display: none;">
+													<option value="">Seleccione una opción</option>
+													<?php while ($b = $vehiculos_Doble_peso->fetch_assoc()) {
+													?>
+														<option value="<?php echo $b["ID"]; ?>" data-capacidad="<?php echo $b['vehiculo_Peso']; ?>" data-2capacidad="<?php echo $b['Vehiculo_PesoSecundario']; ?>"><?php echo $b["vehiculo_Placa"] . " - " . $b["modelo_Nombre"] . " - " . $b["marca_Nombre"]; ?></option>
+													<?php }
+													?>
+												</select>
+											</div>
+										</div>
+										<div class="col-2">
+											<div class="form-group">
+												<label>cargas dobles</label>
+												<div class="d-flex justify-content-around">
+													<div class="form-check">
+														<input type="radio" name="" id="doble" value="si" class="form-check-input">
+														<small class="form-check-label">Si</small>
+													</div>
+													<div class="form-check">
+														<input type="radio" name="" id="doble" value="no" class="form-check-input" checked>
+														<small class="form-check-label">No</small>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -179,7 +211,7 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 											<div class="form-group">
 												<label>Peso bruto</label>
 												<div class="input-group">
-													<input type="number" step="1" min="1" name="cantidad" id="cantidad" class="form-control" pattern="[0-9]+" title="Solo puedes ingresar caracteres múmericos"  required>
+													<input type="number" step="1" min="1" name="cantidad" id="cantidad" class="form-control" pattern="[0-9]+" title="Solo puedes ingresar caracteres múmericos" required>
 													<div class="input-group-append">
 														<span class="input-group-text">KG</span>
 													</div>
@@ -255,7 +287,13 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 					}).catch(error => console.error(error))
 			}
 			const capadidad_vehiculo = (value) => {
-				let select = document.getElementById("Placa");
+				let res;
+				let select;
+				document.querySelectorAll("#doble").forEach(item => {
+					if(item.checked && item.value == "no") select = document.getElementById("Placa");
+					if(item.checked && item.value == "si") select = document.getElementById("Placa_segundo");
+				})
+
 				$("#cantidad").attr("max", parseInt(select.options[value].getAttribute("data-capacidad")))
 				let capacidad_secundaria = parseInt(select.options[value].getAttribute("data-2capacidad"));
 				if (capacidad_secundaria > 0) {
@@ -277,6 +315,28 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 					$("#empresa2").hide(150);
 				};
 			}
+
+			const manipulateVehiculos = (value) => {
+				if (value == "si") {
+					$("#Placa").attr("disabled", true);
+					$("#Placa_segundo").removeAttr("disabled");
+
+					$("#Placa").hide(100, () => {
+						$("#Placa_segundo").show(100)
+					});
+				} else {
+					$("#Placa").removeAttr("disabled");
+					$("#Placa_segundo").attr("disabled", true);
+
+					$("#Placa_segundo").hide(100, () => {
+						$("#Placa").show(100)
+					});
+				}
+			}
+
+			document.querySelectorAll("#doble").forEach(item => {
+				item.addEventListener("change", (e) => manipulateVehiculos(e.target.value))
+			})
 
 			document.querySelectorAll("#condition").forEach(item => {
 				item.addEventListener("change", (e) => manipulateDOM(e.target.value))
@@ -320,8 +380,8 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 						{
 							data: "m_Cantidad",
 							render(data) {
-										return data + " KG.";
-									}
+								return data + " KG.";
+							}
 						},
 						{
 							data: "status_proceso",
