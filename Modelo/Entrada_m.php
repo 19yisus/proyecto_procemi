@@ -179,7 +179,6 @@ class Entrada_m extends bd
     $res2 = $this->ejecutar($sql);
 
     require_once "modalData.php";
-    
   }
   /* No creo que sea necesario explicar esta parte, basciamente agregue las funciones de consultar todos, actualizar y consultar por id */
 
@@ -234,7 +233,10 @@ class Entrada_m extends bd
 
   public function Consultar_Uno($id)
   {
-    $res = $this->ejecutar("SELECT * FROM movimiento INNER JOIN movimiento_detalles ON movimiento_detalles.id_detalle = movimiento.ID WHERE id = $id")->fetch_assoc();
+    $res = $this->ejecutar("SELECT movimiento.*,movimiento_detalles.*,vehiculo.if_doble FROM movimiento 
+      INNER JOIN movimiento_detalles ON movimiento_detalles.id_detalle = movimiento.ID 
+      INNER JOIN vehiculo ON vehiculo.ID = movimiento.ID_Vehiculo
+      WHERE movimiento.ID = $id")->fetch_assoc();
     return $res;
   }
 

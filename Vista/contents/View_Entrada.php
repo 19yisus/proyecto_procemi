@@ -148,11 +148,11 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 												<label>cargas dobles</label>
 												<div class="d-flex justify-content-around">
 													<div class="form-check">
-														<input type="radio" name="" id="doble" value="si" class="form-check-input">
+														<input type="radio" name="doble" id="doble" value="si" class="form-check-input">
 														<small class="form-check-label">Si</small>
 													</div>
 													<div class="form-check">
-														<input type="radio" name="" id="doble" value="no" class="form-check-input" checked>
+														<input type="radio" name="doble" id="doble" value="no" class="form-check-input" checked>
 														<small class="form-check-label">No</small>
 													</div>
 												</div>
@@ -286,16 +286,16 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 						$("#modalConsulta").html(result)
 					}).catch(error => console.error(error))
 			}
-			const capadidad_vehiculo = (value) => {
+			const capadidad_vehiculo = (id) => {
 				let res;
 				let select;
 				document.querySelectorAll("#doble").forEach(item => {
-					if(item.checked && item.value == "no") select = document.getElementById("Placa");
-					if(item.checked && item.value == "si") select = document.getElementById("Placa_segundo");
+					if (item.checked && item.value == "no") select = document.getElementById("Placa");
+					if (item.checked && item.value == "si") select = document.getElementById("Placa_segundo");
 				})
 
-				$("#cantidad").attr("max", parseInt(select.options[value].getAttribute("data-capacidad")))
-				let capacidad_secundaria = parseInt(select.options[value].getAttribute("data-2capacidad"));
+				$("#cantidad").attr("max", parseInt($(`#${select.id} option[value='${id}']`).attr("data-capacidad")));
+				let capacidad_secundaria = parseInt($(`#${select.id} option[value='${id}']`).attr("data-2capacidad"));
 				if (capacidad_secundaria > 0) {
 					$("#segunda_cantidad").removeAttr("disabled");
 					$("#segunda_cantidad").attr("max", capacidad_secundaria);
@@ -321,15 +321,15 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 					$("#Placa").attr("disabled", true);
 					$("#Placa_segundo").removeAttr("disabled");
 
-					$("#Placa").hide(100, () => {
-						$("#Placa_segundo").show(100)
+					$("#Placa").hide(50, () => {
+						$("#Placa_segundo").show(50)
 					});
 				} else {
 					$("#Placa").removeAttr("disabled");
 					$("#Placa_segundo").attr("disabled", true);
 
-					$("#Placa_segundo").hide(100, () => {
-						$("#Placa").show(100)
+					$("#Placa_segundo").hide(50, () => {
+						$("#Placa").show(50)
 					});
 				}
 			}
@@ -432,15 +432,35 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 					.then(({
 						data
 					}) => {
+						
 						$("#id").val(data.ID)
-						$("#Placa").val(data.ID_Vehiculo)
 						$("#cedula").val(data.ID_Personal)
 						$("#empresa").val(data.ID_Empresa)
 						$("#producto").val(data.ID_Producto)
-						// $("#cantidad").val(data.m_Cantidad)
+						$("#cantidad").val(parseInt(data.m_Cantidad) / 2)
 						$("#condition").val(data.condicion_empresa)
+
+						document.querySelectorAll("#doble").forEach(item => {
+							if (data.if_doble == "1") {
+								manipulateVehiculos("si")
+								if (item.value == "si") item.checked = true;
+								if (item.value == "no") item.checked = false;
+								$("#segunda_cantidad").val(parseInt(data.m_Cantidad) / 2)
+							} else {
+								manipulateVehiculos("no")
+								if (item.value == "si") item.checked = false;
+								if (item.value == "no") item.checked = true;
+							}
+						})
+						
 						manipulateDOM(data.condicion_empresa)
-						capadidad_vehiculo(data.ID_Vehiculo)
+						setTimeout(() => {
+							capadidad_vehiculo(data.ID_Vehiculo)
+						}, 150)
+
+						setTimeout(()=>{
+							$("#Placa").val(data.ID_Vehiculo)
+						},150)
 
 					}).catch(error => console.error(error))
 			}
