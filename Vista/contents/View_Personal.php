@@ -237,6 +237,19 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 				item.addEventListener("change", (e) => manipulateDOM(e.target.value))
 			})
 
+			document.getElementById("cedula").addEventListener("keyup", async (e)=>{
+				if(e.target.value.length >= 7){
+					await fetch(`Controlador/Personal.php?operacion=ConsultarCedula&&cedula=${e.target.value}`)
+					.then( response => response.json())
+					.then( result => {
+						if(result.data){
+							alert("Cedula ya registrada")
+							$("#cedula").val("");
+						}
+					}).catch( error => console.error(error))
+				}
+			})
+
 			const manipulateDOM = (value) => {
 				if (value == "I") {
 					$("#empresa2").show(150);

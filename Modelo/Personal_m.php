@@ -110,9 +110,9 @@ class Personal_m extends bd
 
   public function ConsultarCedula($cedula)
   {
-    $res = $this->ejecutar("SELECT * FROM personal WHERE personal_Cedula = $cedula");
+    $res = $this->ejecutar("SELECT * FROM personal WHERE personal_Cedula = '$cedula'");
     if ($res) $res = $res->fetch_assoc();
-    else $res = [];
+    else $res = ["SELECT * FROM personal WHERE personal_Cedula = '$cedula'"];
     return $res;
   }
 

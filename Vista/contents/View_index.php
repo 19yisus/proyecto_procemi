@@ -186,6 +186,7 @@
 							if (data == 'D') return "Devuelto";
 							if (data == 'A') return "Aprobado";
 							if (data == 'S') return "En el Silo";
+							if (data == 'P') return "Pendiente";
 						}
 					},
 					{
