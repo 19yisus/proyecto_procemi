@@ -44,6 +44,8 @@
    function registrar_salida(){
       $humedad = ($_POST["Humedad"]/100) * $_POST["peso_neto"];
       $impureza = $_POST["Impureza"];
+      $totalDes = ($humedad + $impureza);
+      $totalAcon = $_POST["peso_neto"] - $totalDes;
       $a = new Salida_m();
 
       if ($_POST["Humedad"] >= 13){
@@ -57,20 +59,18 @@
 
          $totalDes = ($humedad + $m_impureza);
          $totalAcon = $_POST["peso_neto"] - $totalDes;
-      
 
-         
-         
          $a->SetDatos($_POST["ID"],$_POST["Tara"],$_POST["Cantidad"],$_POST["Silo"],$humedad,$m_impureza,$totalDes,$totalAcon,$_POST["peso_neto"]);
          $res = $a->Registrar();
          if($res) header("location:../View_Salida?Mensaje=2");
          else header("location:../View_Salida?Mensaje=1 ");
       }else{
-         $a->SetDatos($_POST["ID"],$_POST["Tara"],$_POST["Cantidad"],$_POST["Silo"],$humedad,$m_impureza,$totalDes,$totalAcon,$_POST["peso_neto"]);
+         $a->SetDatos($_POST["ID"],$_POST["Tara"],$_POST["Cantidad"],$_POST["Silo"],$humedad,$impureza,$totalDes,$totalAcon,$_POST["peso_neto"]);
          $res = $a->Registrar();
          if($res) header("location:../View_Salida?Mensaje=2");
          else header("location:../View_Salida?Mensaje=1 ");
       }
+
       
    }
 

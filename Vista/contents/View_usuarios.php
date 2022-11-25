@@ -87,7 +87,7 @@
                     <div class="col-6">
                       <div class="form-group">
                         <label>Nombre y Apellido</label>
-                        <input type="text" minlength="2" maxlength="60" name="nombre" id="nombre" class="form-control" required>
+                        <input type="text" minlength="2" maxlength="60" name="nombre" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" id="nombre" class="form-control" required>
                       </div>
                     </div>
                   </div>
@@ -121,7 +121,7 @@
                     <div class="col-6">
                       <div class="form-group">
                         <label>Dirección</label>
-                        <input type="text" name="Direccion" id="direccion" class="form-control" pattern="[A-Za-z0-9 ]+" title="Solo se pueden ingresar caracteres numericos y alfabeticos" required>
+                        <input type="text" name="Direccion" id="direccion" class="form-control" pattern="[0-9a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" title="Solo se pueden ingresar caracteres numericos y alfabeticos" required>
                       </div>
                     </div>
                     <div class="col-6">
@@ -198,6 +198,18 @@
     </footer>
     <?php $this->Component("scripts"); ?>
     <script type="text/javascript">
+      document.getElementById("cedula").addEventListener("keyup", async (e)=>{
+				if(e.target.value.length >= 4){
+					await fetch(`Controlador/Auth.php?operacion=ConsultarCedula&&cedula=${e.target.value}`)
+					.then( response => response.json())
+					.then( result => {
+						if(result.data){
+							alert(result.data)
+							$("#cedula").val("");
+						}
+					}).catch( error => console.error(error))
+				}
+			})
       $(document).ready(() => {
         /* Creamos el datatable y por medio de la propiedad ajax, le damos la url a consultar y asignamos la propiedad dataSrc, le damos el valor data (ya que es lo que mando desde el controlador)
          asigno las columnas donde van, y agrego los botones con su evento onclick para las operaciones

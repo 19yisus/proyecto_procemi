@@ -15,197 +15,59 @@
 	<!-----Contenido----------->
 	<div id="content">
 		<!------PANEL SUPERIOR----------->
-		<?php $this->Component("navbar"); ?>
+		
 
 		<!-- Maria -->
-		<div class="main-content">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="table-wrapper">
-						<div class="table-title">
-							<div class="row">
-								<div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
-									<h2 class="ml-lg-2 text-light">PROCEMI</h2>
-								</div>
+						<div class="principal">
+							<div class="reseña">
+								<h1>Reseña Historica</h1>
+								<p>En el año 2015 el agro-productor William Salazar comenzó con su gran proyecto que se trataba en elaborar un conjunto de silos, para almacenar toda su producción de productos agrícolas, se comenzó construyendo distintos galpones para guardar materias, luego un conjunto de oficinas para   llevar todo supervisado el trabajo la cuál finalizo en el año 2018 con la construcción de 4 silos y habitación de análisis, actualmente se encuentra en la construcción de la cerca de entrada a la planta.</p>
 							</div>
-						</div>
-						<br>
-						<?php if ($_SESSION['rol_id'] == "R") { ?>
-							<table class="table table-striped table-hover" id="tabla">
-								<thead>
-									<th>ID</th>
-									<th>Fecha</th>
-									<th>Placa</th>
-									<th>Cédula</th>
-									<th>Empresa</th>
-									<!-- <th>Condición de la empresa</th> -->
-									<th>Producto</th>
-									<th>Cantidad</th>
-									<th>Muestra</th>
-									<th>Daño</th>
-									<th>Humedad</th>
-									<th>Impureza</th>
-									<th>Cantidad restante</th>
-									<th>Peso Salida</th>
-									<!-- <th>Cantidad Producto</th> -->
-									<th>Silo</th>
-									<th>Estado</th>
-									<th>Opciones</th>
-								</thead>
-								<tbody>
-								</tbody>
-							</table>
-						<?php
-						}
-						if ($_SESSION['rol_id'] == "L") {
-						?>
-							<div class="text-center">
-								<div class="col-6 mx-auto">
-									<h1>Vista para laboratorio</h1>
-								</div>
-							</div>
-						<?php } ?>
-					</div>
-				</div>
-			</div>
-			<div class="modal fade" tabindex="-1" id="modalConsult" role="dialog">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title">Consulta</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body" id="modalConsulta">
 
+							<div class="house-page">
+								<div class="card">
+
+									<div class="icon">
+										<i class="material-icons md-36">local_shipping</i>
+
+									</div>
+									<p class="title">Entrada de vehiculos</p>
+
+								</div>
+
+								<!-----tarjeta 2---->
+								<div class="card">
+									<div class="icon">
+										<i class="material-icons md-36">science</i>
+									</div>
+									<p class="title">Analisis del producto</p>
+
+								</div>
+
+
+								<!-----tarjeta 3---->
+								<div class="card">
+									<div class="icon">
+										<i class="material-icons md-36">corporate_fare</i>
+
+									</div>
+									<p class="title">Almacenamiento del producto</p>
+
+								</div>
+							</div>
+
+							<div class="maps">
+								
+
+
+
+
+								<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3935.166377226718!2d-69.2892083807671!3d9.494254420165346!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e7db89d36080f61%3A0x6f3f1d47be256ac!2sProcemi!5e0!3m2!1ses!2sve!4v1668560521237!5m2!1ses!2sve" width="400" height="300" style="border:1px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+							</div>
 						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+
 	<?php $this->Component("scripts"); ?>
-	<script>
-		const consultarModal = async (value) => {
-			await fetch("Controlador/Entrada.php?operacion=ConsultarModal&&id=" + value)
-				.then(response => response.text())
-				.then(result => {
-					console.log(value)
-					$("#modalConsulta").html(result)
-				}).catch(error => console.error(error))
-		}
-		$(document).ready(() => {
-			/* Creamos el datatable y por medio de la propiedad ajax, le damos la url a consultar y asignamos la propiedad dataSrc, le damos el valor data (ya que es lo que mando desde el controlador)
-			 asigno las columnas donde van, y agrego los botones con su evento onclick para las operaciones
-			 */
-			$("#tabla").DataTable({
-				"ajax": {
-					"url": "Controlador/Entrada.php?operacion=ConsultarTodos",
-					"dataSrc": "data"
-				},
-				"columns": [{
-						data: "ID"
-					},
-					{
-						data: "m_Fecha"
-					},
-					{
-						data: "vehiculo_Placa"
-					},
-					{
-						data: "personal_Cedula"
-					},
-					{
-						data: "empresa_Nombre",
-						render(data, type, row) {
-							if (row.condicion_empresa == "E") return data;
-							else return "Procemi";
-						}
-					},
-					// {
-					// 	data: "condicion_empresa",
-					// 	render(data) {
-					// 		if (data == "E") return "Externa";
-					// 		else return "Interna";
-					// 	}
-					// },
-					{
-						data: "producto_Nombre"
-					},
-					{
-						data: "m_Cantidad",
-						render(data) {
-							return data + " KG"
-						}
-					},
-					{
-						data: "m_Muestra"
-					},
-					{
-						data: "m_Dano"
-					},
-					{
-						data: "m_Humedad",
-						render(data) {
-							return data + "%"
-						}
-					},
-					{
-						data: "m_Impureza",
-						render(data) {
-							return data + "%"
-						}
-					},
-					{
-						data: "m_PesoLab"
-					},
-
-					{
-						data: "m_pesoFinal",
-						render(data) {
-							return data + " KG.";
-						}
-					},
-					// {
-					// 	data: "m_Total",
-					// 	render(data) {
-					// 		return data + " KG.";
-					// 	}
-					// },
-					{
-						data: "m_Silo"
-					},
-					{
-						data: "status_proceso",
-						render(data) {
-							if (data == 'R') return "En Revisión";
-							if (data == 'D') return "Devuelto";
-							if (data == 'A') return "Aprobado";
-							if (data == 'S') return "En el Silo";
-							if (data == 'P') return "Pendiente";
-						}
-					},
-					{
-						defaultContent: "",
-						render(data, type, row) {
-							let btn = `
-									<a href="#modalConsult" class="edit" data-toggle="modal" onclick="consultarModal('${row.ID}')">
-									<i class="material-icons">apps</i>
-									</a>`;
-							return btn;
-						}
-					}
-				],
-				language: {
-					url: `Vista/js/DataTable.config.json`
-				}
-			})
-		})
-	</script>
 </body>
 
 </html>

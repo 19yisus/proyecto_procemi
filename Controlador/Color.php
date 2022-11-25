@@ -43,6 +43,10 @@
             Consultar_E();
          break;   
 
+         case 'ConsultarColor':
+            consultarColor();
+         break;
+
          default:
             echo "No es valida la peticion";
          break;
@@ -53,8 +57,7 @@
       $a = new color_m();
       $a->SetDatos(null,$_POST["Nombre"]);
       $res = $a->Registrar();
-      if($res === 5) header("location:../View_color?Mensaje=2");
-      if($res) header("location:../View_color?Mensaje=5");
+      if($res) header("location:../View_color?Mensaje=2");
       else header("location:../View_color?Mensaje= 1 ");
    }
 
@@ -87,6 +90,14 @@
       if($res) header ("location:../View_color?Mensaje=3");
       else header("location:../View_color?Mensaje= 1 ");
    }
+
+   function consultarColor(){
+      $a = new color_m();
+      $datos = $a->ConsultarColor($_GET["nombre"]);
+      /* La misma explicacion de arriba */
+      echo json_encode(["data" => $datos], false);
+   }
+
 
    /* */ 
    /* Eliminados */

@@ -11,7 +11,7 @@ class Auth_m extends bd
 
   public function __construct()
   {
-    $this->id = $this->cedula_user = $this->clave_user = $this->nombre = $this->nacionalidad = 
+    $this->id = $this->cedula_user = $this->clave_user = $this->nombre = $this->nacionalidad =
       $this->rol_user = $this->estatus_user = $this->direccion = $this->correo = $this->telefono =
       $this->fecha_user = $this->tipo_user = "";
   }
@@ -27,7 +27,7 @@ class Auth_m extends bd
     $this->direccion = isset($datos['Direccion']) ? $datos['Direccion'] : null;
     $this->correo = isset($datos['Correo']) ? $datos['Correo'] : null;
     $this->telefono = isset($datos['Telefono']) ? $datos['codigo_area'] . "-" . $datos['Telefono'] : null;
-    $this->nacionalidad = isset($datos['Nacionalidad']) ? $datos['Nacionalidad'] : null; 
+    $this->nacionalidad = isset($datos['Nacionalidad']) ? $datos['Nacionalidad'] : null;
     // $this->tipo_user = isset($datos['tipo_user']) ? $datos['tipo_user'] : null;
 
   }
@@ -122,5 +122,40 @@ class Auth_m extends bd
     $sql = "UPDATE usuarios SET estatus_user = $this->estatus_user WHERE rol_user != 'A' AND id_usuario = $this->id";
     $res = $this->ejecutar($sql);
     return $res;
+  }
+
+  public function ConsultarCedula($cedula)
+  {
+    $rif = "J-" . $cedula;
+    $ced = "V-" . $cedula;
+
+    // Empresa
+    $res = $this->ejecutar("SELECT * FROM empresa WHERE (empresa_Rif = '$rif') OR (empresa_cedulaE = '$ced') OR (empresa_cedulaE = '$rif')");
+    $res = $res->fetch_assoc();
+
+    // Persoanl
+    $res2 = $this->ejecutar("SELECT * FROM personal WHERE personal_Cedula = '$cedula'");
+    $res2 = $res2->fetch_assoc();
+
+    // Usuarios
+    $res3 = $this->ejecutar("SELECT * FROM usuarios WHERE cedula_user = '$cedula'");
+    $res3 = $res3->fetch_assoc();
+
+    // Vehiculo
+    $res4 = $this->ejecutar("SELECT * FROM vehiculo WHERE (rif_dueno ='$rif') OR (rif_dueno = '$ced')");
+    $res4 = $res4->fetch_assoc();
+
+    switch (true) {
+      case $res != "" || $res != null:
+        return "El dato que estas ingresado ya esta registrado en otra empresa";
+      case $res2 != "" || $res2 != null:
+        return "El dato que estas ingresando ya esta registrado en un personal";
+      case $res3 != "" || $res3 != null:
+        return "El dato que estas ingresando ya esta registrado en un usuario del sistema";
+      case $res4 != "" || $res4 != null:
+        return "El dato que estas ingresando ya esta registrado en un vehiculo";
+      default:
+        return;
+    }
   }
 }

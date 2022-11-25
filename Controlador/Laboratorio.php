@@ -93,7 +93,7 @@ function consultar_uno()
 function eliminar_laboratorio()
 {
    $a = new Laboratorio_m();
-   $a->SetDatos($_POST["ID"], null, null, null, null, null, null);
+   $a->SetDatos($_POST["ID"], null, null, null, null, null, null,null);
    $res = $a->Eliminar();
    if ($res) header("location:../Vista/laboratorio.php?Mensaje=3");
    else header("location:../Vista/laboratorio.php?Mensaje= algun codigo de error que uses ");

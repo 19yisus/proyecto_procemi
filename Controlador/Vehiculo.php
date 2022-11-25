@@ -17,6 +17,10 @@
             eliminar_vehiculo();
          break;
 
+         case 'Recuperar':
+            Recuperar();
+         break;
+
          default:
             echo "No es valida la peticion";
          break;
@@ -30,6 +34,10 @@
             consultar_vehiculos();
          break;
 
+         case 'Consultar_E':
+            Consultar_E();
+         break;   
+
          case 'ConsultarUno':
             consultar_uno();
          break;
@@ -41,8 +49,15 @@
          case 'ConsultPorEmpresa':
             consultarPorEmpresa();
          break;
-         
 
+         case 'ConsultarPlaca':
+            consultarPlaca();
+         break;
+
+         case 'ConsultarCedula':
+            consultarCedula();
+         break;
+         
          default:
             echo "No es valida la peticion";
          break;
@@ -102,6 +117,21 @@
       else header("location:../View_Vehiculo?Mensaje= 1 ");
    }
 
+   function Consultar_E(){
+      $a = new Vehiculo_m();
+      $datos = $a->Consultar_E();
+      /* aqui esta lo que te mencione en la vista, aqui imprimimos con la funcion json_encode, imprimimos un objeto con la propiedad data y dentro de data, esta toda la informacion consultada */
+      echo json_encode(["data" => $datos], false);
+   }
+
+   function Recuperar(){
+      $a = new Vehiculo_m();
+      $a->SetDatos($_POST["ID"],null,null,null,null,null,null,null,null,null,null,null,null);
+      $res = $a->Recuperar();
+      if($res) header ("location:../View_Vehiculo_E?Mensaje=4");
+      else header("location:../View_Vehiculo_E?Mensaje= 1 ");
+   }
+
    function consultarPorEmpresa(){
       $a = new Vehiculo_m();
       $datos = $a->ConsultPorEmpresa($_GET['id']);
@@ -112,6 +142,13 @@
    function ConsultarPlaca(){
       $a = new Vehiculo_m();
       $datos = $a->ConsultarPlaca($_GET["placa"]);
+      /* La misma explicacion de arriba */
+      echo json_encode(["data" => $datos], false);
+   }
+
+   function ConsultarCedula(){
+      $a = new Vehiculo_m();
+      $datos = $a->ConsultarCedula($_GET["cedula"]);
       /* La misma explicacion de arriba */
       echo json_encode(["data" => $datos], false);
    }

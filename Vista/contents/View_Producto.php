@@ -118,6 +118,19 @@
 		</footer>
 		<?php $this->Component("scripts"); ?>
 		<script type="text/javascript">
+			document.getElementById("nombre").addEventListener("keyup", async (e)=>{
+				if(e.target.value.length >= 3){
+					await fetch(`Controlador/Producto.php?operacion=ConsultarProducto&&nombre=${e.target.value}`)
+					.then( response => response.json())
+					.then( result => {
+						if(result.data){
+							alert("El nombre del producto ya esta registrado")
+							$("#nombre").val("");
+						}
+					}).catch( error => console.error(error))
+				}
+			})
+
 			$(document).ready(() => {
 				/* Creamos el datatable y por medio de la propiedad ajax, le damos la url a consultar y asignamos la propiedad dataSrc, le damos el valor data (ya que es lo que mando desde el controlador)
 				 asigno las columnas donde van, y agrego los botones con su evento onclick para las operaciones

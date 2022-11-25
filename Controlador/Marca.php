@@ -43,6 +43,10 @@
             Consultar_E();
          break;   
 
+         case 'ConsultarMarca':
+            consultarMarca();
+         break;
+
          default:
             echo "No es valida la peticion";
          break;
@@ -53,8 +57,7 @@
       $a = new Marca_m();
       $a->SetDatos(null,$_POST["Nombre"]);
       $res = $a->Registrar();
-      if($res === 5) header("location:../View_marca?Mensaje=2");
-      if($res) header("location: ../View_marca?Mensaje=5");
+      if($res) header("location: ../View_marca?Mensaje=2");
       else header("location:../View_marca?Mensaje= 1 ");
    }
 
@@ -86,6 +89,13 @@
       $res = $a->Eliminar();
       if($res) header ("location:../View_marca?Mensaje=3");
       else header("location:../View_marca?Mensaje= 1 ");
+   }
+
+   function consultarMarca(){
+      $a = new Marca_m();
+      $datos = $a->ConsultarMarca($_GET["nombre"]);
+      /* La misma explicacion de arriba */
+      echo json_encode(["data" => $datos], false);
    }
 
     /* Eliminados */

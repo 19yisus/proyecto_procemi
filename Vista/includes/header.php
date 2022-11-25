@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="<?php $this->Assets('css/bootstrap.min.css');?>">
 	<!----css3---->
 	<link rel="stylesheet" href="<?php $this->Assets('css/custom.css');?>">
+	<link rel="stylesheet" href="<?php $this->Assets('css/house-page.css');?>">
 	<!--google fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

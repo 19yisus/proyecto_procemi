@@ -66,7 +66,7 @@
 									<div class="form-group">
 										<label>Nombre del color</label>
 										<input type="hidden" name="ID" id="id">
-										<input type="text" name="Nombre" id="nombre" class="form-control" pattern="[A-Za-z ]+" title="Solo puedes ingresar caracteres alfabeticos" minlength="4" maxlength="12" required>
+										<input type="text" name="Nombre" id="nombre" class="form-control" pattern="[A-Za-z ]+" title="Solo puedes ingresar caracteres alfabeticos" minlength="3" maxlength="12" required>
 									</div>
 								</div>
 								<div class="modal-footer">
@@ -115,6 +115,18 @@
 		</footer>
 		<?php $this->Component("scripts"); ?>
 		<script type="text/javascript">
+			document.getElementById("nombre").addEventListener("keyup", async (e)=>{
+				if(e.target.value.length >= 3){
+					await fetch(`Controlador/Color.php?operacion=ConsultarColor&&nombre=${e.target.value}`)
+					.then( response => response.json())
+					.then( result => {
+						if(result.data){
+							alert("Color ya registrado")
+							$("#nombre").val("");
+						}
+					}).catch( error => console.error(error))
+				}
+			})
 			$(document).ready(() => {
 				/* Creamos el datatable y por medio de la propiedad ajax, le damos la url a consultar y asignamos la propiedad dataSrc, le damos el valor data (ya que es lo que mando desde el controlador)
 				 asigno las columnas donde van, y agrego los botones con su evento onclick para las operaciones

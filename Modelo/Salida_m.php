@@ -44,13 +44,13 @@ class Salida_m extends bd
       // var_dump($this->peso, $this->cantidad, $this->silo);
       // $total_peso = ($this->cantidad - $this->peso);
       $sql1 = "UPDATE movimiento_detalles SET 
-        m_pesoFinal = $this->tara, 
-        m_TotalDesc = $this->totalDes,
-        m_PesoAcon = $this->totalAcon,
-        m_Desc_Humedad = $this->humedad,
-        m_Desc_Impureza = $this->impureza,
-        m_PesoNeto = $this->pesoNeto
-        WHERE id_detalle = $this->id";
+      m_pesoFinal = $this->tara, 
+      m_TotalDesc = $this->totalDes,
+      m_PesoAcon = $this->totalAcon,
+      m_Desc_Humedad = $this->humedad,
+      m_Desc_Impureza = $this->impureza,
+      m_PesoNeto = $this->pesoNeto
+      WHERE id_detalle = $this->id";
 
       // var_dump($sql1);
       // die("FF");

@@ -62,10 +62,10 @@
 									<h5 class="modal-title">Datos de la empresa</h5>
 									<div class="negra">
 										<div class="hora">
-										<h8 aria-label="Close" data-dismiss="modal"id="form_time">00:00:00</h8>
+											<h8 aria-label="Close" data-dismiss="modal" id="form_time">00:00:00</h8>
 										</div>
 										<div class="fecha">
-										<h8 class="modal-title"id="form_date">date</h8>
+											<h8 class="modal-title" id="form_date">date</h8>
 										</div>
 									</div>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -96,36 +96,36 @@
 										</div>
 										<div class="col-6">
 											<div class="form-group">
-											<label>Télefono de la empresa</label>
+												<label>Télefono de la empresa</label>
 												<div class="input-group">
-												<div class="pretend">
-													<select name="codigo_area_e" id="codigo_area_e" class="form-control">
-														<option value="0412">0412</option>
-														<option value="0416">0416</option>
-														<option value="0414">0414</option>
-														<option value="0424">0424</option>
-													</select>
+													<div class="pretend">
+														<select name="codigo_area_e" id="codigo_area_e" class="form-control">
+															<option value="0412">0412</option>
+															<option value="0416">0416</option>
+															<option value="0414">0414</option>
+															<option value="0424">0424</option>
+														</select>
+													</div>
+													<input type="text" name="Telefono" id="Telefono" class="form-control" pattern="[0-9]+" title="Solo puedes ingresar caracteres umericos" minlength="7" maxlength="7" required>
 												</div>
-												<input type="text" name="Telefono" id="Telefono" class="form-control" pattern="[0-9]+" title="Solo puedes ingresar caracteres umericos" minlength="7" maxlength="7" required>
-											</div>
-												
-												
+
+
 											</div>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-6">
 											<div class="form-group">
-											<label>Documento de identidad del encargado</label>
-											<div class="input-group">
-												<div class="pretend">
-													<select name="tipoRif" id="tipo_rif" class="form-control">
-														<option value="J">J</option>
-														<option value="V">V</option>
-													</select>
+												<label>Documento de identidad del encargado</label>
+												<div class="input-group">
+													<div class="pretend">
+														<select name="tipoRif" id="tipo_rif" class="form-control">
+															<option value="J">J</option>
+															<option value="V">V</option>
+														</select>
+													</div>
+													<input type="text" name="cedula_encargado" id="cedula_encargado" minlength="8" maxlength="9" class="form-control" pattern="[0-9]+" title="Solo puedes ingresar caracteres númericos" required>
 												</div>
-												<input type="text" name="cedula_encargado" id="cedula_encargado" minlength="8" maxlength="10"  class="form-control" pattern="[0-9]+" title="Solo puedes ingresar caracteres númericos" required>
-											</div>
 											</div>
 										</div>
 										<div class="col-6">
@@ -140,17 +140,16 @@
 											<div class="form-group">
 												<label>Télefono del encargado</label>
 												<div class="input-group">
-												<div class="pretend">
-													<select name="codigo_area" id="codigo_area" class="form-control">
-														<option value="0412">0412</option>
-														<option value="0416">0416</option>
-														<option value="0414">0414</option>
-														<option value="0424">0424</option>
-													</select>
+													<div class="pretend">
+														<select name="codigo_area" id="codigo_area" class="form-control">
+															<option value="0412">0412</option>
+															<option value="0416">0416</option>
+															<option value="0424">0424</option>
+														</select>
+													</div>
+													<input type="text" name="telefono_encargado" id="telefono_encargado" class="form-control" pattern="[0-9]{7}" title="Solo puedes ingresar caracteres númericos" minlength="7" maxlength="7" required>
 												</div>
-												<input type="text" name="telefono_encargado" id="telefono_encargado" class="form-control" pattern="[0-9]{7}"  title="Solo puedes ingresar caracteres númericos" minlength="7" maxlength="7" required>
-											</div>
-												
+
 											</div>
 										</div>
 										<div class="col-6">
@@ -160,8 +159,8 @@
 											</div>
 										</div>
 									</div>
-									
-									
+
+
 								</div>
 								<div class="modal-footer">
 									<input type="hidden" name="operacion" id="operacion" value="Registro">
@@ -210,6 +209,56 @@
 		</footer>
 		<?php $this->Component("scripts"); ?>
 		<script type="text/javascript">
+			document.getElementById("nombre").addEventListener("keyup", async (e) => {
+				if (e.target.value.length >= 4) {
+					await fetch(`Controlador/Empresa.php?operacion=ConsultarEmpresa&&nombre=${e.target.value}`)
+						.then(response => response.json())
+						.then(result => {
+							if (result.data) {
+								alert("Nombre de empresa ya registrado")
+								$("#nombre").val("");
+							}
+						}).catch(error => console.error(error))
+				}
+			})
+
+			document.getElementById("rif").addEventListener("keyup", async (e) => {
+				if (e.target.value.length >= 4) {
+					if (e.target.value == $("#cedula_encargado").val()) {
+						$("#rif").val("");
+						alert("El rif no puede ser igual a la cédula del encargado");
+					}
+				}
+				if (e.target.value.length >= 4) {
+					await fetch(`Controlador/Empresa.php?operacion=ConsultarRif&&rif=${e.target.value}`)
+						.then(response => response.json())
+						.then(result => {
+							if (result.data) {
+								alert(result.data)
+								$("#rif").val("");
+							}
+						}).catch(error => console.error(error))
+				}
+			})
+
+			document.getElementById("cedula_encargado").addEventListener("keyup", async (e) => {
+				if (e.target.value.length >= 4) {
+					if (e.target.value == $("#rif").val()) {
+						$("#cedula_encargado").val("");
+						alert("La cédula del encargado no puede ser igual al rif de la empresa");
+					}
+				}
+				if (e.target.value.length >= 4) {
+					await fetch(`Controlador/Empresa.php?operacion=ConsultarCedula&&cedula=${e.target.value}`)
+						.then(response => response.json())
+						.then(result => {
+							if (result.data) {
+								alert(result.data)
+								$("#cedula_encargado").val("");
+							}
+						}).catch(error => console.error(error))
+				}
+			})
 			$(document).ready(() => {
 				/* Creamos el datatable y por medio de la propiedad ajax, le damos la url a consultar y asignamos la propiedad dataSrc, le damos el valor data (ya que es lo que mando desde el controlador)
 				 asigno las columnas donde van, y agrego los botones con su evento onclick para las operaciones
@@ -281,7 +330,7 @@
 						data
 					}) => {
 						$("#id").val(data.ID)
-						let [codigo,rif] = data.empresa_Rif.split("-")
+						let [codigo, rif] = data.empresa_Rif.split("-")
 						$("#rif").val(rif)
 						$("#nombre").val(data.empresa_Nombre)
 						$("#ubicacion").val(data.empresa_Ubicacion)
@@ -296,7 +345,7 @@
 						let [tipo2, telefono] = data.empresa_TelefonoE.split("-")
 						$("#codigo_area").val(tipo2);
 						$("#telefono_encargado").val(telefono);
-						
+
 						document.querySelectorAll("#condition").forEach(item => {
 							if (item.value == data.empresa_condition) item.checked = true;
 						})

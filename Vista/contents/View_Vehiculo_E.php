@@ -26,15 +26,16 @@
 						<!-- Tabla -->
 						<table class="table table-striped table-hover" id="tabla">
 							<thead>
-								<th>ID</th>
-								<th>Nombre</th>
-								<th>Apellido</th>
-								<th>Nacionalidad</th>
-								<th>Cédula</th>
-								<th>Télefono</th>
-								<th>Correo</th>
-								<th>Dirección</th>
-								<th>Cargo</th>
+							<th>ID</th>
+								<th>Placa</th>
+								<th>Segunda Placa</th>
+								<th>Marca</th>
+								<th>Modelo</th>
+								<th>Color</th>
+								<th>Peso</th>
+								<th>Segundo Peso</th>
+								<th>Empresa</th>
+								<th>Año</th>
 								<th>Opciones</th>
 							</thead>
 							<tbody>
@@ -45,7 +46,7 @@
 				</div>
 
 				<!----Recuperar--------->
-				<form action="Controlador/Personal.php" method="post">
+				<form action="Controlador/Vehiculo.php" method="post">
 					<div class="modal fade" tabindex="-1" id="deleteEmployeeModal" role="dialog">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
@@ -96,6 +97,13 @@
 							data: "vehiculo_Placa"
 						},
 						{
+							data: "segunda_Placa",
+							render(data) {
+								if (data == null) return "No tiene";
+								else return data;
+							}
+						},
+						{
 							data: "marca_Nombre"
 						},
 						{
@@ -105,7 +113,25 @@
 							data: "color_Nombre"
 						},
 						{
-							data: "vehiculo_Peso"
+							data: "vehiculo_Peso",
+							render(data) {
+								return data + " KG.";
+							}
+						},
+						{
+							data: "Vehiculo_PesoSecundario",
+							render(data) {
+								if (data == "0.00") return "No tiene";
+								else return data + " KG.";
+							}
+						},
+						{
+							data: "empresa_Nombre",
+							render(data, type, row) {
+								if (row.condicion == "I") return "Procemi";
+								if (row.condicion == "P") return "Particular";
+								if (row.condicion == "E") return data;
+							}
 						},
 						{
 							data: "vehiculo_Ano"

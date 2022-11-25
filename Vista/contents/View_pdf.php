@@ -1,6 +1,6 @@
 <!-- Para empezar, optimice las lineas de codigo, y le di identacion al codigo para que se va mas ordenao y legible, como veras varias secciones de la pagina ya no estan.
 	A estas secciones las estoy trabajando como componentes reutilizable, para no tener el mismo codigo repetido en todas las paginas -->
-  <!doctype html>
+<!doctype html>
 <html lang="en">
 <?php $this->Component("header"); ?>
 
@@ -21,26 +21,20 @@
 								<div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
 									<h2 class="ml-lg-2">Reportes de entrada</h2>
 								</div>
-								<!-- <div class="col-sm-6 p-0 flex justify-content-lg-end justify-content-center">
-									<a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal" onclick="crear_marca()">
-										<i class="material-icons">&#xE147;</i>
-										<span></span>
-									</a>
-								</div> -->
 							</div>
 						</div>
-            <form action="Controlador/Reporte.php" method="post" target="__blank">
+						<form action="Controlador/Reporte.php" method="get" id="form_pdf">
 							<div class="row col-10">
 								<div class="col-6">
 									<div class="form-group">
 										<label for="">Desde</label>
-										<input type="date" name="desde" id="" required class="form-control">
+										<input type="date" name="desde" id="desde" required class="form-control">
 									</div>
 								</div>
 								<div class="col-6">
 									<div class="form-group">
 										<label for="">Hasta</label>
-										<input type="date" name="hasta" id="" required class="form-control">
+										<input type="date" name="hasta" id="hasta" required class="form-control">
 									</div>
 								</div>
 							</div>
@@ -51,6 +45,9 @@
 								</button>
 							</div>
 						</form>
+
+						<iframe src="" style="width:100%; height:500px; margin-top:10px; display:none;" id="visor_pdf" frameborder="1"></iframe>
+
 					</div>
 				</div>
 			</div>
@@ -64,6 +61,15 @@
 			</div>
 		</footer>
 		<?php $this->Component("scripts"); ?>
+		<script>
+			document.getElementById("form_pdf").addEventListener("submit", (e) => {
+				e.preventDefault();
+				let desde = $("#desde").val()
+				let hasta = $("#hasta").val()
+				$("#visor_pdf").show(150)
+				$("#visor_pdf").attr("src", `Controlador/Reporte.php?operacion=ConsultarTodos&&desde=${desde}&&hasta=${hasta}`)
+			})
+		</script>
 </body>
 
 </html>

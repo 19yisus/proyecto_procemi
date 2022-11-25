@@ -31,9 +31,6 @@ class Personal_m extends bd
   //Por ejemplo validar que la operacion se realizo, y validar si hubo algun tipo de error
   public function Registrar()
   {
-    $res = $this->ejecutar("SELECT * FROM personal WHERE personal_Cedula = '$this->cedula';")->fetch_all(MYSQLI_ASSOC);
-    if (isset($res[0]) && $res[0] != '') return 5;
-
     $sql = "INSERT INTO personal (
         personal_Cedula,
         personal_Nombre,
@@ -48,13 +45,13 @@ class Personal_m extends bd
         ID_Cargo,
         ID_Empresa) 
       VALUES (
-        '$this->cedula',
-        '$this->nombre',
-        '$this->apellido',
-        '$this->nacionalidad',
-        '$this->telefono',
-        '$this->correo',
-        '$this->direccion',
+        UPPER('$this->cedula'),
+        UPPER('$this->nombre'),
+        UPPER('$this->apellido'),
+        UPPER('$this->nacionalidad'),
+        UPPER('$this->telefono'),
+        UPPER('$this->correo'),
+        UPPER('$this->direccion'),
         true,
         NOW(),
         '$this->condicion',
@@ -82,9 +79,6 @@ class Personal_m extends bd
 
   public function Actualizar()
   {
-    $res = $this->ejecutar("SELECT * FROM personal WHERE ID != $this->id AND personal_Cedula = '$this->cedula';")->fetch_all(MYSQLI_ASSOC);
-    if (isset($res[0]) && $res[0] != '') return 5;
-
     $this->ejecutar("UPDATE personal SET 
       personal_Cedula = '$this->cedula',
       personal_Nombre = '$this->nombre',
@@ -110,10 +104,38 @@ class Personal_m extends bd
 
   public function ConsultarCedula($cedula)
   {
+    $rif = "J-".$cedula;
+    $dato = "V-".$cedula;
+
+    // Personal
     $res = $this->ejecutar("SELECT * FROM personal WHERE personal_Cedula = '$cedula'");
-    if ($res) $res = $res->fetch_assoc();
-    else $res = ["SELECT * FROM personal WHERE personal_Cedula = '$cedula'"];
-    return $res;
+    $res = $res->fetch_assoc();
+
+    // Usuarios
+    $res2 = $this->ejecutar("SELECT * FROM usuarios WHERE cedula_user = '$cedula'");
+    $res2 = $res2->fetch_assoc();
+
+    // Empresa
+    $res3 = $this->ejecutar("SELECT * FROM empresa WHERE (empresa_Rif ='$rif') OR (empresa_CedulaE ='$rif') OR (empresa_CedulaE = '$dato')");
+    $res3 = $res3->fetch_assoc();
+
+    // Vehiculo
+    $res4 = $this->ejecutar("SELECT * FROM vehiculo WHERE (rif_dueno ='$rif') OR (rif_dueno = '$dato')");
+    $res4 = $res4->fetch_assoc();
+    
+
+    switch (true) {
+      case $res != "" || $res != null:
+        return "La cédula ya esta siendo utilizada por otro personal";
+      case $res2 != "" || $res2 != null:
+        return "La cédula ya esta siendo utilizada por un usuario";
+      case $res3 != "" || $res3 != null:
+        return "La cédula ya esta siendo utilizada por una empresa";
+      case $res4 != "" || $res4 != null:
+        return "La cédula ya esta siendo utilizada por un dueño de algun vehiculo"; 
+      default:
+        return;
+    }
   }
 
   public function Eliminar()
@@ -128,19 +150,14 @@ class Personal_m extends bd
   public function Consultar_E()
   {
     $res = $this->ejecutar("SELECT 
-      personal.ID, 
-      personal.personal_Nombre, 
-      personal.personal_Apellido,
-      personal.personal_Nacionalidad,
-      personal.personal_Cedula,
-      personal.personal_Telefono,
-      personal.personal_Correo,
-      personal.personal_Direccion,
+      personal.*,
       cargo.cargo_Nombre,
       empresa.empresa_Nombre
-      FROM personal INNER JOIN cargo ON cargo.ID = personal.ID_Cargo
-      INNER JOIN empresa ON empresa.ID = personal.ID_Empresa
-      WHERE personal_Estatus = false")->fetch_all(MYSQLI_ASSOC);
+      FROM personal LEFT JOIN cargo ON cargo.ID = personal.ID_Cargo
+      LEFT JOIN empresa ON empresa.ID = personal.ID_Empresa
+      WHERE personal_Estatus = false");
+    if ($res) $res = $res->fetch_all(MYSQLI_ASSOC);
+    else $res = [];
     return $res;
   }
 

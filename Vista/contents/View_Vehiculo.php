@@ -124,7 +124,7 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 									<div class="row">
 										<div class="col-6">
 											<div class="form-group" style="display: none;" id="divRifDueno">
-												<label>Rif de Dueño</label>
+												<label>documento de identidad del Dueño</label>
 												<div class="input-group">
 													<div class="pretend">
 														<select name="tipoRif" id="tipo_rif" class="form-control" disabled="disabled" required>
@@ -186,7 +186,7 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 										<div class="col-6">
 											<div class="form-group">
 												<label>Año del vehiculo</label>
-												<input type="text" step="1" pattern="[0-9]+" minlength="4" maxlength="4" name="Ano" id="ano" class="form-control" title="Solo puedes ingresar caracteres númericos" required>
+												<input type="text" step="1" pattern="[0-9]+" max="2022" minlength="4" maxlength="4" name="Ano" id="ano" class="form-control" title="Solo puedes ingresar caracteres númericos" required>
 											</div>
 										</div>
 									</div>
@@ -259,6 +259,40 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 		</footer>
 		<?php $this->Component("scripts"); ?>
 		<script type="text/javascript">
+			document.getElementById("ano").addEventListener("keyup", async (e)=>{
+				if(e.target.value >= 2023){
+					alert ("Año invalido");
+					$("#ano").val("");
+				}
+			})
+
+
+			document.getElementById("placa").addEventListener("keyup", async (e)=>{
+				if(e.target.value.length >= 4){
+					await fetch(`Controlador/Vehiculo.php?operacion=ConsultarPlaca&&placa=${e.target.value}`)
+					.then( response => response.json())
+					.then( result => {
+						if(result.data){
+							alert("Placa ya registrado")
+							$("#placa").val("");
+						}
+					}).catch( error => console.error(error))
+				}
+			})
+
+			document.getElementById("rif_dueno").addEventListener("keyup", async (e)=>{
+				if(e.target.value.length >= 4){
+					await fetch(`Controlador/Vehiculo.php?operacion=ConsultarCedula&&cedula=${e.target.value}`)
+					.then( response => response.json())
+					.then( result => {
+						if(result.data){
+							alert(result.data)
+							$("#rif_dueno").val("");
+						}
+					}).catch( error => console.error(error))
+				}
+			})
+
 			document.getElementById("formRegistro").addEventListener("submit", (e) => {
 				e.preventDefault();
 				if ($("#if_doble")[0].checked) {
@@ -386,7 +420,7 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 						{
 							data: "empresa_Nombre",
 							render(data, type, row) {
-								if (row.condicion == "I") return "Procemi";
+								if (row.condicion == "I") return "PROCEMI";
 								if (row.condicion == "P") return "Particular";
 								if (row.condicion == "E") return data;
 							}

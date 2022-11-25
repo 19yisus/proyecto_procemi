@@ -3,9 +3,10 @@ if ($res['condicion_empresa'] == "E") $condicion = "Externa";
 else $condicion = "Procemi";
 
 if ($res['status_proceso'] == "S") $estatus_proceso = "En el Silo";
-if ($res['status_proceso'] == "R") $estatus_proceso = "Rechazado por laboratorio";
+if ($res['status_proceso'] == "D") $estatus_proceso = "Rechazado por laboratorio";
 if ($res['status_proceso'] == "A") $estatus_proceso = "Aprobado por laboratorio";
 if ($res['status_proceso'] == "R") $estatus_proceso = "En Revisión";
+if ($res['status_proceso'] == "P") $estatus_proceso = "Por analizar";
 
 if ($res['segunda_Placa'] == null) $segunda_Placa = "No tiene";
 else $segunda_Placa = $res["segunda_Placa"];
@@ -51,18 +52,19 @@ else $silo = $res['m_Silo'];
   <table class="table">
     <thead>
       <tr>
+        <th scope="col">Fecha</th>
         <th scope="col">ID</th>
         <th scope="col">estatus</th>
         <th scope="col">condición de la empresa</th>
         <th scope="col">Nombre del Producto</th>
-
         <th>Peso acondiciado al 12%</th>
         <th scope="col">Silo</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <th scope="row"><?php echo $res['ID']; ?></th>
+        <th><?php echo $res['m_Fecha']?>;</th>
+        <th><?php echo $res['ID']; ?></th>
         <td><?php echo  $estatus_proceso; ?></td>
         <td><?php echo $condicion; ?></td>
         <td><?php echo $res['producto_Nombre']; ?></td>

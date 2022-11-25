@@ -43,6 +43,10 @@
             Consultar_E();
          break;   
 
+         case 'ConsultarProducto':
+            consultarProducto();
+         break;
+
          default:
             echo "No es valida la peticion";
          break;
@@ -53,7 +57,6 @@
       $a = new Producto_m();
       $a->SetDatos(null,$_POST["Nombre"]);
       $res = $a->Registrar();
-      if($res === 5) header("location:../View_Producto?Mensaje=5");
       if($res) header("location: ../View_Producto?Mensaje=2");
       else header("location:../View_Producto?Mensaje=1 ");
    }
@@ -86,6 +89,13 @@
       $res = $a->Eliminar();
       if($res) header ("location:../View_Producto?Mensaje=3");
       else header("location:../View_Producto?Mensaje=1 ");
+   }
+
+   function ConsultarProducto(){
+      $a = new Producto_m();
+      $datos = $a->ConsultarProducto($_GET["nombre"]);
+      /* La misma explicacion de arriba */
+      echo json_encode(["data" => $datos], false);
    }
 
     /* Eliminados */

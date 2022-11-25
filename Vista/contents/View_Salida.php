@@ -249,7 +249,7 @@
 							.then(({
 								data
 							}) => {
-								$("#id").val(data.ID)
+								$("#id").val(data.id_detalle)
 								$("#cantidad").val(data.m_Cantidad)
 								$("#peso_bruto").val(data.m_Cantidad)
 								$("#peso_neto").val(data.m_Cantidad)
@@ -263,7 +263,7 @@
 								} else {
 									$("#empresa_nombre").val(data.empresa_Nombre);
 								}
-								$("#id").val(data.ID)
+								
 								$("#Humedad").val(data.m_Humedad)
 								$("#Impureza").val(data.m_Impureza)
 								if (data.m_Silo != "N") $("#silo").val(data.m_Silo)

@@ -43,6 +43,11 @@
             Consultar_E();
          break;   
 
+         case 'ConsultarCargo':
+            consultarCargo();
+         break;
+
+
          default:
             echo "No es valida la peticion";
          break;
@@ -53,8 +58,7 @@
       $a = new Cargo_m();
       $a->SetDatos(null,$_POST["Nombre"]);
       $res = $a->Registrar();
-      if($res === 5) header("location:../View_cargo?Mensaje=2");
-      if($res) header("location: ../View_cargo?Mensaje=5");
+      if($res) header("location: ../View_cargo?Mensaje=2");
       else header("location: ../View_cargo?Mensaje=1 ");
    }
 
@@ -86,6 +90,13 @@
       $res = $a->Eliminar();
       if($res) header ("location:../View_cargo?Mensaje=3");
       else header("location:../View_cargo?Mensaje= 1 ");
+   }
+
+   function consultarCargo(){
+      $a = new Cargo_m();
+      $datos = $a->ConsultarCargo($_GET["nombre"]);
+      /* La misma explicacion de arriba */
+      echo json_encode(["data" => $datos], false);
    }
 
    /* Eliminados */

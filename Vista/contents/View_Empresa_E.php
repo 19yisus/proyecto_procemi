@@ -27,9 +27,14 @@
 						<table class="table table-striped table-hover" id="tabla">
 							<thead>
 								<th>ID</th>
-								<th>Rif</th>
-								<th>Nombre</th>
-								<th>Ubicación</th>
+								<th>Nombre de la empresa</th>
+								<th>Rif de la empresa</th>
+								<th>direccion de la empresa</th>
+								<th>télefono de la empresa</th>
+								<th>Nombre del encargado</th>
+								<th>Cédula del encargado</th>
+								<th>télefono del encargado</th>
+								<th>dirección del encargado</th>
 								<th>Opciones</th>
 							</thead>
 							<tbody>
@@ -88,13 +93,28 @@
 							data: "ID"
 						},
 						{
-							data: "empresa_Rif"
-						},
-						{
 							data: "empresa_Nombre"
 						},
 						{
+							data: "empresa_Rif"
+						},
+						{
 							data: "empresa_Ubicacion"
+						},
+						{
+							data: "empresa_Telefono"
+						},
+						{
+							data: "empresa_Encargado"
+						},
+						{
+							data: "empresa_CedulaE"
+						},
+						{
+							data: "empresa_TelefonoE"
+						},
+						{
+							data: "empresa_DireccionE"
 						},
 						{
 							defaultContent: "",

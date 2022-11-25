@@ -119,30 +119,13 @@
 												<div class="input-group">
 													<input type="number" step="1" pattern="[0-9]{1,11}" min="Solo se aceptan numeros" minlength="1" maxlength="3" name="Muestra" id="muestra" class="form-control" required>
 													<div class="input-group-append">
-														<span class="input-group-text">%</span>
+														<span class="input-group-text">KG</span>
 													</div>
 												</div>
 											</div>
 											<div class="form-group" id="div_obser" style="display: none;">
 												<label>Observación</label>
 												<input type="text" minlength="1" maxlength="60" name="observacion" id="observacion" class="form-control" required disabled="disabled">
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-12">
-											<div class="d-flex flex-column">
-												<label for="">Estatus de la operación</label>
-												<div class="d-flex flex-row justify-content-around">
-													<div class="form-check">
-														<input type="radio" name="estatus_ope" value="A" id="estatus_ope" class="form-check-input" required disabled="disabled">
-														<small class="form-check-label">Aprobada</small>
-													</div>
-													<div class="form-check ml-2 mr-2">
-														<input type="radio" name="estatus_ope" value="D" id="estatus_ope" class="form-check-input" required disabled="disabled">
-														<small class="form-check-label">Rechazada</small>
-													</div>
-												</div>
 											</div>
 										</div>
 									</div>
@@ -175,7 +158,7 @@
 											<div class="form-group">
 												<label>Humedad</label>
 												<div class="input-group">
-													<input type="number" step="00.1" min="00.1" min="Solo se aceptan numeros" maxlength="4" name="Humedad" id="humedad" class="form-control" required disabled="disabled">
+													<input type="number" step="00.1" min="13" min="Solo se aceptan numeros" maxlength="4" name="Humedad" id="humedad" class="form-control" required disabled="disabled">
 													<div class="input-group-append">
 														<span class="input-group-text">%</span>
 													</div>
@@ -195,7 +178,23 @@
 											</div>
 										</div>
 									</div>
-
+									<div class="row">
+										<div class="col-12">
+											<div class="d-flex flex-column">
+												<label for="">Estatus de la operación</label>
+												<div class="d-flex flex-row justify-content-around">
+													<div class="form-check">
+														<input type="radio" name="estatus_ope" value="A" id="estatus_ope" class="form-check-input" disabled="disabled" required>
+														<small class="form-check-label">Aprobada</small>
+													</div>
+													<div class="form-check ml-2 mr-2"> 
+														<input type="radio" name="estatus_ope" value="D" id="estatus_ope" class="form-check-input" disabled="disabled" required>
+														<small class="form-check-label">Rechazada</small>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
 								<div class="modal-footer">
 									<input type="hidden" name="operacion" id="operacion" value="Registro">
@@ -295,7 +294,7 @@
 									data: "m_Muestra",
 									render(data) {
 										if (data == null) return "Sin muestra";
-										else return data + "%";
+										else return data + "KG";
 									}
 								},
 								{

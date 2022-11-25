@@ -54,6 +54,10 @@ if (isset($_GET["operacion"])) {
       Consultar_E();
       break;
 
+    case "ConsultarCedula":
+      ConsultarCedula();
+      break;
+
     default:
       echo "No es valida la peticion";
       break;
@@ -159,4 +163,12 @@ function Recuperar()
   // $res = $a->Recuperar();
   // if($res) header ("location:../View_Login_E?Mensaje=4");
   // else header("location:../View_Login_E?Mensaje=1 ");
+}
+
+
+function ConsultarCedula(){
+  $a = new Auth_m();
+  $datos = $a->ConsultarCedula($_GET["cedula"]);
+  /* La misma explicacion de arriba */
+  echo json_encode(["data" => $datos], false);
 }

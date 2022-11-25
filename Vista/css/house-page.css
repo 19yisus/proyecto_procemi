@@ -1,0 +1,123 @@
+.principal{
+    background-image: url(../img/WhatsApp\ Image\ 2022-11-15\ at\ 21.23.30.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+h1{
+    font-size: 60px;
+}
+
+
+.reseña{
+    text-align: center;
+    color: #ffff;
+    padding-top: 3%;
+    font-weight: bold;
+    overflow: hidden;
+    
+}
+
+#l{
+    color: red;
+}
+.house-page{
+    padding: 0 4%;
+    padding-top: 10%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+
+
+.card{
+    width: 300px;
+    height: 250px;
+    background: rgba(0, 0, 0, 0.747);
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 10px rgb(0,0,0,0.24);
+    border: 2px solid rgba(7, 7, 7, 0.12);
+    font-size: 16px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+    transition: all 0.3s ease;
+    
+}
+
+.icon{
+    margin: 0 auto;
+    width: 100%;
+    height: 80px;
+    max-width: 80px;
+    background: linear-gradient(90deg, #0c55c2 0%, #4869ff 40%,rgba(163, 160, 160, 0.28) 60%);
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background-position: 0px;
+    background-size: 200px;
+    transition: all 0.8s ease;
+}
+
+.card .title{
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    margin-top:  30;
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+.material-icons.md-36{
+    font-size: 36px;
+}
+
+.card .text{
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    width:80%;
+    margin: 0 auto;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 20px;
+    font-weight: 200;
+    opacity: 0;
+    color: #fff;
+    max-height: 0;
+}
+
+.card:hover{
+    height: 270px;
+}
+
+.card:hover .text{
+    transition: all 0.3s ease;
+    opacity: 1;
+    max-height: 40px;
+}
+
+.card:hover .icon{
+    background-position: -120px;
+    transition: all 0.3s ease;
+}
+
+.maps{
+    align-items: center;
+    text-align: center;
+    font-size: 5px;
+    color: #fff;
+    padding-top: 2px;
+
+}

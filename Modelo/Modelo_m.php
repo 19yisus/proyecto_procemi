@@ -24,10 +24,7 @@ class Modelo_m extends bd
   //Por ejemplo validar que la operacion se realizo, y validar si hubo algun tipo de error
   public function Registrar()
   {
-    $res = $this->ejecutar("SELECT * FROM modelo WHERE modelo_Nombre = '$this->nombre';")->fetch_all(MYSQLI_ASSOC);
-    if (isset($res[0])) return 5;
-    
-    $sql = "INSERT INTO modelo(modelo_Nombre,modelo_Estatus,modelo_Fecha,ID_Marca) VALUES ('$this->nombre',true,NOW(),$this->marca)";
+    $sql = "INSERT INTO modelo(modelo_Nombre,modelo_Estatus,modelo_Fecha,ID_Marca) VALUES (UPPER('$this->nombre'),true,NOW(),$this->marca)";
     $result = $this->ejecutar($sql);
     return $result;
   }
@@ -59,6 +56,18 @@ class Modelo_m extends bd
     $this->ejecutar("UPDATE modelo SET modelo_Estatus = false WHERE id = $this->id");
     return true;
   }
+
+
+  
+  public function ConsultarModelo($nombre)
+  {
+    $res = $this->ejecutar("SELECT * FROM modelo WHERE modelo_Nombre = '$nombre'");
+    if ($res) $res = $res->fetch_assoc();
+    else $res = ["SELECT * FROM modelo WHERE modelo_Nombre = '$nombre'"];
+    return $res;
+  }
+
+
 
   /* */
 

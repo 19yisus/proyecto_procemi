@@ -43,6 +43,19 @@
             Consultar_E();
          break;
 
+         case 'ConsultarEmpresa':
+            consultarEmpresa();
+         break;
+
+         case 'ConsultarRif':
+            consultarRif();
+         break;
+
+         case 'ConsultarCedula':
+            consultarCedula();
+         break;
+
+
          default:
             echo "No es valida la peticion";
          break;
@@ -56,12 +69,8 @@
       $telefono_empresa = $_POST["codigo_area_e"]."-".$_POST["Telefono"];
       $a->SetDatos(null,$_POST["Encargado"],$rif,$telefono_encargado,$_POST["direccion_encargado"],"J-".$_POST["Rif"],$_POST["Nombre"],$_POST["Ubicacion"],$telefono_empresa);
       $res = $a->Registrar();
-      if($res === 5) header("location:../View_Vehiculo?Mensaje=5");
-      else{
          if($res) header("location:../View_Empresa?Mensaje=2");
          else header("location:../View_Empresa?Mensaje= 1 ");
-      }
-      
    }
 
    function actualizar_empresa(){
@@ -95,6 +104,29 @@
       $res = $a->Eliminar();
       if($res) header ("location:../View_Empresa?Mensaje=3");
       else header("location:../View_Empresa?Mensaje= 1 ");
+   }
+
+   //  Validaciones 
+
+   function consultarEmpresa(){
+      $a = new Empresa_m();
+      $datos = $a->ConsultarEmpresa($_GET["nombre"]);
+      /* La misma explicacion de arriba */
+      echo json_encode(["data" => $datos], false);
+   }
+
+   function consultarRif(){
+      $a = new Empresa_m();
+      $datos = $a->ConsultarRif($_GET["rif"]);
+      /* La misma explicacion de arriba */
+      echo json_encode(["data" => $datos], false);
+   }
+
+   function consultarCedula(){
+      $a = new Empresa_m();
+      $datos = $a->ConsultarCedula($_GET["cedula"]);
+      /* La misma explicacion de arriba */
+      echo json_encode(["data" => $datos], false);
    }
 
     /* Eliminados */

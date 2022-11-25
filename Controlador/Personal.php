@@ -58,7 +58,6 @@
       if(isset($_POST['Empresa'])) $empresa = $_POST['Empresa']; else $empresa = "Null";
       $a->SetDatos(null,$_POST["Nombre"],$_POST["Apellido"],$_POST["Nacionalidad"],$_POST["Cedula"],$telefono,$_POST["Correo"],$_POST["Direccion"],$empresa,$_POST["Cargo"],$_POST['condicion']);
       $res = $a->Registrar();
-      if($res === 5) header("location:../View_Personal?Mensaje=5");
       if($res) header("location:../View_Personal?Mensaje=2");
       else header("location:../View_Personal?Mensaje= 1 ");
    }
@@ -113,6 +112,6 @@
       $a = new Personal_m();
       $a->SetDatos($_POST["ID"],null,null,null,null,null,null,null,null,null,null);
       $res = $a->Recuperar();
-      if($res) header ("location:../Vista/Personal_E.php?Mensaje=4");
-      else header("location:../Vista/Personal_E.php?Mensaje= 1 ");
+      if($res) header ("location:../View_Personal_E?Mensaje=4");
+      else header("location:../Vista/Personal_E.php?Mensaje=1 ");
    }

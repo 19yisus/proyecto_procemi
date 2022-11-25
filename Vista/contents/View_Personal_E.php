@@ -26,11 +26,9 @@
 						<!-- Tabla -->
 						<table class="table table-striped table-hover" id="tabla">
 							<thead>
-								<th>ID</th>
+								<th>Cédula</th>
 								<th>Nombre</th>
 								<th>Apellido</th>
-								<th>Nacionalidad</th>
-								<th>Cédula</th>
 								<th>Télefono</th>
 								<th>Correo</th>
 								<th>Dirección</th>
@@ -90,20 +88,21 @@
 						"url": "Controlador/Personal.php?operacion=Consultar_E",
 						"dataSrc": "data"
 					},
-					"columns": [{
-							data: "ID"
+					"columns": [
+						// {
+						// 	data: "ID"
+						// },
+						{
+							data: "personal_Cedula",
+							render(data, type, row) {
+								return `${row.personal_Nacionalidad}-${row.personal_Cedula}`;
+							}
 						},
 						{
 							data: "personal_Nombre"
 						},
 						{
 							data: "personal_Apellido"
-						},
-						{
-							data: "personal_Nacionalidad"
-						},
-						{
-							data: "personal_Cedula"
 						},
 						{
 							data: "personal_Telefono"
@@ -115,7 +114,11 @@
 							data: "personal_Direccion"
 						},
 						{
-							data: "empresa_Nombre"
+							data: "empresa_Nombre",
+							render(data) {
+								if (data) return data;
+								else return "Procemi";
+							}
 						},
 						{
 							data: "cargo_Nombre"

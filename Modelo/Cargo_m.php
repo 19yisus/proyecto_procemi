@@ -23,10 +23,7 @@ class Cargo_m extends bd
   //Por ejemplo validar que la operacion se realizo, y validar si hubo algun tipo de error
   public function Registrar()
   {
-    $res = $this->ejecutar("SELECT * FROM cargo WHERE cargo_Nombre = '$this->nombre';")->fetch_all(MYSQLI_ASSOC);
-    if (isset($res[0])) return 5;
-
-    $sql = "INSERT INTO cargo(cargo_Nombre,cargo_Estatus,cargo_Fecha) VALUES ('$this->nombre',true,NOW())";
+    $sql = "INSERT INTO cargo(cargo_Nombre,cargo_Estatus,cargo_Fecha) VALUES (UPPER('$this->nombre'),true,NOW())";
     $result = $this->ejecutar($sql);
     return $result;
   }
@@ -56,6 +53,15 @@ class Cargo_m extends bd
     $this->ejecutar("UPDATE cargo SET cargo_Estatus = false WHERE ID = $this->id");
     return true;
   }
+
+  public function ConsultarCargo($nombre)
+  {
+    $res = $this->ejecutar("SELECT * FROM cargo WHERE cargo_Nombre = '$nombre'");
+    if ($res) $res = $res->fetch_assoc();
+    else $res = ["SELECT * FROM cargo WHERE cargo_Nombre = '$nombre'"];
+    return $res;
+  }
+
 
   /* */
 

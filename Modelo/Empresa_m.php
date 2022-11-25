@@ -49,9 +49,6 @@ class Empresa_m extends bd
   //Por ejemplo validar que la operacion se realizo, y validar si hubo algun tipo de error
   public function Registrar()
   {
-    $res = $this->ejecutar("SELECT * FROM empresa WHERE empresa_Rif = '$this->rif' OR empresa_Nombre = '$this->nombre';")->fetch_all(MYSQLI_ASSOC);
-    if (isset($res[0])) return 5;
-
     $result = $this->ejecutar("INSERT INTO empresa(
       empresa_Rif,
       empresa_Encargado,
@@ -63,13 +60,14 @@ class Empresa_m extends bd
       empresa_telefono,
       empresa_Estatus,
       empresa_Fecha) 
-      VALUES ('$this->rif',
-      '$this->encargado',
+      VALUES (
+        '$this->rif',
+      UPPER('$this->encargado'),
       '$this->cedula_encargado',
       '$this->telefono_encargado',
-      '$this->direccion_encargado',
-      '$this->nombre',
-      '$this->ubicacion',
+      UPPER('$this->direccion_encargado'),
+      UPPER('$this->nombre'),
+      UPPER('$this->ubicacion'),
       '$this->telefono',
       true,NOW())");
     return $result;
@@ -109,6 +107,88 @@ class Empresa_m extends bd
   {
     $this->ejecutar("UPDATE empresa SET empresa_Estatus = false WHERE ID = $this->id");
     return true;
+  }
+
+  //  Validaciones
+
+  public function ConsultarEmpresa($nombre)
+  {
+    $res = $this->ejecutar("SELECT * FROM empresa WHERE empresa_Nombre = '$nombre'");
+    if ($res) $res = $res->fetch_assoc();
+    else $res = ["SELECT * FROM empresa WHERE empresa_Nombre = '$nombre'"];
+    return $res;
+  }
+
+  public function ConsultarRif($rif)
+  {
+    $r = "J-" . $rif;
+    $cedula = "V-" . $rif;
+
+    // Empresa
+    $res = $this->ejecutar("SELECT * FROM empresa WHERE (empresa_Rif = '$r') OR (empresa_cedulaE = '$r') OR (empresa_cedulaE = '$cedula')");
+    $res = $res->fetch_assoc();
+
+    // Persoanl
+    $res2 = $this->ejecutar("SELECT * FROM personal WHERE personal_Cedula = '$rif'");
+    $res2 = $res2->fetch_assoc();
+
+    // Usuarios
+    $res3 = $this->ejecutar("SELECT * FROM usuarios WHERE cedula_user = '$rif'");
+    $res3 = $res3->fetch_assoc();
+
+    // Vehiculo
+    $res4 = $this->ejecutar("SELECT * FROM vehiculo WHERE (rif_dueno ='$r') OR (rif_dueno = '$cedula')");
+    $res4 = $res4->fetch_assoc();
+
+
+
+    switch (true) {
+      case $res != "" || $res != null:
+        return "El dato que estas ingresado ya esta registrado en otra empresa";
+      case $res2 != "" || $res2 != null:
+        return "El dato que estas ingresando ya esta registrado en un personal";
+      case $res3 != "" || $res3 != null:
+        return "El dato que estas ingresando ya esta registrado en un usuario del sistema";
+      case $res4 != "" || $res4 != null:
+        return "El dato que estas ingresando ya esta registrado en un vehiculo";
+      default:
+        return;
+    }
+  }
+
+  public function ConsultarCedula($cedula)
+  {
+    $rif = "J-" . $cedula;
+    $ced = "V-" . $cedula;
+    
+    // Empresa
+    $res = $this->ejecutar("SELECT * FROM empresa WHERE (empresa_Rif = '$rif') OR (empresa_cedulaE = '$ced') OR (empresa_cedulaE = '$rif')");
+    $res = $res->fetch_assoc();
+    
+     // Persoanl
+     $res2 = $this->ejecutar("SELECT * FROM personal WHERE personal_Cedula = '$cedula'");
+     $res2 = $res2->fetch_assoc();
+ 
+     // Usuarios
+     $res3 = $this->ejecutar("SELECT * FROM usuarios WHERE cedula_user = '$cedula'");
+     $res3 = $res3->fetch_assoc();
+ 
+     // Vehiculo
+     $res4 = $this->ejecutar("SELECT * FROM vehiculo WHERE (rif_dueno ='$rif') OR (rif_dueno = '$ced')");
+     $res4 = $res4->fetch_assoc();
+
+    switch (true) {
+      case $res != "" || $res != null:
+        return "El dato que estas ingresado ya esta registrado en otra empresa";
+      case $res2 != "" || $res2 != null:
+        return "El dato que estas ingresando ya esta registrado en un personal";
+      case $res3 != "" || $res3 != null:
+        return "El dato que estas ingresando ya esta registrado en un usuario del sistema";
+      case $res4 != "" || $res4 != null:
+        return "El dato que estas ingresando ya esta registrado en un vehiculo";
+      default:
+        return;
+    }
   }
 
   /* */
