@@ -25,6 +25,9 @@ function consultar_Reporte()
 {
 	$a = new Reporte_m();
 	$datos = $a->Consultar_Todos($_GET['desde'], $_GET['hasta']);
+	if (!isset($datos[0])) {
+		die("No hay información suficiente");
+	}
 
 	// var_dump($datos[0]['cambios'][1]);
 	// die("FFF");
@@ -101,7 +104,11 @@ function consultar_Reporte()
 function consultar_Reporte_porSilo()
 {
 	$a = new Reporte_m();
-	$datos = $a->Consultar_PorEstatus("R");
+	$silo = $_GET['silo'];
+	$datos = $a->Consultar_PorSilo($silo, $_GET['desde'], $_GET['hasta']);
+	if (!isset($datos[0])) {
+		die("No hay información suficiente");
+	}
 	$pdf = new FPDF("L", 'mm', 'legal');
 	$pdf->AddPage();
 	$pdf->SetFont("Arial", "B", 10);
@@ -173,10 +180,12 @@ function consultar_Reporte_porSilo()
 
 function consultar_Reporte_ProductosRechazados()
 {
-	$silo = $_GET['silo'];
-
 	$a = new Reporte_m();
-	$datos = $a->Consultar_PorSilo($silo,$_GET['desde'], $_GET['hasta']);
+	$datos = $a->Consultar_PorSilo("R");
+	
+	if (!isset($datos[0])) {
+		die("No hay información suficiente");
+	}
 	$pdf = new FPDF("L", 'mm', 'legal');
 	$pdf->AddPage();
 	$pdf->SetFont("Arial", "B", 10);
