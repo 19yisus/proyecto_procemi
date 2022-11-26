@@ -99,10 +99,7 @@
             </ul>
             <a href="#homeSubmenu8" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Reportes de silos</a>
             <ul class="collapse list-unstyled menu" id="homeSubmenu8">
-              <li><a href="">Generar reporte del silo 1</a></li>
-              <li><a href="">Generar reporte del silo 2</a></li>
-              <li><a href="">Generar reporte del silo 3</a></li>
-              <li><a href="">Generar reporte del silo 4</a></li>
+              <li><a href="View_pdf_silos">Generar reporte por silos</a></li>
             </ul>
           </ul>
         </li>
