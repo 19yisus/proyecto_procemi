@@ -41,8 +41,14 @@ class Modelo_m extends bd
 
   public function Actualizar()
   {
-    $this->ejecutar("UPDATE modelo SET modelo_Nombre = '$this->nombre', ID_Marca = $this->marca WHERE id = $this->id");
-    return true;
+    $res = $this->ejecutar("SELECT * FROM vehiculo WHERE ID_Modelo = $this->id");
+    $res = $res->fetch_assoc();
+    if ($res != "" || $res != null) {
+      return false;
+    } else {
+      $this->ejecutar("UPDATE modelo SET modelo_Nombre = '$this->nombre', ID_Marca = $this->marca WHERE id = $this->id");
+      return true;
+    }
   }
 
   public function Consultar_Uno($id)
@@ -53,12 +59,18 @@ class Modelo_m extends bd
 
   public function Eliminar()
   {
-    $this->ejecutar("UPDATE modelo SET modelo_Estatus = false WHERE id = $this->id");
-    return true;
+    $res = $this->ejecutar("SELECT * FROM vehiculo WHERE ID_Modelo = $this->id");
+    $res = $res->fetch_assoc();
+    if ($res != "" || $res != null) {
+      return false;
+    } else {
+      $this->ejecutar("UPDATE modelo SET modelo_Estatus = false WHERE id = $this->id");
+      return true;
+    }
   }
 
 
-  
+
   public function ConsultarModelo($nombre)
   {
     $res = $this->ejecutar("SELECT * FROM modelo WHERE modelo_Nombre = '$nombre'");

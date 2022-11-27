@@ -66,8 +66,8 @@
       $a = new Cargo_m();
       $a->SetDatos($_POST["ID"],$_POST["Nombre"]);
       $res = $a->Actualizar();
-      if($res) header("location:../View_cargo?Mensaje=2");
-      else header("location:../View_cargo?Mensaje= 1 ");
+      if($res == true) header("location:../View_cargo?Mensaje=2");
+      else header("location:../View_cargo?Mensaje=8");
    }
 
    function consultar_cargos(){
@@ -88,8 +88,8 @@
       $a = new Cargo_m();
       $a->SetDatos($_POST["ID"],null);
       $res = $a->Eliminar();
-      if($res) header ("location:../View_cargo?Mensaje=3");
-      else header("location:../View_cargo?Mensaje= 1 ");
+      if($res == true) header ("location:../View_cargo?Mensaje=3");
+      else header("location:../View_cargo?Mensaje=9");
    }
 
    function consultarCargo(){

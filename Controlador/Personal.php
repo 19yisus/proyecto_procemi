@@ -68,9 +68,8 @@
       if(isset($_POST['Empresa'])) $empresa = $_POST['Empresa']; else $empresa = "Null";
       $a->SetDatos($_POST["ID"],$_POST["Nombre"],$_POST["Apellido"],$_POST["Nacionalidad"],$_POST["Cedula"],$telefono,$_POST["Correo"],$_POST["Direccion"],$empresa,$_POST["Cargo"],$_POST['condicion']);
       $res = $a->Actualizar();
-      if($res === 5) header("location:../View_Personal?Mensaje=5");
-      if($res) header("location:../View_Personal?Mensaje=2");
-      else header("location:../View_Personal?Mensaje= 1 ");
+      if($res == true) header("location:../View_Personal?Mensaje=2");
+      else header("location:../View_Personal?Mensaje=8");
    }
 
    function consultar_personales(){
@@ -95,8 +94,8 @@
       $a = new Personal_m();
       $a->SetDatos($_POST["ID"],null,null,null,null,null,null,null,null,null,null);
       $res = $a->Eliminar();
-      if($res) header ("location:../View_Personal?Mensaje=3");
-      else header("location:../View_Personal?Mensaje= 1 ");
+      if($res == true) header ("location:../View_Personal?Mensaje=3");
+      else header("location:../View_Personal?Mensaje=9");
    }
 
  /* Eliminados */

@@ -28,6 +28,28 @@
 
  <?php
   if (isset($_GET['Mensaje'])) {
+    if ($_GET['Mensaje'] == 8) {
+      echo "<script>
+              Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Este dato no puede ser editado porque esta siendo utilizado',
+                showConfirmButton: false,
+                timer: 2000
+              })
+            </script>";
+    }
+    if ($_GET['Mensaje'] == 9) {
+      echo "<script>
+              Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Este dato no puede ser eliminado porque esta siendo utilizado',
+                showConfirmButton: false,
+                timer: 2000
+              })
+            </script>";
+    }
     if ($_GET['Mensaje'] == 1) {
       echo "<script>
               Swal.fire({

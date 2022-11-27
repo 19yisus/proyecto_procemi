@@ -1,4 +1,7 @@
 <?php
+
+use JetBrains\PhpStorm\Internal\ReturnTypeContract;
+
 require("Conexion.php");
 
 class Personal_m extends bd
@@ -79,7 +82,12 @@ class Personal_m extends bd
 
   public function Actualizar()
   {
-    $this->ejecutar("UPDATE personal SET 
+    $res = $this->ejecutar("SELECT * FROM movimiento WHERE ID_Personal = $this->id");
+    $res = $res->fetch_assoc();
+    if ($res != "" || $res != null){
+      return false;
+    }else{
+      $this->ejecutar("UPDATE personal SET 
       personal_Cedula = '$this->cedula',
       personal_Nombre = '$this->nombre',
       personal_Apellido = '$this->apellido',
@@ -92,6 +100,8 @@ class Personal_m extends bd
       ID_Empresa = $this->empresa
       WHERE ID = $this->id");
     return true;
+    }
+    
   }
 
   public function Consultar_Uno($id)
@@ -104,8 +114,8 @@ class Personal_m extends bd
 
   public function ConsultarCedula($cedula)
   {
-    $rif = "J-".$cedula;
-    $dato = "V-".$cedula;
+    $rif = "J-" . $cedula;
+    $dato = "V-" . $cedula;
 
     // Personal
     $res = $this->ejecutar("SELECT * FROM personal WHERE personal_Cedula = '$cedula'");
@@ -122,7 +132,7 @@ class Personal_m extends bd
     // Vehiculo
     $res4 = $this->ejecutar("SELECT * FROM vehiculo WHERE (rif_dueno ='$rif') OR (rif_dueno = '$dato')");
     $res4 = $res4->fetch_assoc();
-    
+
 
     switch (true) {
       case $res != "" || $res != null:
@@ -132,7 +142,7 @@ class Personal_m extends bd
       case $res3 != "" || $res3 != null:
         return "La cédula ya esta siendo utilizada por una empresa";
       case $res4 != "" || $res4 != null:
-        return "La cédula ya esta siendo utilizada por un dueño de algun vehiculo"; 
+        return "La cédula ya esta siendo utilizada por un dueño de algun vehiculo";
       default:
         return;
     }
@@ -140,8 +150,14 @@ class Personal_m extends bd
 
   public function Eliminar()
   {
-    $this->ejecutar("UPDATE personal SET personal_Estatus = false WHERE ID = $this->id");
-    return true;
+    $res = $this->ejecutar("SELECT * FROM movimiento WHERE ID_Personal = $this->id");
+    $res = $res->fetch_assoc();
+    if ($res != "" || $res != null) {
+      return false;
+    } else {
+      $this->ejecutar("UPDATE personal SET personal_Estatus = false WHERE ID = $this->id");
+      return true;
+    }
   }
 
 

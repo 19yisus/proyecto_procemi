@@ -66,7 +66,7 @@
       $a->SetDatos($_POST["ID"],$_POST["Nombre"]);
       $res = $a->Actualizar();
       if($res) header("location:../View_color?Mensaje=2");
-      else header("location:../View_color?Mensaje= 1 ");
+      else header("location:../View_color?Mensaje=8");
    }
 
    function consultar_colors(){
@@ -87,8 +87,8 @@
       $a = new color_m();
       $a->SetDatos($_POST["ID"],null);
       $res = $a->Eliminar();
-      if($res) header ("location:../View_color?Mensaje=3");
-      else header("location:../View_color?Mensaje= 1 ");
+      if($res == true) header ("location:../View_color?Mensaje=3");
+      else header("location:../View_color?Mensaje=9");
    }
 
    function consultarColor(){

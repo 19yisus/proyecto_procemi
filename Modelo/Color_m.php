@@ -42,8 +42,14 @@ class Color_m extends bd
 
   public function Actualizar()
   {
-    $this->ejecutar("UPDATE color SET color_Nombre = '$this->nombre' WHERE ID = $this->id");
-    return true;
+    $res = $this->ejecutar("SELECT * FROM vehiculo WHERE ID_Color = $this->id");
+    $res = $res->fetch_assoc();
+    if ($res != "" || $res != null) {
+      return false;
+    } else {
+      $this->ejecutar("UPDATE color SET color_Nombre = '$this->nombre' WHERE ID = $this->id");
+      return true;
+    }
   }
 
   public function Consultar_Uno($id)
@@ -54,8 +60,14 @@ class Color_m extends bd
 
   public function Eliminar()
   {
-    $this->ejecutar("UPDATE color SET color_Estatus = false WHERE ID = $this->id");
-    return true;
+    $res = $this->ejecutar("SELECT * FROM vehiculo WHERE ID_Color = $this->id");
+    $res = $res->fetch_assoc();
+    if ($res != "" || $res != null) {
+      return false;
+    } else {
+      $this->ejecutar("UPDATE color SET color_Estatus = false WHERE ID = $this->id");
+      return true;
+    }
   }
 
   public function ConsultarColor($nombre)

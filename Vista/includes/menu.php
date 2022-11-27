@@ -65,7 +65,7 @@
           </a>
           <ul class="collapse list-unstyled menu" id="homeSubmenu9">
             <li><a href="View_Personal_E">Personal</a></li>
-            <li><a href="View_cargo_E">Cargo</a></li>
+            <li><a href="View_Cargo_E">Cargo</a></li>
             <li><a href="View_Producto_E">Producto</a></li>
             <li><a href="View_Empresa_E">Empresa</a></li>
             <a href="#homeSubmenu7" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Datos de vehiculos</a>

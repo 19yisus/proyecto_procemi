@@ -65,8 +65,8 @@
       $a = new Marca_m();
       $a->SetDatos($_POST["ID"],$_POST["Nombre"]);
       $res = $a->Actualizar();
-      if($res) header("location:../View_marca?Mensaje=2");
-      else header("location:../View_marca?Mensaje= 1 ");
+      if($res == true) header("location:../View_marca?Mensaje=2");
+      else header("location:../View_marca?Mensaje=8");
    }
 
    function consultar_marcas(){
@@ -87,8 +87,8 @@
       $a = new Marca_m();
       $a->SetDatos($_POST["ID"],null);
       $res = $a->Eliminar();
-      if($res) header ("location:../View_marca?Mensaje=3");
-      else header("location:../View_marca?Mensaje= 1 ");
+      if($res == true) header ("location:../View_marca?Mensaje=3");
+      else header("location:../View_marca?Mensaje=9");
    }
 
    function consultarMarca(){

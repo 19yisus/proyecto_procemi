@@ -39,7 +39,7 @@ class Reporte_m extends bd
     return $datos;
   }
 
-  public function Consultar_PorSilo($silo)
+  public function Consultar_PorSilo($silo, $desde, $hasta)
   {
     $res = $this->ejecutar("SELECT
         movimiento.*,
@@ -57,7 +57,7 @@ class Reporte_m extends bd
     left JOIN personal ON personal.ID = movimiento.ID_Personal
     LEFT JOIN producto ON producto.ID = movimiento.ID_Producto
     left JOIN empresa ON empresa.ID = movimiento.ID_Empresa
-    WHERE movimiento.m_Silo = '$silo'; ")->fetch_all(MYSQLI_ASSOC);
+    WHERE movimiento.m_Silo = '$silo' AND movimiento.m_Fecha BETWEEN '$desde' AND '$hasta'; ")->fetch_all(MYSQLI_ASSOC);
     
     $datos = [];
     foreach ($res as $mov) {

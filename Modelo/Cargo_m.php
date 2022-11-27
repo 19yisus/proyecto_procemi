@@ -38,8 +38,15 @@ class Cargo_m extends bd
   /* No creo que sea necesario explicar esta parte, basciamente agregue las funciones de consultar todos, actualizar y consultar por id */
   public function Actualizar()
   {
-    $this->ejecutar("UPDATE cargo SET cargo_Nombre = '$this->nombre' WHERE ID = $this->id");
-    return true;
+    $res = $this->ejecutar("SELECT * FROM personal WHERE ID_Cargo = $this->id");
+    $res = $res->fetch_assoc();
+    if ($res != "" || $res != null){
+      return false;
+    }else{
+      $this->ejecutar("UPDATE cargo SET cargo_Nombre = '$this->nombre' WHERE ID = $this->id");
+      return true;
+    }
+   
   }
 
   public function Consultar_Uno($id)
@@ -50,8 +57,15 @@ class Cargo_m extends bd
 
   public function Eliminar()
   {
-    $this->ejecutar("UPDATE cargo SET cargo_Estatus = false WHERE ID = $this->id");
-    return true;
+    $res = $this->ejecutar("SELECT * FROM personal WHERE ID_Cargo = $this->id");
+    $res = $res->fetch_assoc();
+    if ($res != "" || $res != null){
+      return false;
+    }else{
+      $this->ejecutar("UPDATE cargo SET cargo_Estatus = false WHERE ID = $this->id");
+      return true;
+    }
+   
   }
 
   public function ConsultarCargo($nombre)

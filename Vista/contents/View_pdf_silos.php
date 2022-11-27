@@ -25,7 +25,7 @@
 						</div>
 						<form action="Controlador/Reporte.php" method="get" id="form_pdf">
 							<div class="row col-10">
-								<div class="col-6">
+								<div class="col-4">
 									<div class="form-group">
                     <label for="">Silo</label>
                     <select name="silo" id="silo_select" class="form-control">
@@ -37,6 +37,18 @@
                       
                     </select>
                   </div>
+								</div>
+								<div class="col-4">
+									<div class="form-group">
+										<label for="">Desde</label>
+										<input type="date" name="desde" id="desde" required class="form-control">
+									</div>
+								</div>
+								<div class="col-4">
+									<div class="form-group">
+										<label for="">Hasta</label>
+										<input type="date" name="hasta" id="hasta" required class="form-control">
+									</div>
 								</div>
 							</div>
 							<div class="row col-10">

@@ -65,8 +65,8 @@
       $a = new Producto_m();
       $a->SetDatos($_POST["ID"],$_POST["Nombre"]);
       $res = $a->Actualizar();
-      if($res) header("location:../View_Producto?Mensaje=2");
-      else header("location:../View_Producto?Mensaje=1 ");
+      if($res == true) header("location:../View_Producto?Mensaje=2");
+      else header("location:../View_Producto?Mensaje=8");
    }
 
    function consultar_productos(){
@@ -87,8 +87,8 @@
       $a = new Producto_m();
       $a->SetDatos($_POST["ID"],null);
       $res = $a->Eliminar();
-      if($res) header ("location:../View_Producto?Mensaje=3");
-      else header("location:../View_Producto?Mensaje=1 ");
+      if($res == true) header ("location:../View_Producto?Mensaje=3");
+      else header("location:../View_Producto?Mensaje=9");
    }
 
    function ConsultarProducto(){

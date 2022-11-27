@@ -84,7 +84,12 @@ class Empresa_m extends bd
 
   public function Actualizar()
   {
-    $this->ejecutar("UPDATE empresa SET 
+    $res = $this->ejecutar("SELECT * FROM movimiento WHERE ID_Empresa = $this->id");
+    $res = $res->fetch_assoc();
+    if ($res != "" || $res != null) {
+      return false;
+    } else {
+      $this->ejecutar("UPDATE empresa SET 
       empresa_Rif = '$this->rif',
       empresa_Encargado = '$this->encargado',
       empresa_cedulaE = '$this->cedula_encargado',
@@ -93,8 +98,9 @@ class Empresa_m extends bd
       empresa_Nombre = '$this->nombre',
       empresa_Ubicacion = '$this->ubicacion',
       empresa_telefono = '$this->telefono'
-    WHERE ID = $this->id");
-    return true;
+      WHERE ID = $this->id");
+      return true;
+    }
   }
 
   public function Consultar_Uno($id)
@@ -105,8 +111,14 @@ class Empresa_m extends bd
 
   public function Eliminar()
   {
-    $this->ejecutar("UPDATE empresa SET empresa_Estatus = false WHERE ID = $this->id");
-    return true;
+    $res = $this->ejecutar("SELECT * FROM movimiento WHERE ID_Empresa = $this->id");
+    $res = $res->fetch_assoc();
+    if ($res != "" || $res != null) {
+      return false;
+    } else {
+      $this->ejecutar("UPDATE empresa SET empresa_Estatus = false WHERE ID = $this->id");
+      return true;
+    }
   }
 
   //  Validaciones
@@ -160,22 +172,22 @@ class Empresa_m extends bd
   {
     $rif = "J-" . $cedula;
     $ced = "V-" . $cedula;
-    
+
     // Empresa
     $res = $this->ejecutar("SELECT * FROM empresa WHERE (empresa_Rif = '$rif') OR (empresa_cedulaE = '$ced') OR (empresa_cedulaE = '$rif')");
     $res = $res->fetch_assoc();
-    
-     // Persoanl
-     $res2 = $this->ejecutar("SELECT * FROM personal WHERE personal_Cedula = '$cedula'");
-     $res2 = $res2->fetch_assoc();
- 
-     // Usuarios
-     $res3 = $this->ejecutar("SELECT * FROM usuarios WHERE cedula_user = '$cedula'");
-     $res3 = $res3->fetch_assoc();
- 
-     // Vehiculo
-     $res4 = $this->ejecutar("SELECT * FROM vehiculo WHERE (rif_dueno ='$rif') OR (rif_dueno = '$ced')");
-     $res4 = $res4->fetch_assoc();
+
+    // Persoanl
+    $res2 = $this->ejecutar("SELECT * FROM personal WHERE personal_Cedula = '$cedula'");
+    $res2 = $res2->fetch_assoc();
+
+    // Usuarios
+    $res3 = $this->ejecutar("SELECT * FROM usuarios WHERE cedula_user = '$cedula'");
+    $res3 = $res3->fetch_assoc();
+
+    // Vehiculo
+    $res4 = $this->ejecutar("SELECT * FROM vehiculo WHERE (rif_dueno ='$rif') OR (rif_dueno = '$ced')");
+    $res4 = $res4->fetch_assoc();
 
     switch (true) {
       case $res != "" || $res != null:

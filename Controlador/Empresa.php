@@ -80,8 +80,8 @@
       $telefono_empresa = $_POST["codigo_area_e"]."-".$_POST["Telefono"];
       $a->SetDatos($_POST["ID"],$_POST["Encargado"],$rif,$telefono_encargado,$_POST["direccion_encargado"],"J-".$_POST["Rif"],$_POST["Nombre"],$_POST["Ubicacion"],$telefono_empresa);
       $res = $a->Actualizar();
-      if($res) header("location:../View_Empresa?Mensaje=2");
-      else header("location:../View_Empresa?Mensaje= 1 ");
+      if($res == true) header("location:../View_Empresa?Mensaje=2");
+      else header("location:../View_Empresa?Mensaje=8");
    }
 
    function consultar_empresas(){
@@ -102,8 +102,8 @@
       $a = new Empresa_m();
       $a->SetDatos($_POST["ID"],null,null,null,null,null,null,null,null);
       $res = $a->Eliminar();
-      if($res) header ("location:../View_Empresa?Mensaje=3");
-      else header("location:../View_Empresa?Mensaje= 1 ");
+      if($res == true) header ("location:../View_Empresa?Mensaje=3");
+      else header("location:../View_Empresa?Mensaje=9");
    }
 
    //  Validaciones 

@@ -181,7 +181,7 @@ function consultar_Reporte_porSilo()
 function consultar_Reporte_ProductosRechazados()
 {
 	$a = new Reporte_m();
-	$datos = $a->Consultar_PorSilo("R");
+	$datos = $a->Consultar_PorEstatus("R",$_GET['desde'], $_GET['hasta']);
 	
 	if (!isset($datos[0])) {
 		die("No hay información suficiente");

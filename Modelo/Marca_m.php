@@ -32,8 +32,15 @@
     /* No creo que sea necesario explicar esta parte, basciamente agregue las funciones de consultar todos, actualizar y consultar por id */
 
     public function Actualizar(){
-      $this->ejecutar("UPDATE marca SET marca_Nombre = '$this->nombre' WHERE id = $this->id");
-      return true;
+      $res = $this->ejecutar("SELECT * FROM modelo WHERE ID_Marca= $this->id ");
+      $res = $res->fetch_assoc();
+      if ($res != "" || $res != null){
+        return false;
+      }else{
+        $this->ejecutar("UPDATE marca SET marca_Nombre = '$this->nombre' WHERE id = $this->id");
+        return true;
+      }
+      
     }
 
     public function Consultar_Uno($id){
@@ -42,6 +49,11 @@
     }
 
     public function Eliminar(){
+      $res = $this->ejecutar("SELECT * FROM modelo WHERE ID_Marca = $this->id");
+      $res = $res->fetch_assoc();
+      if ($res != "" || $res != null){
+        return false;
+      }
       $this->ejecutar("UPDATE marca SET marca_Estatus = false WHERE id = $this->id");
       return true;
     }

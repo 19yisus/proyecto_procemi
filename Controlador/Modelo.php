@@ -65,8 +65,8 @@
       $a = new Modelo_m();
       $a->SetDatos($_POST["ID"],$_POST["Nombre"],$_POST["Marca"]);
       $res = $a->Actualizar();
-      if($res) header("location:../View_modelo?Mensaje=2");
-      else header("location:../View_modelo?Mensaje= 1 ");
+      if($res == true) header("location:../View_modelo?Mensaje=2");
+      else header("location:../View_modelo?Mensaje=8");
    }
 
    function consultar_modelos(){
@@ -87,8 +87,8 @@
       $a = new Modelo_m();
       $a->SetDatos($_POST["ID"],null,null);
       $res = $a->Eliminar();
-      if($res) header ("location:../View_modelo?Mensaje=3");
-      else header("location:../View_modelo?Mensaje= 1 ");
+      if($res == true) header ("location:../View_modelo?Mensaje=3");
+      else header("location:../View_modelo?Mensaje=9");
    }
 
    function consultarModelo(){
