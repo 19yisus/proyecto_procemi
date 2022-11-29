@@ -2,7 +2,8 @@
   <div class="body-overlay"></div>
   <div id="sidebar">
     <div class="sidebar-header">
-      <img src="<?php $this->Assets('img/logo.png'); ?>" class="img-fluid" width="150" />
+      <img src="<?php $this->Assets('../Vista/img/avatar.svg'); ?>" class="img-icon"  width="80px" style="margin-left:59px;" />
+  
       <h6>Usuario: <?php echo $_SESSION['Usuario']; ?></h6>
       <h6>
         Rol:
@@ -40,7 +41,7 @@
       <?php if ($_SESSION['rol_id'] == "R") { ?>
         <li class="dropdown">
           <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-            <i class="material-icons">aspect_ratio</i>Registros
+            <i class="material-icons">app_registration</i>Registros
           </a>
           <ul class="collapse list-unstyled menu" id="homeSubmenu1">
             <li><a href="View_Personal">Personal</a></li>
@@ -61,11 +62,11 @@
 
         <li class="dropdown">
           <a href="#homeSubmenu9" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-            <i class="material-icons">aspect_ratio</i>Datos Eleminados
+            <i class="material-icons">delete_sweep</i>Datos Eliminados
           </a>
           <ul class="collapse list-unstyled menu" id="homeSubmenu9">
             <li><a href="View_Personal_E">Personal</a></li>
-            <li><a href="View_Cargo_E">Cargo</a></li>
+            <li><a href="View_cargo_E">Cargo</a></li>
             <li><a href="View_Producto_E">Producto</a></li>
             <li><a href="View_Empresa_E">Empresa</a></li>
             <a href="#homeSubmenu7" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Datos de vehiculos</a>
@@ -80,7 +81,7 @@
 
         <li class="dropdown">
           <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-            <i class="material-icons">apps</i>Movimiento
+            <i class="material-icons">local_shipping</i>Movimiento
           </a>
           <ul class="collapse list-unstyled menu" id="homeSubmenu2">
             <li><a href="View_Entrada">Entrada Materia Prima</a></li>
@@ -100,6 +101,7 @@
             <a href="#homeSubmenu8" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Reportes de silos</a>
             <ul class="collapse list-unstyled menu" id="homeSubmenu8">
               <li><a href="View_pdf_silos">Generar reporte por silos</a></li>
+              <li><a href="View_pdf_empresa">Generar reporte por empresas </a></li>
             </ul>
           </ul>
         </li>

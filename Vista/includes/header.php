@@ -3,7 +3,11 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
 	<title>P R O C E M I</title>
+	<link rel="icon" href="../img/hojitas.ico">
+	<link rel="icon" href="<?php $this->Assets('img\Portada_para_Facebook_Pastelería_Simple_Blanco-removebg-preview.ico');?>">
+
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="<?php $this->Assets('css/bootstrap.min.css');?>">
 	<!----css3---->

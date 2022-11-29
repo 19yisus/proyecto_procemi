@@ -68,7 +68,7 @@ iconos, estilos,tipografia
 	   line-height:1.5em;
   }
 h2{
-	color: rgb(3, 3, 3);
+	color: rgb(255, 255, 255);
 	font-size: 15px;
 }
   p{
@@ -83,6 +83,13 @@ h2{
 	  
   }
   
+  #time{
+	color: #000;
+  }
+
+  #date{
+	color: #000;
+  }
   
   button:focus{
 	  box-shadow:none;

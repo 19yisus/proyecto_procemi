@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
-
+<?php $this->Component("header"); ?>
 <head>
-  <title>Login | ROMANERO</title>
+  <title>Login</title>
   <link rel="stylesheet" type="text/css" href="<?php $this->Assets('css/login.css'); ?>" />
   <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet" />
   <script src="https://kit.fontawesome.com/a81368914c.js"></script>
@@ -22,14 +22,13 @@
         <img src="<?php $this->Assets('img/avatar.svg'); ?>" />
 
         <h2 class="title">Bienvenido</h2>
-        <h3 class="">Romana</h3>
         <div class="input-div uno">
           <div class="i">
             <i class="fas fa-user"></i>
           </div>
           <div class="div">
             <h5>Cédula del usuario</h5>
-            <input type="text" maxlength="8" minlength="7" pattern="[0-9]{7,8}" title="Solo se aceptan numeros" required class="input" name="cedula_user" id="" />
+            <input type="text" maxlength="8" minlength="7" pattern="[0-9]{7,8}" title="Solo se aceptan numeros" required class="input" name="cedula_user" id="cedula_user" />
           </div>
         </div>
         <div class="input-div uno">
@@ -38,18 +37,23 @@
           </div>
           <div class="div">
             <h5>Contraseña</h5>
-            <input type="password" maxlength="20" minlength="8" required class="input" name="clave_user" id="">
+            <input type="password" maxlength="20" minlength="8" required class="input" name="clave_user" id="clave_user">
           </div>
         </div>
         <button type="submit" class="btn" value="Login">
           Aceptar<i class="fas fa-chevron-right"></i>
         </button>
-        <a href="View_Login-laboratorio">Login Laboratorio</a>
       </form>
     </div>
   </div>
   <?php $this->Component("alert_login"); ?>
+  <?php $this->Component("scripts"); ?>
   <script type="text/javascript" src="<?php $this->Assets('js/login.js'); ?>"></script>
+  <script tyoe="text/javascript">
+     $("#cedula_user").on("input", function() {
+      this.value = this.value.replace(/[^0-9]/g,'');
+    })
+  </script>
 </body>
 
 </html>

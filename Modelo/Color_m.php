@@ -47,7 +47,7 @@ class Color_m extends bd
     if ($res != "" || $res != null) {
       return false;
     } else {
-      $this->ejecutar("UPDATE color SET color_Nombre = '$this->nombre' WHERE ID = $this->id");
+      $this->ejecutar("UPDATE color SET color_Nombre = UPPER('$this->nombre') WHERE ID = $this->id");
       return true;
     }
   }

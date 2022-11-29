@@ -48,8 +48,6 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 								<th>Marca</th>
 								<th>Modelo</th>
 								<th>Color</th>
-								<th>Peso</th>
-								<th>Segundo Peso</th>
 								<th>Empresa</th>
 								<th>Año</th>
 								<th>Opciones</th>
@@ -85,7 +83,7 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 										<div class="col-6">
 											<div class="form-group">
 												<label>Placa del vehiculo</label>
-												<input type="text" name="Placa" id="placa" maxlength="7" minlength="7" pattern="[A-Z0-9]{7}" class="form-control" onkeyup="Mayuscula(this)" required>
+												<input type="text" name="Placa" id="placa" maxlength="7" minlength="7" class="form-control" onkeyup="Mayuscula(this)" required>
 											</div>
 										</div>
 										<div class="col-6">
@@ -129,12 +127,11 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 													<div class="pretend">
 														<select name="tipoRif" id="tipo_rif" class="form-control" disabled="disabled" required>
 															<option value="V">V</option>
-															<option value="J">J</option>
+															<option value="E">E</option>
 														</select>
 													</div>
 													<input type="text" minlength="8" maxlength="10" name="rif_dueno" disabled="disabled" id="rif_dueno" class="form-control" pattern="[0-9]+" title="Solo puedes ingresar caracteres númericos" required>
 												</div>
-
 											</div>
 											<div class="form-group" id="divEmpresa">
 												<label>nombre de la Empresa</label>
@@ -161,12 +158,40 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 										</div>
 									</div>
 
-									<div class="row">
+									<div class="row" style="display: none;" id="div_dueno1">
 										<div class="col-6">
+											<div class="form-group">
+												<label for="">Nombre del dueño</label>
+												<input type="text" name="nombre_dueno" id="nombre_dueno" class="form-control" disabled="disabled">
+											</div>
+										</div>
+										<div class="col-6">
+											<div class="form-group">
+												<label for="">Correo del dueño</label>
+												<input type="email" name="correo_dueno" id="correo_dueno" class="form-control" disabled="disabled">
+											</div>
+										</div>
+									</div>
+									<div class="row" style="display: none;" id="div_dueno2">
+										<div class="col-6">
+											<div class="form-group">
+												<label for="">Telefono del dueño</label>
+												<input type="text" name="telefono_dueno" id="tele_dueno" class="form-control" disabled="disabled">
+											</div>
+										</div>
+										<div class="col-6">
+											<div class="form-group">
+												<label for="">Dirección del dueño</label>
+												<input type="text" name="dire_dueno" id="dire_dueno" class="form-control" disabled="disabled">
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<!-- <div class="col-6">
 											<div class="form-group">
 												<label>Capacidad del vehiculo</label>
 												<div class="input-group">
-
 													<input type="hidden" name="ID" id="id">
 													<input type="text" pattern="[0-9]{1,5}(\,[0-9]{2})" step="0.01" max="99999.99" min="10.00" name="Peso" id="peso" class="form-control" required>
 													<div class="input-group-append">
@@ -174,8 +199,9 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 													</div>
 												</div>
 											</div>
-										</div>
+										</div> -->
 										<div class="col-6">
+											<input type="hidden" name="ID" id="id">
 											<div class="form-check">
 												<input type="checkbox" class="form-check-input" value="1" id="if_doble">
 												<label class="form-check-label">Tiene una doble carga?</label>
@@ -189,20 +215,6 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 												<input type="text" step="1" pattern="[0-9]+" max="2022" minlength="4" maxlength="4" name="Ano" id="ano" class="form-control" title="Solo puedes ingresar caracteres númericos" required>
 											</div>
 										</div>
-									</div>
-									<div class="row">
-										<div class="col-6">
-											<div class="form-group">
-												<label>Peso Extra del vehiuclo</label>
-												<div class="input-group">
-													<input type="number" pattern="[0-9]{1,5}(\,[0-9]{2})" step="0.01" max="99999.99" min="10.00" disabled="disabled" id="peso_extra" name="Vehiculo_PesoSecundario" class="form-control">
-													<div class="input-group-append">
-														<span class="input-group-text">KG</span>
-													</div>
-												</div>
-											</div>
-										</div>
-										
 										<div class="col-6">
 											<div class="form-group">
 												<label>Placa Extra del vehiculo</label>
@@ -210,8 +222,8 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 											</div>
 										</div>
 									</div>
-
-
+									<div class="row">
+									</div>
 								</div>
 								<div class="modal-footer">
 									<input type="hidden" name="operacion" id="operacion" value="Registro">
@@ -259,37 +271,64 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 		</footer>
 		<?php $this->Component("scripts"); ?>
 		<script type="text/javascript">
-			document.getElementById("ano").addEventListener("keyup", async (e)=>{
-				if(e.target.value >= 2023){
-					alert ("Año invalido");
-					$("#ano").val("");
+			$("#placa").on("input", function() {
+				this.value = this.value.replace(/[^0-9-a-z-A-Z\u00f1\u00d1]/g, '');
+			})
+			$("#rif_dueno").on("input", function() {
+				this.value = this.value.replace(/[^0-9]/g, '');
+			})
+			$("#segunda_Placa").on("input", function() {
+				this.value = this.value.replace(/[^0-9-a-z-A-Z\u00f1\u00d1]/g, '');
+			})
+			$("#peso_extra").on("input", function() {
+				this.value = this.value.replace(/[^0-9]/g, '');
+			})
+			$("#peso").on("input", function() {
+				this.value = this.value.replace(/[^0-9]/g, '');
+			})
+
+			document.getElementById("rif_dueno").addEventListener("keyup", async (e) => {
+				if (e.target.value.length > 7) {
+					$("#tipo_rif option[value='E']").attr("selected", true);
+				} else {
+					$("#tipo_rif option[value='E']").attr("selected", false);
 				}
 			})
 
+			document.getElementById("ano").addEventListener("keyup", async (e) => {
+				if (e.target.value.length == 4) {
+					if (e.target.value >= 2023 || e.target.value <= 1950) {
+						alert("Año invalido");
+						$("#ano").val("");
+					}
+				}
 
-			document.getElementById("placa").addEventListener("keyup", async (e)=>{
-				if(e.target.value.length >= 4){
+			})
+
+
+			document.getElementById("placa").addEventListener("keyup", async (e) => {
+				if (e.target.value.length >= 4) {
 					await fetch(`Controlador/Vehiculo.php?operacion=ConsultarPlaca&&placa=${e.target.value}`)
-					.then( response => response.json())
-					.then( result => {
-						if(result.data){
-							alert("Placa ya registrado")
-							$("#placa").val("");
-						}
-					}).catch( error => console.error(error))
+						.then(response => response.json())
+						.then(result => {
+							if (result.data) {
+								alert("Placa ya registrado")
+								$("#placa").val("");
+							}
+						}).catch(error => console.error(error))
 				}
 			})
 
-			document.getElementById("rif_dueno").addEventListener("keyup", async (e)=>{
-				if(e.target.value.length >= 4){
+			document.getElementById("rif_dueno").addEventListener("keyup", async (e) => {
+				if (e.target.value.length >= 4) {
 					await fetch(`Controlador/Vehiculo.php?operacion=ConsultarCedula&&cedula=${e.target.value}`)
-					.then( response => response.json())
-					.then( result => {
-						if(result.data){
-							alert(result.data)
-							$("#rif_dueno").val("");
-						}
-					}).catch( error => console.error(error))
+						.then(response => response.json())
+						.then(result => {
+							if (result.data) {
+								alert(result.data)
+								$("#rif_dueno").val("");
+							}
+						}).catch(error => console.error(error))
 				}
 			})
 
@@ -319,8 +358,7 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 
 			document.getElementById("if_doble").addEventListener("click", (e) => manipulatePlaca(e.target.checked))
 
-			const manipulatePlaca = (value) =>{
-				console.log(value)
+			const manipulatePlaca = (value) => {
 				if (!value || value == 0) {
 					$("#peso_extra").attr("disabled", true);
 					$("#segunda_Placa").attr("disabled", true);
@@ -344,11 +382,27 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 							$("#rif_dueno").removeAttr("disabled");
 							$("#tipo_rif").removeAttr("disabled");
 						});
+						$("#div_dueno1").show(150, () => {
+							$("#nombre_dueno").removeAttr("disabled");
+							$("#correo_dueno").removeAttr("disabled");
+						});
+						$("#div_dueno2").show(150, () => {
+							$("#tele_dueno").removeAttr("disabled");
+							$("#dire_dueno").removeAttr("disabled");
+						});
 					} else {
 						$("#divRifDueno").hide(150, () => {
 							$("#divEmpresa").show(150)
 							$("#rif_dueno").attr("disabled", true);
 							$("#tipo_rif").attr("disabled", true);
+						});
+						$("#div_dueno1").hide(150, () => {
+							$("#nombre_dueno").attr("disabled", true);
+							$("#correo_dueno").attr("disabled", true);
+						});
+						$("#div_dueno2").hide(150, () => {
+							$("#tele_dueno").attr("disabled", true);
+							$("#dire_dueno").attr("disabled", true);
 						});
 					}
 				} else {
@@ -405,23 +459,10 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 							data: "color_Nombre"
 						},
 						{
-							data: "vehiculo_Peso",
-							render(data) {
-								return data + " KG.";
-							}
-						},
-						{
-							data: "Vehiculo_PesoSecundario",
-							render(data) {
-								if (data == "0.00") return "No tiene";
-								else return data + " KG.";
-							}
-						},
-						{
 							data: "empresa_Nombre",
 							render(data, type, row) {
 								if (row.condicion == "I") return "PROCEMI";
-								if (row.condicion == "P") return "Particular";
+								if (row.condicion == "P") return "PARTICULAR";
 								if (row.condicion == "E") return data;
 							}
 						},
@@ -468,7 +509,6 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 						manipulateDOM(data.condicion);
 						manipulatePlaca(data.if_doble);
 						console.log(data);
-
 						$("#id").val(data.ID)
 						$("#placa").val(data.vehiculo_Placa)
 						$("#empresa").val(data.ID_Empresa)
@@ -480,13 +520,29 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 						$("#segunda_Placa").val(data.segunda_Placa);
 						$("#if_doble").attr("checked", data.if_doble)
 						let [tipo, cedula] = data.rif_dueno.split("-")
-
 						$("#tipo_rif").val(tipo);
 						$("#rif_dueno").val(cedula);
 					}).catch(error => console.error(error))
 			}
 			/* Bueno, en estas dos funciones solo estamos asignando valores, pero son funciones mas cortas ya que solo realizamos una accion */
-			const crear_vehiculo = () => $("#operacion").val("Registro")
+			const crear_vehiculo = () => {
+				$("#operacion").val("Registro")
+				$("#placa").val("")
+				$("#divEmpresa").hide(150, () => {
+					$("#divRifDueno").show(150)
+					$("#rif_dueno").removeAttr("disabled");
+					$("#tipo_rif").removeAttr("disabled");
+				});
+				$("#modelo").val("")
+				$("#color").val("")
+				$("#peso").val("")
+				$("#ano").val("")
+				$("#peso_extra").val("")
+				$("#segunda_Placa").val("");
+				$("#if_doble").checked = false;
+				$("#tipo_rif").val("");
+				$("#rif_dueno").val("");
+			}
 			const Eliminar = (id) => $(".ID").val(id)
 			/* El codigo de aqui abajo lo comente porque no le vi la utilidad, osea, lo comente y no vi cambios */
 		</script>

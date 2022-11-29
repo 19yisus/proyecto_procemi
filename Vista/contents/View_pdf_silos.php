@@ -1,6 +1,6 @@
 <!-- Para empezar, optimice las lineas de codigo, y le di identacion al codigo para que se va mas ordenao y legible, como veras varias secciones de la pagina ya no estan.
 	A estas secciones las estoy trabajando como componentes reutilizable, para no tener el mismo codigo repetido en todas las paginas -->
-  <!doctype html>
+<!doctype html>
 <html lang="en">
 <?php $this->Component("header"); ?>
 
@@ -27,16 +27,16 @@
 							<div class="row col-10">
 								<div class="col-4">
 									<div class="form-group">
-                    <label for="">Silo</label>
-                    <select name="silo" id="silo_select" class="form-control">
-                      <option value="">Seleccione un silo</option>
-                      <option value="1">Silo 1</option>
-                      <option value="2">Silo 2</option>
-                      <option value="3">Silo 3</option>
-                      <option value="4">Silo 4</option>
-                      
-                    </select>
-                  </div>
+										<label for="">Silo</label>
+										<select name="silo" id="silo_select" class="form-control">
+											<option value="">Seleccione un silo</option>
+											<option value="1">Silo 1</option>
+											<option value="2">Silo 2</option>
+											<option value="3">Silo 3</option>
+											<option value="4">Silo 4</option>
+
+										</select>
+									</div>
 								</div>
 								<div class="col-4">
 									<div class="form-group">
@@ -80,7 +80,7 @@
 				let silo = $("#silo_select").val()
 				let operacion = $("#operacion").val()
 				$("#visor_pdf").show(150)
-				$("#visor_pdf").attr("src", `Controlador/Reporte.php?operacion=${operacion}&&silo=${silo}`)
+				$("#visor_pdf").attr("src", `Controlador/Reporte.php?operacion=${operacion}&&silo=${silo}&&desde=${desde}&&hasta=${hasta}`)
 			})
 		</script>
 </body>

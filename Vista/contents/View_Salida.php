@@ -256,7 +256,9 @@
 								$("#peso").val(data.PesoNeto)
 								$("#peso").attr("max", (data.m_Cantidad - 1))
 								$("#des_product").val(data.producto_Nombre)
-								$("#ced_chofer").val(data.personal_Cedula)
+								$codigo = data.personal_Nacionalidad
+								$telefono = data.personal_Cedula
+								$("#ced_chofer").val($codigo + "-" + $telefono);
 								$("#placa_vehi").val(data.vehiculo_Placa)
 								if (data.empresa_Nombre == null) {
 									$("#empresa_nombre").val("Procemi");

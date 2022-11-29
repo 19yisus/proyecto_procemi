@@ -117,7 +117,7 @@
 											<div class="form-group" id="div_muestra">
 												<label>Muestra</label>
 												<div class="input-group">
-													<input type="number" step="1" pattern="[0-9]{1,11}" min="Solo se aceptan numeros" minlength="1" maxlength="3" name="Muestra" id="muestra" class="form-control" required>
+													<input type="number" step="1 pattern=" [0-9]{1,11}" min="Solo se aceptan numeros" minlength="1" maxlength="3" name="Muestra" id="muestra" class="form-control" required>
 													<div class="input-group-append">
 														<span class="input-group-text">KG</span>
 													</div>
@@ -134,7 +134,7 @@
 											<div class="form-group">
 												<label>Grano Dañado</label>
 												<div class="input-group">
-													<input type="number" step="00.1" min="00.1" min="0.01" max="100" minlength="1" maxlength="3" name="Dano" id="dano" class="form-control porcentaje" required disabled="disabled">
+													<input type="number" step="0.1" min="0.1" max="100" minlength="1" maxlength="3" name="Dano" id="dano" class="form-control porcentaje" required disabled="disabled">
 													<div class="input-group-append">
 														<span class="input-group-text">%</span>
 													</div>
@@ -145,7 +145,7 @@
 											<div class="form-group">
 												<label>Grano Partido</label>
 												<div class="input-group">
-													<input type="number" step="00.1" min="00.1" min="0.01" max="100" minlength="1" maxlength="3" name="Partido" id="partido" class="form-control" required disabled="disabled">
+													<input type="number" step="0.1" min="0.1" max="100" minlength="1" maxlength="3" name="Partido" id="partido" class="form-control" required disabled="disabled">
 													<div class="input-group-append">
 														<span class="input-group-text">%</span>
 													</div>
@@ -158,7 +158,7 @@
 											<div class="form-group">
 												<label>Humedad</label>
 												<div class="input-group">
-													<input type="number" step="00.1" min="13" min="Solo se aceptan numeros" maxlength="4" name="Humedad" id="humedad" class="form-control" required disabled="disabled">
+													<input type="number" step="00.1" min="13" min="Solo se aceptan numeros" maxlength="3" name="Humedad" id="humedad" class="form-control" required disabled="disabled">
 													<div class="input-group-append">
 														<span class="input-group-text">%</span>
 													</div>
@@ -170,7 +170,7 @@
 												<input type="hidden" name="ID" id="id">
 												<label>Impureza</label>
 												<div class="input-group">
-													<input type="number" step="00.1" min="Solo se aceptan numeros" min="00.1" maxlength="4" name="Impureza" id="impureza" class="form-control" required disabled="disabled">
+													<input type="number" step="00.1" min="Solo se aceptan numeros" min="00.1" maxlength="3" name="Impureza" id="impureza" class="form-control" required disabled="disabled">
 													<div class="input-group-append">
 														<span class="input-group-text">%</span>
 													</div>
@@ -187,7 +187,7 @@
 														<input type="radio" name="estatus_ope" value="A" id="estatus_ope" class="form-check-input" disabled="disabled" required>
 														<small class="form-check-label">Aprobada</small>
 													</div>
-													<div class="form-check ml-2 mr-2"> 
+													<div class="form-check ml-2 mr-2">
 														<input type="radio" name="estatus_ope" value="D" id="estatus_ope" class="form-check-input" disabled="disabled" required>
 														<small class="form-check-label">Rechazada</small>
 													</div>
@@ -216,6 +216,32 @@
 				</footer>
 				<?php $this->Component("scripts"); ?>
 				<script type="text/javascript">
+					$("#muestra").on("input", function() {
+						this.value = this.value.replace(/[^0-9]/g, '');
+					})
+					// $("#partido").on("input", function() {
+					// 	this.value = this.value.replace(/[^0-9]/g, '');
+					// })
+
+					// $("#dano").on("input", function() {
+					// 	this.value = this.value.replace(/[^0-9]/g, '');
+					// })
+
+
+					$("#humedad").on("input", function() {
+						this.value = this.value.replace(/[^0-9]/g, '');
+					})
+
+
+					$("#impureza").on("input", function() {
+						this.value = this.value.replace(/[^0-9]/g, '');
+					})
+
+					$("#observacion").on("input", function() {
+						this.value = this.value.replace(/[^a-z-A-ZÀ-ÿ\u00f1\u00d1 ]/g, '');
+					})
+
+
 					const consultarModal = async (value) => {
 						await fetch("Controlador/Entrada.php?operacion=ConsultarModal&&id=" + value)
 							.then(response => response.text())
@@ -330,7 +356,7 @@
 									render(data) {
 										if (data == 'R') return "En Revisión";
 										if (data == 'P') return "Por analizar";
-										if (data == 'D') return "Devuelto por laboratorio";
+										if (data == 'D'){} return "Devuelto por laboratorio";
 										if (data == 'A') return "Aprobado por laboratorio";
 										if (data == 'S') return "En el Silo";
 									}
@@ -367,7 +393,6 @@
 								$("#cantidad").val(data.m_Cantidad)
 								$("#muestra").val(data.m_Muestra)
 								$("#muestra").attr("max", data.m_Cantidad)
-
 								if (data.m_Muestra != null) {
 									console.log(data.m_Impureza)
 									if (data.m_Impureza != null) {

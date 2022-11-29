@@ -37,7 +37,7 @@
       if ($res != "" || $res != null){
         return false;
       }else{
-        $this->ejecutar("UPDATE marca SET marca_Nombre = '$this->nombre' WHERE id = $this->id");
+        $this->ejecutar("UPDATE marca SET marca_Nombre = UPPER('$this->nombre') WHERE id = $this->id");
         return true;
       }
       

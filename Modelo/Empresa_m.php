@@ -91,12 +91,12 @@ class Empresa_m extends bd
     } else {
       $this->ejecutar("UPDATE empresa SET 
       empresa_Rif = '$this->rif',
-      empresa_Encargado = '$this->encargado',
+      empresa_Encargado = UPPER('$this->encargado'),
       empresa_cedulaE = '$this->cedula_encargado',
       empresa_telefonoE = '$this->telefono_encargado',
-      empresa_direccionE = '$this->direccion_encargado',
-      empresa_Nombre = '$this->nombre',
-      empresa_Ubicacion = '$this->ubicacion',
+      empresa_direccionE = UPPER('$this->direccion_encargado'),
+      empresa_Nombre = UPPER('$this->nombre'),
+      empresa_Ubicacion = UPPER('$this->ubicacion'),
       empresa_telefono = '$this->telefono'
       WHERE ID = $this->id");
       return true;
@@ -134,7 +134,7 @@ class Empresa_m extends bd
   public function ConsultarRif($rif)
   {
     $r = "J-" . $rif;
-    $cedula = "V-" . $rif;
+    $cedula = "E-" . $rif;
 
     // Empresa
     $res = $this->ejecutar("SELECT * FROM empresa WHERE (empresa_Rif = '$r') OR (empresa_cedulaE = '$r') OR (empresa_cedulaE = '$cedula')");

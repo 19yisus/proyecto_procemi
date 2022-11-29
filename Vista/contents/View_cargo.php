@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="C:\xampp\htdocs\proyecto_procemi-master\Vista\css\custom.css">
 <html lang="en">
 <?php $this->Component("header"); ?>
+
 <body>
 	<?php $this->Component("menu"); ?>
 	<!------------>
@@ -51,10 +52,10 @@
 									<h5 class="modal-title">Registro de cargos</h5>
 									<div class="negra">
 										<div class="hora">
-										<h8 aria-label="Close" data-dismiss="modal"id="form_time">00:00:00</h8>
+											<h8 aria-label="Close" data-dismiss="modal" id="form_time">00:00:00</h8>
 										</div>
 										<div class="fecha">
-										<h8 class="modal-title"id="form_date">date</h8>
+											<h8 class="modal-title" id="form_date">date</h8>
 										</div>
 									</div>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -114,16 +115,16 @@
 		</footer>
 		<?php $this->Component("scripts"); ?>
 		<script type="text/javascript">
-			document.getElementById("nombre").addEventListener("keyup", async (e)=>{
-				if(e.target.value.length >= 4){
+			document.getElementById("nombre").addEventListener("keyup", async (e) => {
+				if (e.target.value.length >= 4) {
 					await fetch(`Controlador/Cargo.php?operacion=ConsultarCargo&&nombre=${e.target.value}`)
-					.then( response => response.json())
-					.then( result => {
-						if(result.data){
-							alert("Cargo ya registrado")
-							$("#nombre").val("");
-						}
-					}).catch( error => console.error(error))
+						.then(response => response.json())
+						.then(result => {
+							if (result.data) {
+								alert("Cargo ya registrado")
+								$("#nombre").val("");
+							}
+						}).catch(error => console.error(error))
 				}
 			})
 			$(document).ready(() => {
@@ -180,7 +181,10 @@
 					}).catch(error => console.error(error))
 			}
 			/* Bueno, en estas dos funciones solo estamos asignando valores, pero son funciones mas cortas ya que solo realizamos una accion */
-			const crear_cargo = () => $("#operacion").val("Registro")
+			const crear_cargo = () => {
+				$("#nombre").val("");
+				$("#operacion").val("Registro")
+			}
 			const Eliminar = (id) => $(".ID").val(id)
 			/* El codigo de aqui abajo lo comente porque no le vi la utilidad, osea, lo comente y no vi cambios */
 		</script>

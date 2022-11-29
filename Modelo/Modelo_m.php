@@ -46,7 +46,7 @@ class Modelo_m extends bd
     if ($res != "" || $res != null) {
       return false;
     } else {
-      $this->ejecutar("UPDATE modelo SET modelo_Nombre = '$this->nombre', ID_Marca = $this->marca WHERE id = $this->id");
+      $this->ejecutar("UPDATE modelo SET modelo_Nombre = UPPER('$this->nombre'), ID_Marca = $this->marca WHERE id = $this->id");
       return true;
     }
   }

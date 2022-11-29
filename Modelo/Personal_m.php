@@ -89,12 +89,12 @@ class Personal_m extends bd
     }else{
       $this->ejecutar("UPDATE personal SET 
       personal_Cedula = '$this->cedula',
-      personal_Nombre = '$this->nombre',
-      personal_Apellido = '$this->apellido',
+      personal_Nombre = UPPER('$this->nombre'),
+      personal_Apellido = UPPER('$this->apellido'),
       personal_Nacionalidad = '$this->nacionalidad',
       personal_Telefono = '$this->telefono',
-      personal_Correo = '$this->correo',
-      personal_Direccion = '$this->direccion',
+      personal_Correo = UPPER('$this->correo'),
+      personal_Direccion = UPPER('$this->direccion'),
       personal_condicion = '$this->condicion',
       ID_Cargo = $this->cargo,
       ID_Empresa = $this->empresa
@@ -114,7 +114,7 @@ class Personal_m extends bd
 
   public function ConsultarCedula($cedula)
   {
-    $rif = "J-" . $cedula;
+    $extrangero = "E-" . $cedula;
     $dato = "V-" . $cedula;
 
     // Personal
@@ -126,11 +126,11 @@ class Personal_m extends bd
     $res2 = $res2->fetch_assoc();
 
     // Empresa
-    $res3 = $this->ejecutar("SELECT * FROM empresa WHERE (empresa_Rif ='$rif') OR (empresa_CedulaE ='$rif') OR (empresa_CedulaE = '$dato')");
+    $res3 = $this->ejecutar("SELECT * FROM empresa WHERE (empresa_CedulaE ='$extrangero') OR (empresa_CedulaE = '$dato')");
     $res3 = $res3->fetch_assoc();
 
     // Vehiculo
-    $res4 = $this->ejecutar("SELECT * FROM vehiculo WHERE (rif_dueno ='$rif') OR (rif_dueno = '$dato')");
+    $res4 = $this->ejecutar("SELECT * FROM vehiculo WHERE (rif_dueno ='$extrangero') OR (rif_dueno = '$dato')");
     $res4 = $res4->fetch_assoc();
 
 

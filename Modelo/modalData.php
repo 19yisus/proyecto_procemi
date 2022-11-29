@@ -134,8 +134,6 @@ else $silo = $res['m_Silo'];
       <tr>
         <th scope="col">Placa</th>
         <th scope="col">Segunda Placa</th>
-        <th scope="col">Capacidad</th>
-        <th scope="col">Segunda Capacidad</th>
         <?php if ($res['condicion'] == "P") { ?>
           <th>Rif del dueño</th>
         <?php } ?>
@@ -153,15 +151,9 @@ else $silo = $res['m_Silo'];
           ?>
         </td>
 
-        <td><?php echo $res['vehiculo_Peso'] . "KG"; ?></td>
+      
 
-        <td>
-          <?php
-          echo $segundo_Peso;
-          ?>
-        </td>
-
-        <?php if ($res['condicion'] == "P") { ?>
+      | <?php if ($res['condicion'] == "P") { ?>
           <td><?php echo $res['rif_dueno']; ?></td>
         <?php } ?>
         <td><?php echo $res['vehiculo_Ano']; ?></td>

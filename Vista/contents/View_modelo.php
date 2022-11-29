@@ -32,10 +32,6 @@ $marca = $a->Consultar_Todos();
 										<i class="material-icons">&#xE147;</i>
 										<span></span>
 									</a>
-									<a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal">
-										<i class="material-icons">&#xE15C;</i>
-										<span></span>
-									</a>
 								</div>
 							</div>
 						</div>
@@ -62,10 +58,10 @@ $marca = $a->Consultar_Todos();
 									<h5 class="modal-title">Modelo del vehiculo</h5>
 									<div class="negra">
 										<div class="hora">
-										<h8 aria-label="Close" data-dismiss="modal"id="form_time">00:00:00</h8>
+											<h8 aria-label="Close" data-dismiss="modal" id="form_time">00:00:00</h8>
 										</div>
 										<div class="fecha">
-										<h8 class="modal-title"id="form_date">date</h8>
+											<h8 class="modal-title" id="form_date">date</h8>
 										</div>
 									</div>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -76,7 +72,7 @@ $marca = $a->Consultar_Todos();
 									<div class="form-group">
 										<label>nombre del Modelo</label>
 										<input type="hidden" name="ID" id="id">
-										<input type="text" name="Nombre" id="nombre" class="form-control" pattern="[A-Za-z0-9 ]+" title="Solo puedes ingresar caracteres alfanumericos" minlength="3" maxlength="15" required>
+										<input type="text" name="Nombre" id="nombre" class="form-control" title="Solo puedes ingresar caracteres alfanumericos" minlength="3" maxlength="15" required>
 									</div>
 
 
@@ -138,16 +134,19 @@ $marca = $a->Consultar_Todos();
 		</footer>
 		<?php $this->Component("scripts"); ?>
 		<script type="text/javascript">
-			document.getElementById("nombre").addEventListener("keyup", async (e)=>{
-				if(e.target.value.length >= 4){
+			$("#nombre").on("input", function() {
+				this.value = this.value.replace(/[^0-9-a-z-A-ZÀ-ÿ\u00f1\u00d1 ]/g, '');
+			})
+			document.getElementById("nombre").addEventListener("keyup", async (e) => {
+				if (e.target.value.length >= 4) {
 					await fetch(`Controlador/Modelo.php?operacion=ConsultarModelo&&nombre=${e.target.value}`)
-					.then( response => response.json())
-					.then( result => {
-						if(result.data){
-							alert("Modelo ya registrado")
-							$("#nombre").val("");
-						}
-					}).catch( error => console.error(error))
+						.then(response => response.json())
+						.then(result => {
+							if (result.data) {
+								alert("Modelo ya registrado")
+								$("#nombre").val("");
+							}
+						}).catch(error => console.error(error))
 				}
 			})
 			$(document).ready(() => {
@@ -208,7 +207,11 @@ $marca = $a->Consultar_Todos();
 					}).catch(error => console.error(error))
 			}
 			/* Bueno, en estas dos funciones solo estamos asignando valores, pero son funciones mas cortas ya que solo realizamos una accion */
-			const crear_modelo = () => $("#operacion").val("Registro")
+			const crear_modelo = () => {
+				$("#nombre").val("")
+				$("#marca").val("")
+				$("#operacion").val("Registro")
+			}
 			const Eliminar = (id) => $(".ID").val(id)
 			/* El codigo de aqui abajo lo comente porque no le vi la utilidad, osea, lo comente y no vi cambios */
 		</script>

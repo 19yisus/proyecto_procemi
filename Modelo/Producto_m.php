@@ -44,7 +44,7 @@ class Producto_m extends bd
     if ($res != "" || $res != null) {
       return false;
     } else {
-      $this->ejecutar("UPDATE producto SET producto_Nombre = '$this->nombre' WHERE id = $this->id");
+      $this->ejecutar("UPDATE producto SET producto_Nombre = UPPER('$this->nombre') WHERE id = $this->id");
       return true;
     }
   }

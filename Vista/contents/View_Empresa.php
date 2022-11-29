@@ -26,10 +26,6 @@
 										<i class="material-icons">&#xE147;</i>
 										<span></span>
 									</a>
-									<a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal">
-										<i class="material-icons">&#xE15C;</i>
-										<span></span>
-									</a>
 								</div>
 							</div>
 						</div>
@@ -83,7 +79,13 @@
 										<div class="col-6">
 											<div class="form-group">
 												<label>Rif de la empresa</label>
-												<input type="text" name="Rif" id="rif" class="form-control" pattern="[0-9]+" title="Solo puedes ingresar caracteres númericos" minlength="8" maxlength="9" required>
+												<div class="input-group">
+													<div class="input-group-append">
+														<span class="input-group-text">J-</span>
+													</div>
+													<input type="text" name="Rif" id="rif" class="form-control" pattern="[0-9]+" title="Solo puedes ingresar caracteres númericos" minlength="9" maxlength="9" required>
+
+												</div>
 											</div>
 										</div>
 									</div>
@@ -91,7 +93,7 @@
 										<div class="col-6">
 											<div class="form-group">
 												<label>Dirección de la empresa</label>
-												<input type="text" name="Ubicacion" id="ubicacion" class="form-control" pattern="[A-Za-z0-9 ]+" title="Solo puedes ingresar caracteres alfabeticos y números" minlength="4" maxlength="50" required>
+												<input type="text" name="Ubicacion" id="ubicacion" class="form-control" minlength="4" maxlength="50" required>
 											</div>
 										</div>
 										<div class="col-6">
@@ -102,6 +104,7 @@
 														<select name="codigo_area_e" id="codigo_area_e" class="form-control">
 															<option value="0412">0412</option>
 															<option value="0416">0416</option>
+															<option value="0426">0426</option>
 															<option value="0414">0414</option>
 															<option value="0424">0424</option>
 														</select>
@@ -120,8 +123,8 @@
 												<div class="input-group">
 													<div class="pretend">
 														<select name="tipoRif" id="tipo_rif" class="form-control">
-															<option value="J">J</option>
 															<option value="V">V</option>
+															<option value="E">E</option>
 														</select>
 													</div>
 													<input type="text" name="cedula_encargado" id="cedula_encargado" minlength="8" maxlength="9" class="form-control" pattern="[0-9]+" title="Solo puedes ingresar caracteres númericos" required>
@@ -144,6 +147,8 @@
 														<select name="codigo_area" id="codigo_area" class="form-control">
 															<option value="0412">0412</option>
 															<option value="0416">0416</option>
+															<option value="0426">0426</option>
+															<option value="0414">0414</option>
 															<option value="0424">0424</option>
 														</select>
 													</div>
@@ -155,7 +160,7 @@
 										<div class="col-6">
 											<div class="form-group">
 												<label>Dirección del encargado</label>
-												<input type="text" name="direccion_encargado" id="direccion_encargado" class="form-control" pattern="[A-Za-z0-9 ]+" title="Solo puedes ingresar caracteres alfanumericos" minlength="4" maxlength="50" required>
+												<input type="text" name="direccion_encargado" id="direccion_encargado" class="form-control" minlength="4" maxlength="50" required>
 											</div>
 										</div>
 									</div>
@@ -209,6 +214,24 @@
 		</footer>
 		<?php $this->Component("scripts"); ?>
 		<script type="text/javascript">
+			$("#telefono_encargado").on("input", function() {
+				this.value = this.value.replace(/[^0-9]/g, '');
+			})
+			$("#cedula_encargado").on("input", function() {
+				this.value = this.value.replace(/[^0-9]/g, '');
+			})
+			$("#Telefono").on("input", function() {
+				this.value = this.value.replace(/[^0-9]/g, '');
+			})
+			$("#rif").on("input", function() {
+				this.value = this.value.replace(/[^0-9]/g, '');
+			})
+			$("#nombre").on("input", function() {
+				this.value = this.value.replace(/[^a-z-A-ZÀ-ÿ\u00f1\u00d1]/g, '');
+			})
+			$("#encargado").on("input", function() {
+				this.value = this.value.replace(/[^a-z-A-ZÀ-ÿ\u00f1\u00d1]/g, '');
+			})
 			document.getElementById("nombre").addEventListener("keyup", async (e) => {
 				if (e.target.value.length >= 4) {
 					await fetch(`Controlador/Empresa.php?operacion=ConsultarEmpresa&&nombre=${e.target.value}`)
@@ -222,6 +245,14 @@
 				}
 			})
 
+			document.getElementById("cedula_encargado").addEventListener("keyup", async (e) => {
+				if (e.target.value.length > 8) {
+					$("#tipo_rif option[value='E']").attr("selected", true);
+				} else {
+					$("#tipo_rif option[value='E']").attr("selected", false);
+				}
+			})
+
 			document.getElementById("rif").addEventListener("keyup", async (e) => {
 				if (e.target.value.length >= 4) {
 					if (e.target.value == $("#cedula_encargado").val()) {
@@ -229,7 +260,7 @@
 						alert("El rif no puede ser igual a la cédula del encargado");
 					}
 				}
-				if (e.target.value.length >= 4) {
+				if (e.target.value.length == 9) {
 					await fetch(`Controlador/Empresa.php?operacion=ConsultarRif&&rif=${e.target.value}`)
 						.then(response => response.json())
 						.then(result => {
@@ -242,13 +273,13 @@
 			})
 
 			document.getElementById("cedula_encargado").addEventListener("keyup", async (e) => {
-				if (e.target.value.length >= 4) {
+				if (e.target.value.length == 9) {
 					if (e.target.value == $("#rif").val()) {
 						$("#cedula_encargado").val("");
 						alert("La cédula del encargado no puede ser igual al rif de la empresa");
 					}
 				}
-				if (e.target.value.length >= 4) {
+				if (e.target.value.length == 8 || e.target.value.length == 9) {
 					await fetch(`Controlador/Empresa.php?operacion=ConsultarCedula&&cedula=${e.target.value}`)
 						.then(response => response.json())
 						.then(result => {
@@ -352,7 +383,21 @@
 					}).catch(error => console.error(error))
 			}
 			/* Bueno, en estas dos funciones solo estamos asignando valores, pero son funciones mas cortas ya que solo realizamos una accion */
-			const crear_empresa = () => $("#operacion").val("Registro")
+			const crear_empresa = () => {
+						$("#rif").val("")
+						$("#nombre").val("")
+						$("#ubicacion").val("")
+						$("#codigo_area_e").val("0412")
+						$("#Telefono").val("")
+						$("#tipoRif").val("V")
+						$("#cedula_encargado").val("")
+						$("#encargado").val("")
+						$("#direccion_encargado").val("")
+						$("#codigo_area").val("0412");
+						$("#telefono_encargado").val("");
+				$("#operacion").val("Registro")
+				
+			}
 			const Eliminar = (id) => $(".ID").val(id)
 			/* El codigo de aqui abajo lo comente porque no le vi la utilidad, osea, lo comente y no vi cambios */
 		</script>

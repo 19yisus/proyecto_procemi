@@ -65,16 +65,18 @@
    }      
 
    function registrar_vehiculo(){
+      // var_dump($_POST);
+      // die("FF");
       $a = new Vehiculo_m();
-      if(isset($_POST['rif_dueno'])){
-         $rif = $_POST['tipoRif']."-".$_POST['rif_dueno'];
-      }else $rif = null;
+      // if(isset($_POST['rif_dueno'])){
+      //    $rif = $_POST['tipoRif']."-".$_POST['rif_dueno'];
+      // }else $rif = null;
+      // if(!isset($_POST['if_doble'])) $if_doble = 0; else $if_doble = $_POST['if_doble'];
+      // if(!isset($_POST['segunda_Placa'])) $segundaPlaca = null; else $segundaPlaca = $_POST['segunda_Placa'];
+      // if(!isset($_POST["Empresa"])) $empresa = null; else $empresa = $_POST["Empresa"];
+      // $a->SetDatos(null,$_POST["Placa"],$_POST["Modelo"],$empresa,$_POST["Color"],0,$_POST["Ano"],$if_doble,0,$_POST['condicion'],$rif, $segundaPlaca);
 
-      if(!isset($_POST['if_doble'])) $if_doble = 0; else $if_doble = $_POST['if_doble'];
-      if(!isset($_POST['segunda_Placa'])) $segundaPlaca = null; else $segundaPlaca = $_POST['segunda_Placa'];
-      if(!isset($_POST['Vehiculo_PesoSecundario'])) $pesoExtra = 0; else $pesoExtra = $_POST['Vehiculo_PesoSecundario'];
-      if(!isset($_POST["Empresa"])) $empresa = null; else $empresa = $_POST["Empresa"];
-      $a->SetDatos(null,$_POST["Placa"],$_POST["Modelo"],$empresa,$_POST["Color"],$_POST["Peso"],$_POST["Ano"],$if_doble,$pesoExtra,$_POST['condicion'],$rif, $segundaPlaca);
+      $a->GuardarDatos($_POST);
       $res = $a->Registrar();
       if($res === 5) header("location:../View_Vehiculo?Mensaje=5");
       if($res) header("location:../View_Vehiculo?Mensaje=2");
@@ -83,14 +85,15 @@
 
    function actualizar_vehiculo(){
       $a = new Vehiculo_m();
-      if(isset($_POST['rif_dueno'])){
-         $rif = $_POST['tipoRif']."-".$_POST['rif_dueno'];
-      }else $rif = null;
-      if(!isset($_POST['if_doble'])) $if_doble = 0; else $if_doble = $_POST['if_doble'];
-      if(!isset($_POST['segunda_Placa'])) $segundaPlaca = null; else $segundaPlaca = $_POST['segunda_Placa'];
-      if(!isset($_POST['Vehiculo_PesoSecundario'])) $pesoExtra = 0; else $pesoExtra = $_POST['Vehiculo_PesoSecundario'];
-      if(!isset($_POST["Empresa"])) $empresa = null; else $empresa = $_POST["Empresa"];
-      $a->SetDatos(null,$_POST["Placa"],$_POST["Modelo"],$empresa,$_POST["Color"],$_POST["Peso"],$_POST["Ano"],$if_doble,$pesoExtra,$_POST['condicion'],$rif, $segundaPlaca);
+      // if(isset($_POST['rif_dueno'])){
+      //    $rif = $_POST['tipoRif']."-".$_POST['rif_dueno'];
+      // }else $rif = null;
+      // if(!isset($_POST['if_doble'])) $if_doble = 0; else $if_doble = $_POST['if_doble'];
+      // if(!isset($_POST['segunda_Placa'])) $segundaPlaca = null; else $segundaPlaca = $_POST['segunda_Placa'];
+      // if(!isset($_POST['Vehiculo_PesoSecundario'])) $pesoExtra = 0; else $pesoExtra = $_POST['Vehiculo_PesoSecundario'];
+      // if(!isset($_POST["Empresa"])) $empresa = null; else $empresa = $_POST["Empresa"];
+      // $a->SetDatos($_POST["ID"],$_POST["Placa"],$_POST["Modelo"],$empresa,$_POST["Color"],0,$_POST["Ano"],$if_doble,0,$_POST['condicion'],$rif, $segundaPlaca);
+      $a->GuardarDatos($_POST);
       $res = $a->Actualizar();
       if($res == true) header("location:../View_Vehiculo?Mensaje=2");
       else header("location:../View_Vehiculo?Mensaje=8");

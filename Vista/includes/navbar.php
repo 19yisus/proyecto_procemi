@@ -11,9 +11,9 @@
 			</div>
 		</div>
 		<div class="xp-breadcrumbbar text-center">
-			<ol class="breadcrumb"><br>
+			<ol class="breadcrumb">
 
-				<div class="as"> <br>
+				<div class="as"> 
 					<h2 id="time" class="as_t">00:00:00</h2>
 					<h2 id="date" class="as_t">date</h2>
 				</div>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 14-11-2022 a las 05:30:49
+-- Tiempo de generación: 29-11-2022 a las 07:03:28
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 7.4.22
 
@@ -36,6 +36,16 @@ CREATE TABLE `cargo` (
   `cargo_Fecha` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `cargo`
+--
+
+INSERT INTO `cargo` (`ID`, `cargo_Nombre`, `cargo_Estatus`, `cargo_Fecha`) VALUES
+(5, 'CARGO', 1, '2022-11-22'),
+(6, 'ROJO', 0, '2022-11-25'),
+(7, 'OBRERO', 0, '2022-11-28'),
+(8, 'CLORO', 1, '2022-11-28');
+
 -- --------------------------------------------------------
 
 --
@@ -48,6 +58,15 @@ CREATE TABLE `color` (
   `color_Estatus` tinyint(1) NOT NULL,
   `color_Fecha` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `color`
+--
+
+INSERT INTO `color` (`ID`, `color_Nombre`, `color_Estatus`, `color_Fecha`) VALUES
+(7, 'ROJO', 1, '2022-11-22'),
+(8, 'GRIS', 1, '2022-11-27'),
+(9, 'MARRÓN', 1, '2022-11-27');
 
 -- --------------------------------------------------------
 
@@ -69,6 +88,13 @@ CREATE TABLE `empresa` (
   `empresa_Fecha` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `empresa`
+--
+
+INSERT INTO `empresa` (`ID`, `empresa_Rif`, `empresa_Encargado`, `empresa_CedulaE`, `empresa_TelefonoE`, `empresa_DireccionE`, `empresa_Nombre`, `empresa_Ubicacion`, `empresa_Telefono`, `empresa_Estatus`, `empresa_Fecha`) VALUES
+(6, 'J-999999999', 'PEDRO', 'V-555555555', '0416-6666666', 'ACARIGUA', 'MANUELA', 'PORTUGUESA', '0424-5108557', 1, '2022-11-22');
+
 -- --------------------------------------------------------
 
 --
@@ -81,6 +107,16 @@ CREATE TABLE `marca` (
   `marca_Estatus` tinyint(1) NOT NULL,
   `marca_Fecha` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `marca`
+--
+
+INSERT INTO `marca` (`ID`, `marca_Nombre`, `marca_Estatus`, `marca_Fecha`) VALUES
+(6, 'AAAAA', 1, '2022-11-22'),
+(7, 'MACACO', 1, '2022-11-22'),
+(8, 'PERMIÉÑ', 1, '2022-11-27'),
+(9, 'WE WE', 1, '2022-11-27');
 
 -- --------------------------------------------------------
 
@@ -95,6 +131,16 @@ CREATE TABLE `modelo` (
   `modelo_Fecha` date NOT NULL,
   `ID_Marca` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `modelo`
+--
+
+INSERT INTO `modelo` (`ID`, `modelo_Nombre`, `modelo_Estatus`, `modelo_Fecha`, `ID_Marca`) VALUES
+(4, 'AAAAAA', 1, '2022-11-22', 7),
+(5, 'EEEE', 1, '2022-11-27', 6),
+(6, 'F-', 1, '2022-11-27', 6),
+(7, '350', 1, '2022-11-27', 7);
 
 -- --------------------------------------------------------
 
@@ -111,10 +157,17 @@ CREATE TABLE `movimiento` (
   `condicion_empresa` enum('I','E') COLLATE utf8_spanish_ci NOT NULL,
   `m_Silo` char(1) COLLATE utf8_spanish_ci NOT NULL,
   `m_Estatus` tinyint(1) NOT NULL,
-  `status_proceso` enum('R','A','S','D') COLLATE utf8_spanish_ci NOT NULL,
-  `m_Fecha` datetime NOT NULL,
+  `status_proceso` enum('R','A','S','D','P') COLLATE utf8_spanish_ci NOT NULL,
+  `m_Fecha` date NOT NULL,
   `observacion` varchar(250) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `movimiento`
+--
+
+INSERT INTO `movimiento` (`ID`, `ID_Vehiculo`, `ID_Personal`, `ID_Producto`, `ID_Empresa`, `condicion_empresa`, `m_Silo`, `m_Estatus`, `status_proceso`, `m_Fecha`, `observacion`) VALUES
+(1, 2, 7, 1, 6, '', 'N', 1, 'P', '2022-11-28', 'porque me da la gana');
 
 -- --------------------------------------------------------
 
@@ -141,6 +194,13 @@ CREATE TABLE `movimiento_detalles` (
   `m_FechaLab` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `movimiento_detalles`
+--
+
+INSERT INTO `movimiento_detalles` (`id_detalle`, `m_Cantidad`, `m_Dano`, `m_Partido`, `m_Muestra`, `m_Humedad`, `m_Impureza`, `m_PesoLab`, `m_pesoFinal`, `m_Total`, `m_TotalDesc`, `m_Desc_Humedad`, `m_Desc_Impureza`, `m_PesoAcon`, `m_PesoNeto`, `m_FechaLab`) VALUES
+(1, 5000, '10.00', '10.00', 100, '13.00', '10.00', '23.00', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -163,6 +223,15 @@ CREATE TABLE `personal` (
   `ID_Empresa` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `personal`
+--
+
+INSERT INTO `personal` (`ID`, `personal_Cedula`, `personal_Nombre`, `personal_Apellido`, `personal_Nacionalidad`, `personal_Telefono`, `personal_Correo`, `personal_Direccion`, `personal_Estatus`, `personal_Fecha`, `personal_condicion`, `ID_Cargo`, `ID_Empresa`) VALUES
+(7, '46846989', 'RICARDO', 'FENOMENO', 'V', '0412-8293923', 'RICARDOFENOMENO13@GMAIL.COM', 'ACARIGUA', 1, '2022-11-27', 'I', 5, NULL),
+(8, '89489384', 'RÍCARÑO', 'FÉNOMENO', 'V', '0426-2738273', 'RICARDOFENOMENO13@GMAIL.COM', 'ACARIGUA-PORTUGUESA CALLE #3 ', 0, '2022-11-27', 'I', 5, NULL),
+(9, '87456468', 'RICARD', 'FENOMENO', 'E', '0426-0424510', 'RICARDOFENOMENO13@GMAIL.COM', 'URB SANTA RITA  # 3 CASA 22', 1, '2022-11-28', 'E', 5, 6);
+
 -- --------------------------------------------------------
 
 --
@@ -176,6 +245,13 @@ CREATE TABLE `producto` (
   `producto_Fecha` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `producto`
+--
+
+INSERT INTO `producto` (`ID`, `producto_Nombre`, `producto_Estatus`, `producto_Fecha`) VALUES
+(1, 'FASDFASDFASDF', 1, '2022-11-28');
+
 -- --------------------------------------------------------
 
 --
@@ -186,8 +262,19 @@ CREATE TABLE `user_transaction_cambios` (
   `user_id` int(11) NOT NULL,
   `tran_id` int(11) NOT NULL,
   `des_cambio` enum('E','A','S','U','R') COLLATE utf8_spanish_ci DEFAULT NULL,
-  `fecha` date NOT NULL
+  `fecha` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `user_transaction_cambios`
+--
+
+INSERT INTO `user_transaction_cambios` (`user_id`, `tran_id`, `des_cambio`, `fecha`) VALUES
+(2, 1, 'E', '2022-11-28 00:00:00'),
+(3, 1, 'U', '2022-11-28 00:00:00'),
+(3, 1, 'U', '2022-11-28 00:00:00'),
+(3, 1, 'R', '2022-11-28 00:00:00'),
+(2, 1, 'U', '2022-11-29 01:34:37');
 
 -- --------------------------------------------------------
 
@@ -215,8 +302,8 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id_usuario`, `cedula_user`, `clave_user`, `nombre`, `Nacionalidad`, `Telefono`, `Correo`, `Direccion`, `rol_user`, `estatus_user`, `fecha_user`, `intentos_user`) VALUES
-(1, '12345678', '$2y$12$ET7BsjhVu/ow0FxiNmGWFOSeJkwMCCDizzxv7SoOz8/VIobX65Br6', 'administrador', NULL, NULL, NULL, NULL, 'A', 1, '2022-10-29', NULL),
-(2, '22222222', '$2y$12$eY59CnNwmKFzHPO1090Kv.XxBPSKvrmXwQucvhyltfeqzwYxSkDuO', 'roberto', 'V', '0412-4645645', 'fasdfadsfadsf@gmai.com', 'fasdfasdfadsf', 'R', 1, '2022-10-30', 0),
+(1, '12345678', '$2y$12$ET7BsjhVu/ow0FxiNmGWFOSeJkwMCCDizzxv7SoOz8/VIobX65Br6', 'administrador', NULL, NULL, NULL, NULL, 'A', 1, '2022-10-29', 1),
+(2, '22222222', '$2y$12$V8ygq/a6PmTb5UnoH.kWtOxL0GaYIAutjFsa0bFoUGE4HItJBkZxe', 'roberto', 'V', '0412-4645645', 'fasdfadsfadsf@gmai.com', 'fasdfasdfadsf', 'R', 1, '2022-10-30', 0),
 (3, '33333333', '$2y$12$ET7BsjhVu/ow0FxiNmGWFOSeJkwMCCDizzxv7SoOz8/VIobX65Br6', 'primer laboratorio', NULL, NULL, NULL, NULL, 'L', 1, '2022-10-30', 1),
 (4, '12123123', '$2y$12$ET7BsjhVu/ow0FxiNmGWFOSeJkwMCCDizzxv7SoOz8/VIobX65Br6', 'segundo romanero', NULL, NULL, NULL, NULL, 'R', 1, '2022-10-31', NULL),
 (6, '27672767', '$2y$12$ET7BsjhVu/ow0FxiNmGWFOSeJkwMCCDizzxv7SoOz8/VIobX65Br6', 'Ricardo Fenomeno', NULL, NULL, NULL, NULL, 'R', 1, '2022-11-02', 1);
@@ -232,7 +319,7 @@ CREATE TABLE `vehiculo` (
   `vehiculo_Placa` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
   `segunda_Placa` char(10) COLLATE utf8_spanish_ci DEFAULT NULL,
   `rif_dueno` char(12) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `vehiculo_Peso` decimal(8,2) NOT NULL,
+  `vehiculo_Peso` decimal(8,2) DEFAULT NULL,
   `vehiculo_Ano` char(4) COLLATE utf8_spanish_ci NOT NULL,
   `condicion` enum('P','E','I') COLLATE utf8_spanish_ci NOT NULL,
   `if_doble` tinyint(1) NOT NULL,
@@ -241,8 +328,19 @@ CREATE TABLE `vehiculo` (
   `ID_Color` int(11) DEFAULT NULL,
   `ID_Empresa` int(11) DEFAULT NULL,
   `vehiculo_Fecha` date NOT NULL,
-  `vehiculo_Estatus` tinyint(1) NOT NULL
+  `vehiculo_Estatus` tinyint(1) NOT NULL,
+  `nombre_dueno` varchar(60) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `dire_dueno` varchar(120) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `correo_dueno` varchar(120) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `telefono_dueno` varchar(11) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `vehiculo`
+--
+
+INSERT INTO `vehiculo` (`ID`, `vehiculo_Placa`, `segunda_Placa`, `rif_dueno`, `vehiculo_Peso`, `vehiculo_Ano`, `condicion`, `if_doble`, `Vehiculo_PesoSecundario`, `ID_Modelo`, `ID_Color`, `ID_Empresa`, `vehiculo_Fecha`, `vehiculo_Estatus`, `nombre_dueno`, `dire_dueno`, `correo_dueno`, `telefono_dueno`) VALUES
+(2, 'FAS6D4F', NULL, 'V-65465406', '0.00', '2000', 'P', 0, '0.00', 4, 8, NULL, '2022-11-28', 1, 'fasdfasdfadsf', 'fasdfasdfasdfasdf@gmail.com', 'fasdfasdfasdfasdf', '04245109389');
 
 --
 -- Índices para tablas volcadas
@@ -342,49 +440,49 @@ ALTER TABLE `vehiculo`
 -- AUTO_INCREMENT de la tabla `cargo`
 --
 ALTER TABLE `cargo`
-  MODIFY `ID` int(50) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `color`
 --
 ALTER TABLE `color`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `empresa`
 --
 ALTER TABLE `empresa`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `marca`
 --
 ALTER TABLE `marca`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `modelo`
 --
 ALTER TABLE `modelo`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `movimiento`
 --
 ALTER TABLE `movimiento`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `personal`
 --
 ALTER TABLE `personal`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
@@ -396,7 +494,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `vehiculo`
 --
 ALTER TABLE `vehiculo`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas

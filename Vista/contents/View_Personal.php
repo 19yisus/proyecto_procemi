@@ -34,7 +34,7 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 										<i class="material-icons">&#xE147;</i>
 										<span></span>
 									</a>
-									
+
 								</div>
 							</div>
 						</div>
@@ -59,7 +59,7 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 					</div>
 				</div>
 				<!----Formulario emergente--------->
-				<form action="Controlador/Personal.php" method="post">
+				<form action="Controlador/Personal.php" method="post" id="formulario">
 					<div class="modal fade" tabindex="-1" id="addEmployeeModal" role="dialog">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
@@ -96,7 +96,7 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 										<div class="col-6">
 											<div class="form-group">
 												<label>Nombre</label>
-												<input type="text" maxlength="25" minlength="4" name="Nombre" id="nombre" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" title="Solo puedes ingresar caracteres alfabeticos" class="form-control" required>
+												<input type="text" maxlength="25" minlength="3" name="Nombre" id="nombre" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" title="Solo puedes ingresar caracteres alfabeticos" class="form-control" required>
 											</div>
 										</div>
 									</div>
@@ -104,7 +104,7 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 										<div class="col-6">
 											<div class="form-group">
 												<label>Apellido</label>
-												<input type="text" maxlength="25" minlength="5" name="Apellido" id="apellido" class="form-control" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" title="Solo puedes ingresar caracteres alfabeticos" required>
+												<input type="text" maxlength="25" minlength="3" name="Apellido" id="apellido" class="form-control" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" title="Solo puedes ingresar caracteres alfabeticos" required>
 											</div>
 										</div>
 										<div class="col-6">
@@ -115,6 +115,7 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 														<select name="codigo_area" id="codigo_area" class="form-control">
 															<option value="0412">0412</option>
 															<option value="0416">0416</option>
+															<option value="0426">0426</option>
 															<option value="0414">0414</option>
 															<option value="0424">0424</option>
 														</select>
@@ -128,13 +129,13 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 										<div class="col-6">
 											<div class="form-group">
 												<label>Correo</label>
-												<input type="email" maxlength="120" minlength="20" name="Correo" id="correo" class="form-control" required>
+												<input type="email" maxlength="50" minlength="5" name="Correo" id="correo" class="form-control" required>
 											</div>
 										</div>
 										<div class="col-6">
 											<div class="form-group">
 												<label>Dirección</label>
-												<input type="text" name="Direccion" id="direccion" class="form-control" pattern="[0-9a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" title="Solo se pueden ingresar caracteres numericos y alfabeticos" required>
+												<input type="text" name="Direccion" maxlength="50" minlength="4" id="direccion" class="form-control" required>
 											</div>
 										</div>
 									</div>
@@ -171,7 +172,7 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 										<div class="col-6">
 											<div class="form-group">
 												<label>Cargo</label>
-												<select name="Cargo" class="form-control" required>
+												<select name="Cargo" id="cargo" class="form-control" required>
 													<option value="">Seleccione una opción</option>
 													<?php while ($a = $cargo->fetch_assoc()) { ?>
 														<option name="Cargo" id="cargo" value="<?php echo $a["ID"] ?>"><?php echo $a["cargo_Nombre"] ?></option>
@@ -231,17 +232,43 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 			document.querySelectorAll("#condition").forEach(item => {
 				item.addEventListener("change", (e) => manipulateDOM(e.target.value))
 			})
+			// Validaciones números
+			$("#cedula").on("input", function() {
+				this.value = this.value.replace(/[^0-9]/g, '');
+			})
 
-			document.getElementById("cedula").addEventListener("keyup", async (e)=>{
-				if(e.target.value.length >= 7){
+			$("#telefono").on("input", function() {
+				this.value = this.value.replace(/[^0-9]/g, '');
+			})
+
+			// Validaciones letras
+			$("#nombre").on("input", function() {
+				this.value = this.value.replace(/[^a-z-A-ZÀ-ÿ\u00f1\u00d1]/g, '');
+			})
+
+			$("#apellido").on("input", function() {
+				this.value = this.value.replace(/[^a-z-A-ZÀ-ÿ\u00f1\u00d1]/g, '');
+			})
+
+
+			document.getElementById("cedula").addEventListener("keyup", async (e) => {
+				if (e.target.value.length > 7) {
+					$("#Nacionalidad option[value='E']").attr("selected", true);
+				} else {
+					$("#Nacionalidad option[value='E']").attr("selected", false);
+				}
+			})
+
+			document.getElementById("cedula").addEventListener("keyup", async (e) => {
+				if (e.target.value.length >= 7) {
 					await fetch(`Controlador/Personal.php?operacion=ConsultarCedula&&cedula=${e.target.value}`)
-					.then( response => response.json())
-					.then( result => {
-						if(result.data){
-							alert(result.data)
-							$("#cedula").val("");
-						}
-					}).catch( error => console.error(error))
+						.then(response => response.json())
+						.then(result => {
+							if (result.data) {
+								alert(result.data)
+								$("#cedula").val("");
+							}
+						}).catch(error => console.error(error))
 				}
 			})
 
@@ -295,7 +322,7 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 							data: "empresa_Nombre",
 							render(data) {
 								if (data) return data;
-								else return "Procemi";
+								else return "PROCEMI";
 							}
 						},
 						{
@@ -350,10 +377,24 @@ $empresa = $a->ejecutar("SELECT * FROM empresa WHERE empresa_Estatus = true");
 						$("#correo").val(data.personal_Correo)
 						$("#direccion").val(data.personal_Direccion)
 						$("#cargo").val(data.ID_Cargo)
+						$("#sel_empresa").val(data.ID_Empresa)
 					}).catch(error => console.error(error))
 			}
 			/* Bueno, en estas dos funciones solo estamos asignando valores, pero son funciones mas cortas ya que solo realizamos una accion */
-			const crear_personal = () => $("#operacion").val("Registro")
+			const crear_personal = () => {
+				$("#nombre").val("");
+				$("#apellido").val("")
+				$("#Nacionalidad").val("V")
+				$("#cedula").val("")
+				$("#codigo_area").val("0412")
+				$("#telefono").val("")
+				$("#correo").val("")
+				$("#direccion").val("")
+				$("#cargo").val("")
+				$("input:radio[name=condicion]:checked")[0].checked = false;
+				$("#sel_empresa").val("0")
+				$("#operacion").val("Registro")
+			}
 			const Eliminar = (id) => $(".ID").val(id)
 			/* El codigo de aqui abajo lo comente porque no le vi la utilidad, osea, lo comente y no vi cambios */
 		</script>

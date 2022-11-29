@@ -89,7 +89,7 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 					</div>
 				</div>
 				<!----Formulario emergente--------->
-				<form action="Controlador/Entrada.php" method="post">
+				<form action="Controlador/Entrada.php" method="post" id="formulario">
 					<div class="modal fade" tabindex="-1" id="addEmployeeModal" role="dialog">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
@@ -211,7 +211,7 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 											<div class="form-group">
 												<label>Peso bruto</label>
 												<div class="input-group">
-													<input type="number" step="1" min="1" name="cantidad" id="cantidad" class="form-control" pattern="[0-9]+" title="Solo puedes ingresar caracteres múmericos" required>
+													<input type="number" min="1000" step="1" maxlength="7" minlength="4" name="cantidad" id="cantidad" class="form-control" pattern="[0-9]+" title="Solo puedes ingresar caracteres múmericos" required>
 													<div class="input-group-append">
 														<span class="input-group-text">KG</span>
 													</div>
@@ -222,11 +222,19 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 											<div class="form-group">
 												<label>Segunda carga</label>
 												<div class="input-group">
-													<input type="number" step="1" min="1" name="segunda_cantidad" id="segunda_cantidad" class="form-control" pattern="[0-9]+" disabled="disabled" required>
+													<input type="number" step="1" min="500" name="segunda_cantidad" id="segunda_cantidad" class="form-control" pattern="[0-9]+" disabled="disabled" required>
 													<div class="input-group-append">
 														<span class="input-group-text">KG</span>
 													</div>
 												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row" id="divOb">
+										<div class="col-12">
+											<div class="form-group" id="div_obser" style="display: none;">
+												<label>Observación</label>
+												<input type="text" minlength="1" maxlength="60" name="observacion" id="observacion" class="form-control" readonly>
 											</div>
 										</div>
 									</div>
@@ -278,6 +286,12 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 		</footer>
 		<?php $this->Component("scripts"); ?>
 		<script type="text/javascript">
+			$("#cantidad").on("input", function() {
+				this.value = this.value.replace(/[^0-9]/g, '');
+			})
+			$("#segunda_cantidad").on("input", function() {
+				this.value = this.value.replace(/[^0-9]/g, '');
+			})
 			const consultarModal = async (value) => {
 				await fetch("Controlador/Entrada.php?operacion=ConsultarModal&&id=" + value)
 					.then(response => response.text())
@@ -364,7 +378,7 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 							data: "empresa_Nombre",
 							render(data, type, row) {
 								if (row.condicion_empresa == "E") return data;
-								else return "Procemi";
+								else return "PROCEMI";
 							}
 						},
 						// {
@@ -388,8 +402,8 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 							render(data) {
 								if (data == 'R') return "En Revisión";
 								if (data == 'P') return "Por analizar";
-								if (data == 'D') return "Devuelto";
-								if (data == 'A') return "Aprobado";
+								if (data == 'D') return "Devuelto por laboratorio";
+								if (data == 'A') return "Aprobado por laboratorio";
 								if (data == 'S') return "En el Silo";
 							}
 						},
@@ -432,13 +446,21 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 					.then(({
 						data
 					}) => {
-						
+
 						$("#id").val(data.ID)
 						$("#cedula").val(data.ID_Personal)
 						$("#empresa").val(data.ID_Empresa)
 						$("#producto").val(data.ID_Producto)
 						$("#cantidad").val(parseInt(data.m_Cantidad) / 2)
 						$("#condition").val(data.condicion_empresa)
+
+						if(data.status_proceso == "D"){
+							$("#divOb").show(150, ()=>{
+								$("#observacion").val(data.observacion)
+							})
+						}else{
+							$("#divOb").hide(150)
+						}
 
 						document.querySelectorAll("#doble").forEach(item => {
 							if (data.if_doble == "1") {
@@ -452,20 +474,29 @@ $personal = $a->ejecutar("SELECT * FROM personal WHERE personal_Estatus = true")
 								if (item.value == "no") item.checked = true;
 							}
 						})
-						
+
 						manipulateDOM(data.condicion_empresa)
 						setTimeout(() => {
 							capadidad_vehiculo(data.ID_Vehiculo)
 						}, 150)
 
-						setTimeout(()=>{
+						setTimeout(() => {
 							$("#Placa").val(data.ID_Vehiculo)
-						},150)
+						}, 150)
 
 					}).catch(error => console.error(error))
 			}
 			/* Bueno, en estas dos funciones solo estamos asignando valores, pero son funciones mas cortas ya que solo realizamos una accion */
-			const crear_entrada = () => $("#operacion").val("Registro")
+			const crear_entrada = () => {
+				$("#cedula").val("")
+				$("#empresa").val("")
+				$("#producto").val("0")
+				$("#cantidad").val("")
+				$("#condition").val("0")
+				$("#condition").val("0")
+
+				$("#operacion").val("Registro")
+			}
 			const Eliminar = (id) => $(".ID").val(id)
 			const ConsultVehiculos = async (idEmpresa) => {
 				if (!idEmpresa) return false;

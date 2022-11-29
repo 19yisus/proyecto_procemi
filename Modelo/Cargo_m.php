@@ -43,7 +43,7 @@ class Cargo_m extends bd
     if ($res != "" || $res != null){
       return false;
     }else{
-      $this->ejecutar("UPDATE cargo SET cargo_Nombre = '$this->nombre' WHERE ID = $this->id");
+      $this->ejecutar("UPDATE cargo SET cargo_Nombre = UPPER('$this->nombre') WHERE ID = $this->id");
       return true;
     }
    
