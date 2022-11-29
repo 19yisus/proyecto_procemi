@@ -83,7 +83,7 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 										<div class="col-6">
 											<div class="form-group">
 												<label>Placa del vehiculo</label>
-												<input type="text" name="Placa" id="placa" maxlength="7" minlength="7" class="form-control" onkeyup="Mayuscula(this)" required>
+												<input type="text" name="Placa" id="placa" pattern="[A-Z]{3}\d{3}" maxlength="7" minlength="7" class="form-control" onkeyup="Mayuscula(this)" required>
 											</div>
 										</div>
 										<div class="col-6">
@@ -218,7 +218,7 @@ $vehiculos = $a->ejecutar("SELECT * FROM vehiculo WHERE vehiculo_Estatus = $Esta
 										<div class="col-6">
 											<div class="form-group">
 												<label>Placa Extra del vehiculo</label>
-												<input type="text" name="segunda_Placa" id="segunda_Placa" disabled="disabled" maxlength="7" minlength="7" pattern="[A-Z0-9]{7}" class="form-control" onkeyup="Mayuscula(this)" required>
+												<input type="text" name="segunda_Placa" id="segunda_Placa" disabled="disabled" maxlength="7" minlength="7" pattern="[A-Z]{3}\d{3}" class="form-control" onkeyup="Mayuscula(this)" required>
 											</div>
 										</div>
 									</div>
